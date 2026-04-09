@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .verbirator{
+    width: calc(100vw - 60px);
+    height: 100vh;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.616);
+    pointer-events: none;
+    transition: .3s ease-in;
+    opacity: 0;
+}
+.flash{
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: rotate 10s linear infinite;
+}
+.flash:hover ~ .verbirator{
+    z-index: 2;
+    opacity: 1;
+}
+.flash:hover{
+    z-index: 3;
+}
+
+.gope{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(137, 43, 226);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    border-radius: 8px;
+    transition: 0.4s cubic-bezier(0, 1.15, 0.5, 1.65);
+    animation: rotate 10s linear infinite reverse;
+}
+.gope:hover{
+    width: 150px;
+    height: 150px;
+}
+.hearts{
+    position: absolute;
+    transition: 0.4s ease-in;
+}
+.hearts img{
+    animation: rotate 5s linear infinite reverse;
+}
+.hearts img{
+    width: 70px;
+}
+.gope:hover ~ .hearts:nth-child(3){
+    transform: translate(-200px, -100px) rotate(-130deg);
+}.gope:hover ~ .hearts:nth-child(2){
+    transform: translate(-200px, 40px) rotate(-38deg);
+}.gope:hover ~ .hearts:nth-child(4){
+    transform: translateX(200px) rotate(-278deg);
+}.gope:hover ~ .hearts:nth-child(5){
+    transform: translateY(-200px) rotate(-330deg);
+}.gope:hover ~ .hearts:nth-child(6){
+    transform: translate(0px, 200px) rotate(-180deg);
+}
+
+
+
+
+
+@keyframes rotate {
+    to{
+        transform: rotate(360deg);
+    }
+}
+</style>
+<style>
+    body {
+    background: #fffffe;
+    color: #000000;
+    overflow-x: hidden;
+  }
+  
+  nav {
+    overflow: visible;
+    flex-direction: row;
+    width: 100%;
+    bottom: 0px;
+    height: auto;
+  }
+  nav .icon {
+    padding: 0.6rem;
+    flex-direction: column;
+  }
+  nav .icon h3 {
+    margin: 0.3rem;
+  }
+  nav .icon1 {
+    display: none;
+  }
+  nav .icons {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  .audioWaves {
+    left: 20px;
+    bottom: 80px;
+    position: fixed;
+  }
+  
+  .container {
+    display: block;
+  }
+  .container section {
+    height: auto;
+    width: 100%;
+  }
+  .container section .verbirator {
+    display: none;
+  }
+  .container section .about {
+    flex-direction: column;
+  }
+  .container section .about .intro {
+    width: 100%;
+    margin-top: 2.4rem;
+  }
+  .container section .about .name {
+    font-size: 2.5em;
+  }
+  .container section:nth-child(1) {
+    margin-left: 0px;
+  }
+  .container section .left {
+    display: none;
+  }
+  .container section .right {
+    display: none;
+  }
+  .container section .home .project {
+    text-align: center;
+  }
+  .container section .home .project .projects {
+    grid-template-columns: auto;
+  }
+  .container section .home .small-cont .card {
+    max-width: 350px;
+  }
+  .container section .bio {
+    width: 100%;
+    padding: 2rem;
+  }
+  .container section .bio h3 {
+    font-size: 2em;
+  }
+  .container section .flash {
+    margin-bottom: 5rem;
+    height: 100px;
+    justify-content: flex-start;
+  }
+  .container section .flash .gope {
+    width: 60px;
+    height: 60px;
+  }
+  .container section .flash .gope img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .fadeup {
+    opacity: 0;
+    animation: fadeup 0.7s 1 forwards;
+  }
+  
+  .fadeupnot {
+    opacity: 1;
+    animation: fadedown 0.4s 1 forwards;
+  }
+  
+  .square-transition {
+    opacity: 1;
+    transform: none;
+  }
+  
+  /*# sourceMappingURL=stylesheet.css.map */
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo2.png">
+    <link rel="stylesheet" href="styled.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Heart.css">
+    <link rel="stylesheet" media="screen and (max-width: 600px)" href="stylesheet.css" />
+    <title>꧁ঔৣ☬✞JȺYȺNT♪࿐✞☬ঔৣ꧂</title>
+</head>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
+body {
+  width: 100vw;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.popup {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fffffe;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.815);
+}
+.popup .set {
+  width: 600px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  text-align: center;
+}
+.popup .set button {
+  padding: 1rem 2rem;
+  border: none;
+  color: white;
+  background: none;
+  font-weight: 200px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  border: 2px solid #9f0fef;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.79, 0.15, 0, 1.43);
+}
+.popup .set button:hover {
+  background: #9f0fef;
+  transform: scale(1.1);
+}
+
+nav {
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 65px;
+  height: 100%;
+  background: linear-gradient(to bottom, #281533, #1e1424, #2d2233);
+  z-index: 3;
+  box-shadow: 0 0 60px 30px rgba(0, 0, 0, 0.5);
+  transition: 0.4s ease-in;
+}
+nav .icons {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+nav .icons a {
+  text-decoration: none;
+  color: white;
+}
+nav .icon1 {
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: calc(100% - 57px);
+  transition: 0.3s ease-in;
+  width: 40px;
+}
+nav .icon1 div {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 5px;
+  transition: 0.3s ease-in;
+}
+nav .icon {
+  display: flex;
+  align-items: center;
+}
+nav .icon img {
+  width: 27px;
+  margin-inline: 1.3rem;
+}
+
+.snap {
+  width: 200px;
+}
+.snap .icon1 {
+  margin-left: calc(100% - 40px);
+}
+
+.card {
+  background: linear-gradient(to bottom, #281533, #1e1424, #2d2233);
+  color: white;
+  position: relative;
+  box-shadow: 0 0 70px 10px rgba(139, 137, 137, 0.151);
+  margin: auto;
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  align-items: center;
+  border-radius: 0.5rem;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -40%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  transition: 0.7s cubic-bezier(0.59, 0.31, 0.28, 1.33);
+  opacity: 0.7;
+}
+
+.card h2 {
+  z-index: 1;
+  letter-spacing: 3px;
+  transition: 0.7s ease;
+  transition-delay: 0.4s;
+}
+
+span {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  z-index: 1;
+  transition: 0.7s ease;
+  margin: 0.4rem;
+}
+
+#first {
+  transition-delay: 0.2s;
+}
+
+.card:hover .circle {
+  width: 500px;
+  height: 500px;
+  transform: translate(25%, -88%);
+  opacity: 1;
+}
+
+.card:hover h2 {
+  transform: translateY(-20px);
+  transition-delay: 0s;
+  color: black;
+}
+
+.card:hover span {
+  transform: translateY(-30px);
+}
+
+.card:hover #first {
+  transform: translateY(-30px);
+  transition-delay: 0.2s;
+}
+
+.card:hover span {
+  transform: translateY(-30px);
+  transition-delay: 0.4s;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overflow-x: scroll;
+  display: flex;
+}
+.container section {
+  position: relative;
+  flex: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #2d2233;
+  width: calc(100vw - 60px);
+  height: 100vh;
+  scroll-margin-left: 60px;
+  scroll-snap-align: start;
+}
+.container section:nth-child(1) {
+  margin-left: 100px;
+}
+.container section h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 7em;
+}
+.container section .left, .container section .right {
+  position: absolute;
+  height: 100%;
+  width: 8rem;
+  transition: 0.1s ease-in;
+  opacity: 0;
+}
+.container section .left:hover, .container section .right:hover {
+  opacity: 0.4;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.right {
+  background: linear-gradient(to left, black, #2d2233);
+  right: 0;
+}
+
+.left {
+  background: linear-gradient(to right, black, #2d2233);
+  left: 0;
+}
+
+.snap .line1 {
+  transform: rotate(-45deg) translate(-11px, 3px);
+}
+
+.snap .line2 {
+  opacity: 0;
+}
+
+.snap .line3 {
+  transform: rotate(45deg) translate(-8px, 0px);
+}
+
+/* restricted flex containers */
+.about {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.about .intro {
+  width: 70%;
+  padding: 1rem;
+  text-align: center;
+}
+.about .intro .name {
+  font-family: "Monoton", cursive;
+  word-spacing: 10px;
+  font-size: 3.5em;
+}
+.about .intro .carrera {
+  word-spacing: 2px;
+  line-height: 23px;
+  font-size: 1.4em;
+  padding: 1rem;
+}
+.about .picture {
+  padding: 2rem;
+  word-spacing: 2px;
+  line-height: 23px;
+  font-size: 1.1em;
+}
+.about .picture img {
+  width: 300px;
+  height: auto;
+  border-radius: 0.4rem;
+  box-shadow: 0 0 100px 50px rgba(0, 0, 0, 0.5);
+}
+
+.bio {
+  width: 70%;
+  font-size: 1.5em;
+}
+.bio h3 {
+  font-size: 4em;
+}
+
+.details {
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease;
+}
+.details .incont {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+}
+.details .incont .image {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.6s ease;
+}
+.details .incont .image img {
+  width: 240px;
+  height: auto;
+  border-radius: 0.6rem;
+}
+.details .incont .side-info {
+  width: 50%;
+  text-align: center;
+}
+.details .incont .side-info .p-name {
+  font-size: 34px;
+  letter-spacing: 4px;
+  transform: translateY(50px);
+  transition: 0.6s ease;
+  transition-delay: 0.2s;
+  opacity: 0;
+}
+.details .incont .side-info p {
+  font-size: 20px;
+  line-height: 25px;
+  margin-top: 4rem;
+  transform: translateY(50px);
+  transition: 0.6s ease;
+  transition-delay: 0.4s;
+  opacity: 0;
+}
+
+.audioWaves {
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  left: 90px;
+  z-index: 1;
+  transition: 0.5s ease;
+}
+
+.loading {
+  width: 100px;
+  height: 30px;
+  position: relative;
+}
+
+.loading .x {
+  position: absolute;
+  box-shadow: 0 0 0vw 0vw yellow;
+  animation: loading 2s ease-in-out infinite, flash1 6s ease infinite;
+  width: 5px;
+  background-color: #4e4355;
+  height: 5px;
+  transition: 0.8s ease-in;
+}
+
+@keyframes loading {
+  0%, 100% {
+    top: 0px;
+  }
+  25% {
+    top: 15px;
+  }
+  50% {
+    top: 0px;
+  }
+  75% {
+    top: 15px;
+  }
+}
+@keyframes flash1 {
+  0%, 100% {
+    box-shadow: 0 0 0vw 0vw yellow;
+  }
+  5%, 30% {
+    opacity: 1;
+    box-shadow: 0 0 2vw 0.2vw yellow;
+  }
+}
+.loading .x:nth-child(1) {
+  left: 0px;
+  animation-delay: 0s;
+}
+
+.loading .x:nth-child(2) {
+  left: 5px;
+  animation-delay: 0.1s;
+}
+
+.loading .x:nth-child(3) {
+  left: 10px;
+  animation-delay: 0.2s;
+}
+
+.loading .x:nth-child(4) {
+  left: 15px;
+  animation-delay: 0.3s;
+}
+
+.loading .x:nth-child(5) {
+  left: 20px;
+  animation-delay: 0.4s;
+}
+
+.loading .x:nth-child(6) {
+  left: 25px;
+  animation-delay: 0.5s;
+}
+
+.loading .x:nth-child(7) {
+  left: 30px;
+  animation-delay: 0.6s;
+}
+
+.loading .x:nth-child(8) {
+  left: 35px;
+  animation-delay: 0.7s;
+}
+
+.loading .x:nth-child(9) {
+  left: 40px;
+  animation-delay: 0.8s;
+}
+
+.loading .x:nth-child(10) {
+  left: 45px;
+  animation-delay: 0.9s;
+}
+
+.loading .x:nth-child(11) {
+  left: 50px;
+  animation-delay: 1s;
+}
+
+.loading .x:nth-child(12) {
+  left: 55px;
+  animation-delay: 1.1s;
+}
+
+.loading .x:nth-child(13) {
+  left: 60px;
+  animation-delay: 1.2s;
+}
+
+.loading .x:nth-child(14) {
+  left: 65px;
+  animation-delay: 1.3s;
+}
+
+.home {
+  width: 100%;
+}
+.home .project {
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home .project .p-heading {
+  width: 100%;
+  max-width: 900px;
+}
+.home .project .p-heading h2 {
+  margin-left: 2rem;
+  font-size: 34px;
+  letter-spacing: 3px;
+}
+.home .project .projects {
+  display: grid;
+  width: 100%;
+  max-width: 900px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-rows: repeat(2, minmax(250px, 1fr));
+}
+.home .project .projects a {
+  text-decoration: none;
+}
+.home .project .projects a:hover {
+  z-index: 1;
+}
+.home .project .projects .small-cont {
+  margin: 0.4rem;
+  color: #fffffe;
+  letter-spacing: 2px;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.home .project .projects .small-cont:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 60px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  z-index: 4;
+}
+@keyframes fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(-90px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes fadedown {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-90px);
+  }
+}
+
+/*# sourceMappingURL=styled.css.map */
+</style>
+<body id="nody" onload="load()">
+    <div class="audioWaves" data-text="audioWaves">
+        <div class="loading">
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+            <div class="x"></div>
+        </div>
+    </div>
+    <div class="popup">
+        <div class="set">
+            <h3>The site supports horizontal scroll. Use arrow keys or just scroll down or up to navigate And Open in Desktop or Laptop for
+                better experience, why you ask cause i don't have that much skill to animate in mobile</h3>
+            <button onclick="popclose()">Understood</button>
+        </div>
+    </div>
+    <nav class="grab">
+        <div class="icon1" onclick="grab()">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+        <div class="icons">
+            <a href="#First">
+                <div class="icon flusshout">
+                    <img src="home.png" alt="">
+                    <h3>home</h3>
+                </div>
+            </a>
+            <a href="#Second ">
+                <div class="icon " id='toSecond'>
+                    <img src="project.png" alt="">
+                    <h3>project</h3>
+                </div>
+            </a>
+            <a href="#thirds">
+                <div class="icon flusshout">
+                    <img src="info-button.png" alt="">
+                    <h3>About</h3>
+                </div>
+            </a>
+            <a href="#Fourth">
+                <div class="icon flusshout">
+                    <img src="email.png" alt="">
+                    <h3>Contact</h3>
+                </div>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+
+        <section id="First">
+            <div class="home">
+                <div class="about">
+                    <div class="intro">
+                        <div class="name">Hey, I'm Jayant Awasthi</div>
+                        <div class="carrera">
+                            <p>I’m a Computer Applications student with a deep passion for UI/UX design. I'm particularly fascinated by the
+                                art of creating intricate, complex designs and continuously pushing the boundaries of what’s possible. Adobe
+                                software is my toolkit of choice, and I love exploring its full potential to bring my creative visions to
+                                life.<br>:)</p>
+                        </div>
+                    </div>
+                    <div class="picture">
+                        <img src="Jayant.jpg" alt="style=" opacity: 0; animation: 0.7s ease 0.4s 1 normal forwards running fadeup;>
+                        <p><span>Parth Sarthi PS:</span> This is how i look <br>:)</p>
+                    </div>
+                </div>
+            </div>
+            <a class="right" onclick="fadeup()" href="#Second"></a>
+        </section>
+        <section id="Second">
+            <a class="left" onclick="fadeupnot()" href="#First"></a>
+            <div class="details">
+                <div class="incont">
+                    <div class="image">
+                        <img src="a3010cfb18e80def7b06c99288ccc276.jpg" alt="">
+                    </div>
+                    <div class="side-info">
+                        <h3 class="p-name">Whatever</h3>
+                        <p class="brief">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus illum similique quas, ipsum
+                            accusantium aliquid magni ad. Aut,</p>
+                    </div>
+                </div>
+            </div>
+            <div class="home">
+                <div class="project">
+                    <div class="p-heading">
+                        <h2>PROJECTS</h2>
+                    </div>
+                    <div class="projects">
+                        <a target="_blank" href="">
+                            <div class="small-cont">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>Mughaliya</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a target="_blank" href=""> <!--This is  the refrence link for GFG Calculator-->
+                            <div class="small-cont">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>Burnout</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a target="_blank" href="https://github.com/Jayant987">
+                            <div class="small-cont">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>This PortFolio is for game and web devlopmnet On Working</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a target="_blank" href="https://jayant987.github.io/jayant987/">
+                            <div class="small-cont ">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>MY Portfolio</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a target="_blank" href="https:">
+                            <div class="small-cont">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>Some Work On AI</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a target="_blank" href="https:#portfolio">
+                            <div class="small-cont">
+                                <div class="card">
+                                    <div class="circle"></div>
+                                    <h2>Database Work</h2>
+                                    <span id="first">Hover For More</span>
+                                    <span id="second">CLick To Visit</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="right" onclick="fadeupnot()" href="#thirds"></a>
+        </section>
+        <section id="thirds">
+            <a class="left" onclick="fadeup()" href="#Second"></a>
+            <div class="bio">
+                <br>Hey,<br> I'm Jayant Awasthi</br></h3>
+                <p>A Computer Application Student, fasicnated by art ,
+                    I make css animations and game designing and an well graphic Designer in free time and watch anime with a pile of work
+                    (undone) :).
+                </p>
+                <p>
+                    I live in Bhopal, MP. The best thing about Bhopal is lakes (they're drying btw! ). Make sure to check out lakes here if
+                    you ever visit (if they exist when you arive ofcourse)
+                </p>
+                <p>
+                    Back to work I'm persuing Computer Application, 3rd Semester, From BSSS(Barkatullah), not gonaa give full cause it's not
+                    a great college
+                </p>
+                <p>
+                    I'm gonna make more of it so look forward to it
+                </p>
+            </div>
+            <a class="right" href="#Fourth"></a>
+        </section>
+        <section id="Fourth">
+            <a class="left" href="#thirds"></a>
+            <div class="flash">
+                <a href="https://www.linkedin.com/in/jayant-awasthi-833b4b256/" class="gope">
+                    <img src="linkedin.png" alt="">
+                </a>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+            </div>
+            <div class="flash">
+                <a href="https://github.com/Jayant987/" class="gope">
+                    <img src="github-logo-silhouette-in-a-square.png" alt="">
+                </a>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+            </div>
+            <div class="flash">
+                <!-- <a href="https://www.instagram.com/nehal_s_r/" class="gope"> -->
+                <a href="https://www.instagram.com/_.jayant_.aws" class="gope">
+                    <img src="instagram.png" alt="">
+                </a>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+            </div>
+            <div class="flash">
+                <a href="mailto:jayantawasthi18@gmail.com" class="gope">
+                    <img src="email1.png" alt="">
+                </a>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+                <div class="hearts"><img src="like1.png" alt=""></div>
+            </div>
+            <div class="verbirator"></div>
+        </section>
+    </div>
+
+    <!-- just some fire flies -->
+
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+    <div class="firefly"></div>
+
+
+
+    <script src="index1.js"></script>
+    <script>
+        
+var secondSection = document.querySelector('.p-heading')
+var details = document.querySelector('.details')
+var smallCont = document.querySelectorAll(".small-cont");
+var myAudio = new Audio('sample4.mp3')
+
+function load(){
+    document.querySelector('.name').style.opacity = "0";
+    document.querySelector('.carrera').style.opacity = "0"; 
+    document.querySelector('.picture').style.opacity = "0"; 
+    myAudio.volume = 0.05
+    myAudio.play();
+    if (typeof myAudio.loop == 'boolean')
+    {
+        myAudio.loop = true;
+    }
+    else
+    {
+        myAudio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+}
+
+var a = true
+function grab() {
+    document.querySelector('.grab').classList.toggle( a ? 'snap' : '')
+    a != a
+}
+
+document.querySelector('.audioWaves').addEventListener('click', (e)=>{
+    if(!myAudio.paused){
+        document.querySelectorAll('.loading .x').forEach(element => {
+                element.style.animationPlayState = 'paused'
+        });
+        var vol = 0.05
+        var setup = setInterval(() => {
+            if (vol >= 0) {
+                myAudio.volume = vol
+                vol -= 0.01
+            }
+            else{
+                myAudio.pause()
+                clearInterval(setup)
+            }
+        }, 100);
+    }
+    else{
+        document.querySelectorAll('.loading .x').forEach(element => {
+                element.style.animationPlayState = 'running'
+        });
+        var vol = 0.0
+        myAudio.play()
+        var setup = setInterval(() => {
+            if (vol <= 0.08) {
+                myAudio.volume = vol
+                vol += 0.01
+            }
+            else{
+                clearInterval(setup)
+            }
+        }, 100);
+    }
+
+})
+// popup Mechnisms and early animation binder
+function popclose() {
+    document.querySelector('.popup').style.display = 'none'
+    document.querySelector('.name').style.animation = "fadeup 0.7s 1 forwards";
+    document.querySelector('.carrera').style.animation = "fadeup 0.7s 1 forwards"; 
+    document.querySelector('.carrera').style.animationDelay = "0.2s"; 
+    document.querySelector('.picture').style.animation = "fadeup 0.7s 1 forwards"; 
+    document.querySelector('.picture').style.animationDelay = "0.4s"; 
+}
+
+//cursor
+
+
+if(screen.width > 600){
+    console.log(screen.width);
+
+// animation toggler
+function fadeup() {
+    var i
+    for (i = 0; i < smallCont.length; i++) {
+        smallCont[i].style.opacity = "0";
+        smallCont[i].style.animation = "fadeup 0.7s 1 forwards";
+        smallCont[i].style.animationDelay = 0.8/(i + 03)  +'s';
+    }
+}
+
+// animation toggler
+function fadeupnot() {
+    var i
+    for (i = 0; i < smallCont.length; i++) {
+        smallCont[i].style.opacity = "1";
+        smallCont[i].style.animation = "fadedown 0.4s 1 forwards";
+        smallCont[i].style.animationDelay = i/18 +'s';
+        smallCont[i].addEventListener('mouseover',()=>{
+            details.style.opacity = '1'
+        })
+    }
+}
+
+//scrolling to views
+
+const scrollContainer = document.querySelector(".container");
+
+scrollContainer.addEventListener("wheel", (evt) => {
+    evt.preventDefault();
+    scrollContainer.scrollLeft += evt.deltaY * 10;
+    damn()
+});
+
+
+
+//viewChange inspector
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// conditonal inspector
+function damn() {
+    var epp = setInterval(() => {
+        var isIn = isInViewport(secondSection);
+        isIn ? fadeup() : fadeupnot()
+    }, 500);
+    setTimeout(() => {
+        clearInterval(epp)
+    }, 1000);
+}
+
+
+
+// keydown inspector
+document.onkeydown = (e)=> {
+    switch (e.keyCode) {
+        case 37:
+            damn();
+            break;
+            case 39:
+                damn();
+                break;
+    }
+}
+
+// other shits
+
+document.getElementById('toSecond').addEventListener('click',()=>{
+    fadeup()
+})
+
+document.querySelectorAll('.flusshout').forEach(element => {
+    element.addEventListener('click',()=>{
+        fadeupnot()
+    })
+});
+
+// Some shit that can't do in css or even in scss
+
+// const names = ["Mungaliya Haat", "Burnout-predictor", "My Game Portfolio", "My Porfolio", "Anurag's Case", "Mayank's Portfolio"];
+// const info = ['This is an informational website about a village, situated in Madhya Pradesh known as Mughaliya Hat. It presents the names, along with the pictures of all the places to visit in and around the village, information on influential people, families and members of the Gram Panchayat.\n\nMoreover, a graph that constitutes the total population of the village over the years.', 'Burnout-predictor is a machine learning model specifically trained to predict burnout rates (stress level) in employees.\n\nIt takes input from the user and according to the input value, it provides predicted burnout rate, as the output.\n\nTo make things effortless, we also created a user friendly frontend and connected our model to it.', 'Believe it or not I make games as well.\nClick to see my Game Portfolio, none of my game are published btw.....', 'This is my portfolio as you can see', 'Contains my latest knowledge of flexboxes and animations', 'This is a portfolio i made in my early days of learning Web Development']
+// const images = ['']
+const names = ["Mungaliya Haat", "Burnout-predictor", "My Game Portfolio -On Working", "My Porfolio and Fibonacci Sphere", "Jarvis and Eye Mouse Detector", "Woodland VP4 and Battery Man"];
+const info = ['This is an informational website about a village, situated in Madhya Pradesh known as Mughaliya Hat. It presents the names, along with the pictures of all the places to visit in and around the village, information on influential people, families and members of the Gram Panchayat.\n\nMoreover, a graph that constitutes the total population of the village over the years.', 'Burnout-predictor is a machine learning model specifically trained to predict burnout rates (stress level) in employees.\n\nIt takes input from the user and according to the input value, it provides predicted burnout rate, as the output.\n\nTo make things effortless, we also created a user friendly frontend and connected our model to it.', 'Believe it or not I make games as well.\nClick to see my Game Portfolio, none of my game are published btw.....', 'This is my portfolio as you can see', 'Contains my latest knowledge of flexboxes and animations', 'This is a portfolio i made in my early days of learning Web Development']
+const images = ['']
+
+var image = document.querySelector('.image')
+var aName = document.querySelector('.p-name')
+var brief = document.querySelector('.brief')
+var img = document.querySelector('.image')
+var i
+for (i = 0; i < smallCont.length; i++) {
+    var filles = names[i];
+    smallCont[i].setAttribute('id',`${i}`)
+    smallCont[i].addEventListener('mouseenter',(e)=>{
+        details.style.opacity = '1'
+        details.style.zIndex  = '5'
+        details.style.background = '#2815338e'
+        details.style.backdropFilter = 'blur(10px)'
+        image.style.transitionDelay = '0s'
+        image.style.opacity = '1'
+        image.style.transform = 'translateY(0px)'
+        aName.style.transitionDelay = '0.2s'
+        aName.style.opacity = '1'
+        aName.innerText = names[e.target.id]
+        aName.style.transform = 'translateY(0px)'
+        brief.style.transitionDelay = '0.4s'
+        brief.style.opacity = '1'
+        brief.style.transform = 'translateY(0px)'
+        brief.innerText = info[e.target.id]
+    })
+    smallCont[i].addEventListener('mouseleave',()=>{
+        details.style.opacity = '0'
+        image.style.transform = 'translateY(50px)'
+        image.style.transitionDelay = '0.4s'
+        image.style.opacity = '0'
+            aName.style.transform = 'translateY(50px)'
+            aName.style.transitionDelay = '0.2s'
+            aName.style.opacity = '0'
+            brief.style.transform = 'translateY(50px)'
+            brief.style.transitionDelay = '0s'
+            brief.style.opacity = '0'
+            details.style.zIndex = '0'
+            details.style.backdropFilter = 'none'
+            details.style.background = 'none'        
+        })
+    }
+    
+}
+    //new method for viewposts
+    const square = document.querySelector('.small-cont');
+    square.classList.remove('square-transition');
+    
+    // Create the observer, same as before:
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          square.classList.add('square-transition');
+          return;
+        }
+    
+        square.classList.remove('square-transition');
+      });
+    });
+    
+    observer.observe(document.querySelector('.projects'));
+    </script>
+</body>
+<style>
+    .firefly {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 0.4vw;
+    height: 0.4vw;
+    margin: -0.2vw 0 0 9.8vw;
+    animation: ease 200s alternate infinite;
+    pointer-events: none;
+  }
+  .firefly::before, .firefly::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform-origin: -10vw;
+  }
+  .firefly::before {
+    background: black;
+    opacity: 0.4;
+    animation: drift ease alternate infinite;
+  }
+  .firefly::after {
+    background: white;
+    opacity: 0;
+    box-shadow: 0 0 0vw 0vw yellow;
+    animation: drift ease alternate infinite, flash ease infinite;
+  }
+  
+  .firefly:nth-child(1) {
+    animation-name: move1;
+  }
+  .firefly:nth-child(1)::before {
+    animation-duration: 9s;
+  }
+  .firefly:nth-child(1)::after {
+    animation-duration: 9s, 7059ms;
+    animation-delay: 0ms, 2777ms;
+  }
+  
+  @keyframes move1 {
+    0% {
+      transform: translateX(-26vw) translateY(-38vh) scale(0.73);
+    }
+    5.8823529412% {
+      transform: translateX(-16vw) translateY(-24vh) scale(0.76);
+    }
+    11.7647058824% {
+      transform: translateX(12vw) translateY(22vh) scale(0.28);
+    }
+    17.6470588235% {
+      transform: translateX(25vw) translateY(44vh) scale(0.95);
+    }
+    23.5294117647% {
+      transform: translateX(23vw) translateY(-19vh) scale(0.79);
+    }
+    29.4117647059% {
+      transform: translateX(-19vw) translateY(-4vh) scale(0.3);
+    }
+    35.2941176471% {
+      transform: translateX(41vw) translateY(17vh) scale(0.27);
+    }
+    41.1764705882% {
+      transform: translateX(25vw) translateY(-37vh) scale(0.9);
+    }
+    47.0588235294% {
+      transform: translateX(14vw) translateY(-10vh) scale(0.82);
+    }
+    52.9411764706% {
+      transform: translateX(10vw) translateY(6vh) scale(0.46);
+    }
+    58.8235294118% {
+      transform: translateX(-19vw) translateY(-29vh) scale(0.41);
+    }
+    64.7058823529% {
+      transform: translateX(-46vw) translateY(-18vh) scale(0.38);
+    }
+    70.5882352941% {
+      transform: translateX(-2vw) translateY(37vh) scale(0.57);
+    }
+    76.4705882353% {
+      transform: translateX(-43vw) translateY(-22vh) scale(0.52);
+    }
+    82.3529411765% {
+      transform: translateX(40vw) translateY(-24vh) scale(0.59);
+    }
+    88.2352941176% {
+      transform: translateX(12vw) translateY(17vh) scale(0.35);
+    }
+    94.1176470588% {
+      transform: translateX(-7vw) translateY(2vh) scale(0.29);
+    }
+    100% {
+      transform: translateX(-25vw) translateY(37vh) scale(0.35);
+    }
+  }
+  .firefly:nth-child(2) {
+    animation-name: move2;
+  }
+  .firefly:nth-child(2)::before {
+    animation-duration: 16s;
+  }
+  .firefly:nth-child(2)::after {
+    animation-duration: 16s, 5178ms;
+    animation-delay: 0ms, 3363ms;
+  }
+  
+  @keyframes move2 {
+    0% {
+      transform: translateX(43vw) translateY(-29vh) scale(0.84);
+    }
+    4.1666666667% {
+      transform: translateX(50vw) translateY(28vh) scale(0.68);
+    }
+    8.3333333333% {
+      transform: translateX(34vw) translateY(-15vh) scale(0.69);
+    }
+    12.5% {
+      transform: translateX(9vw) translateY(18vh) scale(0.71);
+    }
+    16.6666666667% {
+      transform: translateX(-9vw) translateY(19vh) scale(0.9);
+    }
+    20.8333333333% {
+      transform: translateX(-34vw) translateY(17vh) scale(0.86);
+    }
+    25% {
+      transform: translateX(-26vw) translateY(29vh) scale(0.94);
+    }
+    29.1666666667% {
+      transform: translateX(-17vw) translateY(14vh) scale(0.48);
+    }
+    33.3333333333% {
+      transform: translateX(-16vw) translateY(15vh) scale(0.67);
+    }
+    37.5% {
+      transform: translateX(38vw) translateY(-26vh) scale(0.51);
+    }
+    41.6666666667% {
+      transform: translateX(-34vw) translateY(37vh) scale(0.95);
+    }
+    45.8333333333% {
+      transform: translateX(37vw) translateY(-27vh) scale(0.56);
+    }
+    50% {
+      transform: translateX(-17vw) translateY(-2vh) scale(0.52);
+    }
+    54.1666666667% {
+      transform: translateX(23vw) translateY(-6vh) scale(0.64);
+    }
+    58.3333333333% {
+      transform: translateX(-24vw) translateY(46vh) scale(0.57);
+    }
+    62.5% {
+      transform: translateX(24vw) translateY(6vh) scale(0.94);
+    }
+    66.6666666667% {
+      transform: translateX(14vw) translateY(-8vh) scale(0.41);
+    }
+    70.8333333333% {
+      transform: translateX(-21vw) translateY(12vh) scale(0.29);
+    }
+    75% {
+      transform: translateX(-16vw) translateY(-6vh) scale(0.94);
+    }
+    79.1666666667% {
+      transform: translateX(-37vw) translateY(-27vh) scale(0.8);
+    }
+    83.3333333333% {
+      transform: translateX(34vw) translateY(-45vh) scale(0.29);
+    }
+    87.5% {
+      transform: translateX(-42vw) translateY(31vh) scale(0.56);
+    }
+    91.6666666667% {
+      transform: translateX(33vw) translateY(29vh) scale(0.3);
+    }
+    95.8333333333% {
+      transform: translateX(46vw) translateY(-40vh) scale(0.74);
+    }
+    100% {
+      transform: translateX(-40vw) translateY(39vh) scale(0.94);
+    }
+  }
+  .firefly:nth-child(3) {
+    animation-name: move3;
+  }
+  .firefly:nth-child(3)::before {
+    animation-duration: 9s;
+  }
+  .firefly:nth-child(3)::after {
+    animation-duration: 9s, 10986ms;
+    animation-delay: 0ms, 8185ms;
+  }
+  
+  @keyframes move3 {
+    0% {
+      transform: translateX(28vw) translateY(-28vh) scale(0.9);
+    }
+    5.8823529412% {
+      transform: translateX(38vw) translateY(-48vh) scale(0.66);
+    }
+    11.7647058824% {
+      transform: translateX(-49vw) translateY(-20vh) scale(0.75);
+    }
+    17.6470588235% {
+      transform: translateX(-29vw) translateY(11vh) scale(0.67);
+    }
+    23.5294117647% {
+      transform: translateX(8vw) translateY(-1vh) scale(0.59);
+    }
+    29.4117647059% {
+      transform: translateX(23vw) translateY(23vh) scale(0.89);
+    }
+    35.2941176471% {
+      transform: translateX(41vw) translateY(-15vh) scale(0.45);
+    }
+    41.1764705882% {
+      transform: translateX(45vw) translateY(-14vh) scale(0.57);
+    }
+    47.0588235294% {
+      transform: translateX(-43vw) translateY(-15vh) scale(0.3);
+    }
+    52.9411764706% {
+      transform: translateX(47vw) translateY(1vh) scale(0.92);
+    }
+    58.8235294118% {
+      transform: translateX(21vw) translateY(-35vh) scale(1);
+    }
+    64.7058823529% {
+      transform: translateX(-36vw) translateY(47vh) scale(0.32);
+    }
+    70.5882352941% {
+      transform: translateX(-31vw) translateY(50vh) scale(0.62);
+    }
+    76.4705882353% {
+      transform: translateX(-13vw) translateY(48vh) scale(0.82);
+    }
+    82.3529411765% {
+      transform: translateX(-5vw) translateY(41vh) scale(0.87);
+    }
+    88.2352941176% {
+      transform: translateX(-46vw) translateY(33vh) scale(0.64);
+    }
+    94.1176470588% {
+      transform: translateX(-40vw) translateY(-43vh) scale(0.54);
+    }
+    100% {
+      transform: translateX(-26vw) translateY(-26vh) scale(1);
+    }
+  }
+  .firefly:nth-child(4) {
+    animation-name: move4;
+  }
+  .firefly:nth-child(4)::before {
+    animation-duration: 9s;
+  }
+  .firefly:nth-child(4)::after {
+    animation-duration: 9s, 5798ms;
+    animation-delay: 0ms, 5717ms;
+  }
+  
+  @keyframes move4 {
+    0% {
+      transform: translateX(46vw) translateY(13vh) scale(0.9);
+    }
+    4.1666666667% {
+      transform: translateX(-24vw) translateY(17vh) scale(0.47);
+    }
+    8.3333333333% {
+      transform: translateX(-31vw) translateY(-47vh) scale(0.4);
+    }
+    12.5% {
+      transform: translateX(-41vw) translateY(5vh) scale(0.4);
+    }
+    16.6666666667% {
+      transform: translateX(-38vw) translateY(-31vh) scale(0.76);
+    }
+    20.8333333333% {
+      transform: translateX(28vw) translateY(44vh) scale(0.82);
+    }
+    25% {
+      transform: translateX(40vw) translateY(44vh) scale(0.62);
+    }
+    29.1666666667% {
+      transform: translateX(11vw) translateY(36vh) scale(0.66);
+    }
+    33.3333333333% {
+      transform: translateX(27vw) translateY(30vh) scale(0.34);
+    }
+    37.5% {
+      transform: translateX(-42vw) translateY(21vh) scale(0.49);
+    }
+    41.6666666667% {
+      transform: translateX(-29vw) translateY(-46vh) scale(0.37);
+    }
+    45.8333333333% {
+      transform: translateX(-27vw) translateY(28vh) scale(0.91);
+    }
+    50% {
+      transform: translateX(-16vw) translateY(15vh) scale(0.55);
+    }
+    54.1666666667% {
+      transform: translateX(26vw) translateY(-23vh) scale(0.29);
+    }
+    58.3333333333% {
+      transform: translateX(35vw) translateY(-28vh) scale(0.79);
+    }
+    62.5% {
+      transform: translateX(25vw) translateY(42vh) scale(0.39);
+    }
+    66.6666666667% {
+      transform: translateX(-6vw) translateY(-22vh) scale(0.77);
+    }
+    70.8333333333% {
+      transform: translateX(0vw) translateY(-10vh) scale(0.57);
+    }
+    75% {
+      transform: translateX(-37vw) translateY(-23vh) scale(0.51);
+    }
+    79.1666666667% {
+      transform: translateX(28vw) translateY(15vh) scale(0.35);
+    }
+    83.3333333333% {
+      transform: translateX(-13vw) translateY(-5vh) scale(0.83);
+    }
+    87.5% {
+      transform: translateX(12vw) translateY(11vh) scale(0.62);
+    }
+    91.6666666667% {
+      transform: translateX(31vw) translateY(-31vh) scale(0.4);
+    }
+    95.8333333333% {
+      transform: translateX(16vw) translateY(-26vh) scale(0.84);
+    }
+    100% {
+      transform: translateX(12vw) translateY(-28vh) scale(0.49);
+    }
+  }
+  .firefly:nth-child(5) {
+    animation-name: move5;
+  }
+  .firefly:nth-child(5)::before {
+    animation-duration: 11s;
+  }
+  .firefly:nth-child(5)::after {
+    animation-duration: 11s, 9556ms;
+    animation-delay: 0ms, 1213ms;
+  }
+  
+  @keyframes move5 {
+    0% {
+      transform: translateX(22vw) translateY(20vh) scale(0.63);
+    }
+    5% {
+      transform: translateX(-36vw) translateY(-20vh) scale(0.77);
+    }
+    10% {
+      transform: translateX(24vw) translateY(-10vh) scale(0.37);
+    }
+    15% {
+      transform: translateX(-19vw) translateY(28vh) scale(0.84);
+    }
+    20% {
+      transform: translateX(13vw) translateY(-41vh) scale(0.41);
+    }
+    25% {
+      transform: translateX(-17vw) translateY(6vh) scale(0.95);
+    }
+    30% {
+      transform: translateX(-41vw) translateY(-47vh) scale(0.57);
+    }
+    35% {
+      transform: translateX(48vw) translateY(6vh) scale(0.65);
+    }
+    40% {
+      transform: translateX(43vw) translateY(42vh) scale(0.51);
+    }
+    45% {
+      transform: translateX(-22vw) translateY(-21vh) scale(0.65);
+    }
+    50% {
+      transform: translateX(2vw) translateY(-11vh) scale(0.73);
+    }
+    55% {
+      transform: translateX(11vw) translateY(-3vh) scale(0.48);
+    }
+    60% {
+      transform: translateX(33vw) translateY(-5vh) scale(0.37);
+    }
+    65% {
+      transform: translateX(21vw) translateY(-25vh) scale(0.92);
+    }
+    70% {
+      transform: translateX(-10vw) translateY(47vh) scale(0.98);
+    }
+    75% {
+      transform: translateX(1vw) translateY(13vh) scale(0.81);
+    }
+    80% {
+      transform: translateX(-19vw) translateY(27vh) scale(0.37);
+    }
+    85% {
+      transform: translateX(36vw) translateY(27vh) scale(0.95);
+    }
+    90% {
+      transform: translateX(0vw) translateY(4vh) scale(0.6);
+    }
+    95% {
+      transform: translateX(-23vw) translateY(-44vh) scale(0.75);
+    }
+    100% {
+      transform: translateX(-11vw) translateY(43vh) scale(0.38);
+    }
+  }
+  .firefly:nth-child(6) {
+    animation-name: move6;
+  }
+  .firefly:nth-child(6)::before {
+    animation-duration: 17s;
+  }
+  .firefly:nth-child(6)::after {
+    animation-duration: 17s, 8122ms;
+    animation-delay: 0ms, 8247ms;
+  }
+  
+  @keyframes move6 {
+    0% {
+      transform: translateX(13vw) translateY(-25vh) scale(0.68);
+    }
+    3.7037037037% {
+      transform: translateX(-34vw) translateY(-48vh) scale(0.68);
+    }
+    7.4074074074% {
+      transform: translateX(-44vw) translateY(38vh) scale(0.66);
+    }
+    11.1111111111% {
+      transform: translateX(-27vw) translateY(-36vh) scale(0.73);
+    }
+    14.8148148148% {
+      transform: translateX(5vw) translateY(13vh) scale(0.65);
+    }
+    18.5185185185% {
+      transform: translateX(-25vw) translateY(0vh) scale(0.53);
+    }
+    22.2222222222% {
+      transform: translateX(35vw) translateY(33vh) scale(0.69);
+    }
+    25.9259259259% {
+      transform: translateX(22vw) translateY(-24vh) scale(0.37);
+    }
+    29.6296296296% {
+      transform: translateX(21vw) translateY(-20vh) scale(0.29);
+    }
+    33.3333333333% {
+      transform: translateX(27vw) translateY(25vh) scale(0.65);
+    }
+    37.037037037% {
+      transform: translateX(18vw) translateY(42vh) scale(0.36);
+    }
+    40.7407407407% {
+      transform: translateX(-17vw) translateY(-8vh) scale(0.57);
+    }
+    44.4444444444% {
+      transform: translateX(-25vw) translateY(40vh) scale(0.27);
+    }
+    48.1481481481% {
+      transform: translateX(-35vw) translateY(29vh) scale(0.92);
+    }
+    51.8518518519% {
+      transform: translateX(-27vw) translateY(-9vh) scale(0.95);
+    }
+    55.5555555556% {
+      transform: translateX(32vw) translateY(32vh) scale(0.72);
+    }
+    59.2592592593% {
+      transform: translateX(-32vw) translateY(15vh) scale(0.47);
+    }
+    62.962962963% {
+      transform: translateX(-6vw) translateY(29vh) scale(1);
+    }
+    66.6666666667% {
+      transform: translateX(-15vw) translateY(1vh) scale(0.33);
+    }
+    70.3703703704% {
+      transform: translateX(-4vw) translateY(22vh) scale(0.32);
+    }
+    74.0740740741% {
+      transform: translateX(32vw) translateY(-14vh) scale(0.95);
+    }
+    77.7777777778% {
+      transform: translateX(10vw) translateY(7vh) scale(0.82);
+    }
+    81.4814814815% {
+      transform: translateX(-30vw) translateY(-47vh) scale(0.42);
+    }
+    85.1851851852% {
+      transform: translateX(-6vw) translateY(45vh) scale(0.76);
+    }
+    88.8888888889% {
+      transform: translateX(40vw) translateY(23vh) scale(0.89);
+    }
+    92.5925925926% {
+      transform: translateX(-9vw) translateY(17vh) scale(0.68);
+    }
+    96.2962962963% {
+      transform: translateX(22vw) translateY(39vh) scale(0.26);
+    }
+    100% {
+      transform: translateX(-13vw) translateY(1vh) scale(0.33);
+    }
+  }
+  .firefly:nth-child(7) {
+    animation-name: move7;
+  }
+  .firefly:nth-child(7)::before {
+    animation-duration: 11s;
+  }
+  .firefly:nth-child(7)::after {
+    animation-duration: 11s, 10867ms;
+    animation-delay: 0ms, 1154ms;
+  }
+  
+  @keyframes move7 {
+    0% {
+      transform: translateX(13vw) translateY(-6vh) scale(0.76);
+    }
+    4.1666666667% {
+      transform: translateX(35vw) translateY(36vh) scale(0.86);
+    }
+    8.3333333333% {
+      transform: translateX(-19vw) translateY(30vh) scale(0.78);
+    }
+    12.5% {
+      transform: translateX(-43vw) translateY(32vh) scale(0.77);
+    }
+    16.6666666667% {
+      transform: translateX(-21vw) translateY(12vh) scale(0.83);
+    }
+    20.8333333333% {
+      transform: translateX(4vw) translateY(30vh) scale(0.26);
+    }
+    25% {
+      transform: translateX(-39vw) translateY(-14vh) scale(0.61);
+    }
+    29.1666666667% {
+      transform: translateX(38vw) translateY(-44vh) scale(0.88);
+    }
+    33.3333333333% {
+      transform: translateX(36vw) translateY(-6vh) scale(0.54);
+    }
+    37.5% {
+      transform: translateX(48vw) translateY(-25vh) scale(0.33);
+    }
+    41.6666666667% {
+      transform: translateX(47vw) translateY(-5vh) scale(0.77);
+    }
+    45.8333333333% {
+      transform: translateX(-12vw) translateY(-22vh) scale(0.43);
+    }
+    50% {
+      transform: translateX(-28vw) translateY(48vh) scale(0.56);
+    }
+    54.1666666667% {
+      transform: translateX(-32vw) translateY(17vh) scale(0.3);
+    }
+    58.3333333333% {
+      transform: translateX(36vw) translateY(-36vh) scale(0.67);
+    }
+    62.5% {
+      transform: translateX(13vw) translateY(-15vh) scale(0.97);
+    }
+    66.6666666667% {
+      transform: translateX(48vw) translateY(-26vh) scale(0.28);
+    }
+    70.8333333333% {
+      transform: translateX(-44vw) translateY(-37vh) scale(0.38);
+    }
+    75% {
+      transform: translateX(-23vw) translateY(15vh) scale(0.6);
+    }
+    79.1666666667% {
+      transform: translateX(9vw) translateY(-5vh) scale(0.68);
+    }
+    83.3333333333% {
+      transform: translateX(-14vw) translateY(34vh) scale(0.45);
+    }
+    87.5% {
+      transform: translateX(-19vw) translateY(29vh) scale(0.82);
+    }
+    91.6666666667% {
+      transform: translateX(-6vw) translateY(-49vh) scale(0.53);
+    }
+    95.8333333333% {
+      transform: translateX(-37vw) translateY(44vh) scale(0.46);
+    }
+    100% {
+      transform: translateX(-1vw) translateY(42vh) scale(0.48);
+    }
+  }
+  .firefly:nth-child(8) {
+    animation-name: move8;
+  }
+  .firefly:nth-child(8)::before {
+    animation-duration: 10s;
+  }
+  .firefly:nth-child(8)::after {
+    animation-duration: 10s, 8587ms;
+    animation-delay: 0ms, 3136ms;
+  }
+  
+  @keyframes move8 {
+    0% {
+      transform: translateX(39vw) translateY(-30vh) scale(0.35);
+    }
+    3.7037037037% {
+      transform: translateX(38vw) translateY(47vh) scale(0.88);
+    }
+    7.4074074074% {
+      transform: translateX(-18vw) translateY(17vh) scale(0.63);
+    }
+    11.1111111111% {
+      transform: translateX(23vw) translateY(-4vh) scale(0.5);
+    }
+    14.8148148148% {
+      transform: translateX(7vw) translateY(-27vh) scale(0.33);
+    }
+    18.5185185185% {
+      transform: translateX(-48vw) translateY(-31vh) scale(0.65);
+    }
+    22.2222222222% {
+      transform: translateX(15vw) translateY(-24vh) scale(0.33);
+    }
+    25.9259259259% {
+      transform: translateX(33vw) translateY(-49vh) scale(0.49);
+    }
+    29.6296296296% {
+      transform: translateX(-19vw) translateY(47vh) scale(0.43);
+    }
+    33.3333333333% {
+      transform: translateX(15vw) translateY(-47vh) scale(0.8);
+    }
+    37.037037037% {
+      transform: translateX(23vw) translateY(12vh) scale(0.32);
+    }
+    40.7407407407% {
+      transform: translateX(34vw) translateY(35vh) scale(0.48);
+    }
+    44.4444444444% {
+      transform: translateX(20vw) translateY(27vh) scale(0.58);
+    }
+    48.1481481481% {
+      transform: translateX(40vw) translateY(-11vh) scale(0.5);
+    }
+    51.8518518519% {
+      transform: translateX(-28vw) translateY(32vh) scale(0.99);
+    }
+    55.5555555556% {
+      transform: translateX(-3vw) translateY(-45vh) scale(0.64);
+    }
+    59.2592592593% {
+      transform: translateX(-6vw) translateY(-36vh) scale(0.78);
+    }
+    62.962962963% {
+      transform: translateX(-35vw) translateY(43vh) scale(0.78);
+    }
+    66.6666666667% {
+      transform: translateX(-36vw) translateY(-17vh) scale(0.4);
+    }
+    70.3703703704% {
+      transform: translateX(-39vw) translateY(22vh) scale(0.63);
+    }
+    74.0740740741% {
+      transform: translateX(-25vw) translateY(48vh) scale(0.9);
+    }
+    77.7777777778% {
+      transform: translateX(17vw) translateY(22vh) scale(0.37);
+    }
+    81.4814814815% {
+      transform: translateX(22vw) translateY(-6vh) scale(1);
+    }
+    85.1851851852% {
+      transform: translateX(-37vw) translateY(33vh) scale(0.37);
+    }
+    88.8888888889% {
+      transform: translateX(5vw) translateY(49vh) scale(0.76);
+    }
+    92.5925925926% {
+      transform: translateX(34vw) translateY(3vh) scale(0.97);
+    }
+    96.2962962963% {
+      transform: translateX(-11vw) translateY(3vh) scale(0.45);
+    }
+    100% {
+      transform: translateX(25vw) translateY(-14vh) scale(0.62);
+    }
+  }
+  .firefly:nth-child(9) {
+    animation-name: move9;
+  }
+  .firefly:nth-child(9)::before {
+    animation-duration: 9s;
+  }
+  .firefly:nth-child(9)::after {
+    animation-duration: 9s, 5747ms;
+    animation-delay: 0ms, 4605ms;
+  }
+  
+  @keyframes move9 {
+    0% {
+      transform: translateX(-21vw) translateY(-18vh) scale(0.55);
+    }
+    4.347826087% {
+      transform: translateX(26vw) translateY(49vh) scale(0.41);
+    }
+    8.6956521739% {
+      transform: translateX(30vw) translateY(35vh) scale(0.68);
+    }
+    13.0434782609% {
+      transform: translateX(12vw) translateY(-39vh) scale(0.46);
+    }
+    17.3913043478% {
+      transform: translateX(32vw) translateY(21vh) scale(0.34);
+    }
+    21.7391304348% {
+      transform: translateX(-36vw) translateY(9vh) scale(0.44);
+    }
+    26.0869565217% {
+      transform: translateX(15vw) translateY(35vh) scale(0.36);
+    }
+    30.4347826087% {
+      transform: translateX(17vw) translateY(6vh) scale(0.53);
+    }
+    34.7826086957% {
+      transform: translateX(-21vw) translateY(2vh) scale(0.72);
+    }
+    39.1304347826% {
+      transform: translateX(-44vw) translateY(-48vh) scale(0.89);
+    }
+    43.4782608696% {
+      transform: translateX(-4vw) translateY(10vh) scale(0.32);
+    }
+    47.8260869565% {
+      transform: translateX(-24vw) translateY(-43vh) scale(0.28);
+    }
+    52.1739130435% {
+      transform: translateX(-36vw) translateY(15vh) scale(0.56);
+    }
+    56.5217391304% {
+      transform: translateX(-5vw) translateY(-11vh) scale(0.48);
+    }
+    60.8695652174% {
+      transform: translateX(25vw) translateY(46vh) scale(0.82);
+    }
+    65.2173913043% {
+      transform: translateX(23vw) translateY(13vh) scale(0.9);
+    }
+    69.5652173913% {
+      transform: translateX(42vw) translateY(-33vh) scale(0.75);
+    }
+    73.9130434783% {
+      transform: translateX(13vw) translateY(-19vh) scale(0.52);
+    }
+    78.2608695652% {
+      transform: translateX(39vw) translateY(0vh) scale(0.34);
+    }
+    82.6086956522% {
+      transform: translateX(-25vw) translateY(-22vh) scale(0.37);
+    }
+    86.9565217391% {
+      transform: translateX(-40vw) translateY(-45vh) scale(0.57);
+    }
+    91.3043478261% {
+      transform: translateX(-10vw) translateY(35vh) scale(0.28);
+    }
+    95.652173913% {
+      transform: translateX(40vw) translateY(-46vh) scale(0.77);
+    }
+    100% {
+      transform: translateX(-33vw) translateY(-24vh) scale(0.57);
+    }
+  }
+  .firefly:nth-child(10) {
+    animation-name: move10;
+  }
+  .firefly:nth-child(10)::before {
+    animation-duration: 18s;
+  }
+  .firefly:nth-child(10)::after {
+    animation-duration: 18s, 5563ms;
+    animation-delay: 0ms, 7717ms;
+  }
+  
+  @keyframes move10 {
+    0% {
+      transform: translateX(-33vw) translateY(13vh) scale(0.65);
+    }
+    4% {
+      transform: translateX(38vw) translateY(27vh) scale(0.38);
+    }
+    8% {
+      transform: translateX(0vw) translateY(-41vh) scale(0.74);
+    }
+    12% {
+      transform: translateX(-18vw) translateY(5vh) scale(0.74);
+    }
+    16% {
+      transform: translateX(-27vw) translateY(-30vh) scale(0.58);
+    }
+    20% {
+      transform: translateX(-26vw) translateY(27vh) scale(0.86);
+    }
+    24% {
+      transform: translateX(19vw) translateY(27vh) scale(0.33);
+    }
+    28% {
+      transform: translateX(24vw) translateY(-46vh) scale(0.96);
+    }
+    32% {
+      transform: translateX(-18vw) translateY(17vh) scale(0.66);
+    }
+    36% {
+      transform: translateX(11vw) translateY(42vh) scale(0.42);
+    }
+    40% {
+      transform: translateX(-41vw) translateY(-45vh) scale(0.71);
+    }
+    44% {
+      transform: translateX(-5vw) translateY(18vh) scale(0.41);
+    }
+    48% {
+      transform: translateX(36vw) translateY(28vh) scale(0.64);
+    }
+    52% {
+      transform: translateX(-36vw) translateY(-2vh) scale(0.34);
+    }
+    56% {
+      transform: translateX(9vw) translateY(-13vh) scale(0.27);
+    }
+    60% {
+      transform: translateX(-40vw) translateY(-46vh) scale(0.81);
+    }
+    64% {
+      transform: translateX(-45vw) translateY(-27vh) scale(1);
+    }
+    68% {
+      transform: translateX(1vw) translateY(7vh) scale(0.45);
+    }
+    72% {
+      transform: translateX(42vw) translateY(1vh) scale(0.84);
+    }
+    76% {
+      transform: translateX(24vw) translateY(19vh) scale(0.83);
+    }
+    80% {
+      transform: translateX(37vw) translateY(43vh) scale(0.36);
+    }
+    84% {
+      transform: translateX(6vw) translateY(35vh) scale(0.41);
+    }
+    88% {
+      transform: translateX(-29vw) translateY(44vh) scale(0.42);
+    }
+    92% {
+      transform: translateX(23vw) translateY(42vh) scale(0.62);
+    }
+    96% {
+      transform: translateX(-16vw) translateY(-13vh) scale(0.73);
+    }
+    100% {
+      transform: translateX(-1vw) translateY(25vh) scale(0.62);
+    }
+  }
+  .firefly:nth-child(11) {
+    animation-name: move11;
+  }
+  .firefly:nth-child(11)::before {
+    animation-duration: 10s;
+  }
+  .firefly:nth-child(11)::after {
+    animation-duration: 10s, 10411ms;
+    animation-delay: 0ms, 3371ms;
+  }
+  
+  @keyframes move11 {
+    0% {
+      transform: translateX(42vw) translateY(25vh) scale(0.69);
+    }
+    4.7619047619% {
+      transform: translateX(-47vw) translateY(-13vh) scale(0.98);
+    }
+    9.5238095238% {
+      transform: translateX(-1vw) translateY(-44vh) scale(0.89);
+    }
+    14.2857142857% {
+      transform: translateX(49vw) translateY(40vh) scale(0.72);
+    }
+    19.0476190476% {
+      transform: translateX(-6vw) translateY(-46vh) scale(0.45);
+    }
+    23.8095238095% {
+      transform: translateX(46vw) translateY(-26vh) scale(0.92);
+    }
+    28.5714285714% {
+      transform: translateX(3vw) translateY(-2vh) scale(0.69);
+    }
+    33.3333333333% {
+      transform: translateX(12vw) translateY(22vh) scale(0.96);
+    }
+    38.0952380952% {
+      transform: translateX(-39vw) translateY(9vh) scale(0.32);
+    }
+    42.8571428571% {
+      transform: translateX(38vw) translateY(-14vh) scale(0.53);
+    }
+    47.619047619% {
+      transform: translateX(15vw) translateY(11vh) scale(0.91);
+    }
+    52.380952381% {
+      transform: translateX(30vw) translateY(-23vh) scale(0.59);
+    }
+    57.1428571429% {
+      transform: translateX(-21vw) translateY(37vh) scale(0.49);
+    }
+    61.9047619048% {
+      transform: translateX(-14vw) translateY(23vh) scale(0.49);
+    }
+    66.6666666667% {
+      transform: translateX(-41vw) translateY(4vh) scale(0.39);
+    }
+    71.4285714286% {
+      transform: translateX(22vw) translateY(33vh) scale(0.81);
+    }
+    76.1904761905% {
+      transform: translateX(46vw) translateY(43vh) scale(0.59);
+    }
+    80.9523809524% {
+      transform: translateX(9vw) translateY(-26vh) scale(0.89);
+    }
+    85.7142857143% {
+      transform: translateX(34vw) translateY(-28vh) scale(0.78);
+    }
+    90.4761904762% {
+      transform: translateX(-28vw) translateY(12vh) scale(0.56);
+    }
+    95.2380952381% {
+      transform: translateX(-30vw) translateY(-40vh) scale(0.34);
+    }
+    100% {
+      transform: translateX(11vw) translateY(13vh) scale(0.43);
+    }
+  }
+  .firefly:nth-child(12) {
+    animation-name: move12;
+  }
+  .firefly:nth-child(12)::before {
+    animation-duration: 11s;
+  }
+  .firefly:nth-child(12)::after {
+    animation-duration: 11s, 9074ms;
+    animation-delay: 0ms, 7429ms;
+  }
+  
+  @keyframes move12 {
+    0% {
+      transform: translateX(24vw) translateY(36vh) scale(1);
+    }
+    5.8823529412% {
+      transform: translateX(-48vw) translateY(21vh) scale(0.32);
+    }
+    11.7647058824% {
+      transform: translateX(14vw) translateY(17vh) scale(0.83);
+    }
+    17.6470588235% {
+      transform: translateX(-41vw) translateY(-32vh) scale(0.97);
+    }
+    23.5294117647% {
+      transform: translateX(-24vw) translateY(-31vh) scale(0.51);
+    }
+    29.4117647059% {
+      transform: translateX(1vw) translateY(-37vh) scale(0.29);
+    }
+    35.2941176471% {
+      transform: translateX(47vw) translateY(30vh) scale(0.43);
+    }
+    41.1764705882% {
+      transform: translateX(-27vw) translateY(5vh) scale(0.4);
+    }
+    47.0588235294% {
+      transform: translateX(47vw) translateY(46vh) scale(0.85);
+    }
+    52.9411764706% {
+      transform: translateX(20vw) translateY(19vh) scale(0.86);
+    }
+    58.8235294118% {
+      transform: translateX(3vw) translateY(40vh) scale(0.43);
+    }
+    64.7058823529% {
+      transform: translateX(-35vw) translateY(6vh) scale(0.96);
+    }
+    70.5882352941% {
+      transform: translateX(25vw) translateY(-46vh) scale(0.57);
+    }
+    76.4705882353% {
+      transform: translateX(-44vw) translateY(-9vh) scale(0.91);
+    }
+    82.3529411765% {
+      transform: translateX(48vw) translateY(-9vh) scale(0.33);
+    }
+    88.2352941176% {
+      transform: translateX(29vw) translateY(11vh) scale(0.66);
+    }
+    94.1176470588% {
+      transform: translateX(-21vw) translateY(28vh) scale(0.95);
+    }
+    100% {
+      transform: translateX(-36vw) translateY(12vh) scale(0.91);
+    }
+  }
+  .firefly:nth-child(13) {
+    animation-name: move13;
+  }
+  .firefly:nth-child(13)::before {
+    animation-duration: 11s;
+  }
+  .firefly:nth-child(13)::after {
+    animation-duration: 11s, 7226ms;
+    animation-delay: 0ms, 2110ms;
+  }
+  
+  @keyframes move13 {
+    0% {
+      transform: translateX(-18vw) translateY(4vh) scale(1);
+    }
+    3.8461538462% {
+      transform: translateX(35vw) translateY(-15vh) scale(0.99);
+    }
+    7.6923076923% {
+      transform: translateX(47vw) translateY(-48vh) scale(0.27);
+    }
+    11.5384615385% {
+      transform: translateX(6vw) translateY(10vh) scale(0.35);
+    }
+    15.3846153846% {
+      transform: translateX(-37vw) translateY(-18vh) scale(0.3);
+    }
+    19.2307692308% {
+      transform: translateX(-12vw) translateY(49vh) scale(0.7);
+    }
+    23.0769230769% {
+      transform: translateX(32vw) translateY(1vh) scale(0.98);
+    }
+    26.9230769231% {
+      transform: translateX(-23vw) translateY(-5vh) scale(0.83);
+    }
+    30.7692307692% {
+      transform: translateX(30vw) translateY(-12vh) scale(0.82);
+    }
+    34.6153846154% {
+      transform: translateX(-18vw) translateY(15vh) scale(0.31);
+    }
+    38.4615384615% {
+      transform: translateX(35vw) translateY(-23vh) scale(0.9);
+    }
+    42.3076923077% {
+      transform: translateX(47vw) translateY(-3vh) scale(0.72);
+    }
+    46.1538461538% {
+      transform: translateX(14vw) translateY(-41vh) scale(0.3);
+    }
+    50% {
+      transform: translateX(13vw) translateY(-21vh) scale(0.87);
+    }
+    53.8461538462% {
+      transform: translateX(18vw) translateY(-35vh) scale(0.49);
+    }
+    57.6923076923% {
+      transform: translateX(19vw) translateY(-13vh) scale(0.83);
+    }
+    61.5384615385% {
+      transform: translateX(46vw) translateY(-5vh) scale(0.35);
+    }
+    65.3846153846% {
+      transform: translateX(-46vw) translateY(-35vh) scale(0.68);
+    }
+    69.2307692308% {
+      transform: translateX(9vw) translateY(-44vh) scale(0.78);
+    }
+    73.0769230769% {
+      transform: translateX(-17vw) translateY(17vh) scale(1);
+    }
+    76.9230769231% {
+      transform: translateX(-14vw) translateY(24vh) scale(0.94);
+    }
+    80.7692307692% {
+      transform: translateX(-24vw) translateY(41vh) scale(0.45);
+    }
+    84.6153846154% {
+      transform: translateX(17vw) translateY(2vh) scale(0.29);
+    }
+    88.4615384615% {
+      transform: translateX(-42vw) translateY(49vh) scale(0.64);
+    }
+    92.3076923077% {
+      transform: translateX(-8vw) translateY(38vh) scale(0.46);
+    }
+    96.1538461538% {
+      transform: translateX(-5vw) translateY(2vh) scale(0.31);
+    }
+    100% {
+      transform: translateX(39vw) translateY(13vh) scale(0.4);
+    }
+  }
+  .firefly:nth-child(14) {
+    animation-name: move14;
+  }
+  .firefly:nth-child(14)::before {
+    animation-duration: 13s;
+  }
+  .firefly:nth-child(14)::after {
+    animation-duration: 13s, 9066ms;
+    animation-delay: 0ms, 4116ms;
+  }
+  
+  @keyframes move14 {
+    0% {
+      transform: translateX(-40vw) translateY(5vh) scale(0.58);
+    }
+    3.5714285714% {
+      transform: translateX(-37vw) translateY(-31vh) scale(0.53);
+    }
+    7.1428571429% {
+      transform: translateX(-26vw) translateY(-48vh) scale(0.42);
+    }
+    10.7142857143% {
+      transform: translateX(38vw) translateY(-47vh) scale(0.54);
+    }
+    14.2857142857% {
+      transform: translateX(-15vw) translateY(10vh) scale(0.99);
+    }
+    17.8571428571% {
+      transform: translateX(22vw) translateY(35vh) scale(0.27);
+    }
+    21.4285714286% {
+      transform: translateX(19vw) translateY(-22vh) scale(0.95);
+    }
+    25% {
+      transform: translateX(-24vw) translateY(-18vh) scale(0.29);
+    }
+    28.5714285714% {
+      transform: translateX(-13vw) translateY(-11vh) scale(0.98);
+    }
+    32.1428571429% {
+      transform: translateX(49vw) translateY(-27vh) scale(0.46);
+    }
+    35.7142857143% {
+      transform: translateX(-4vw) translateY(38vh) scale(0.67);
+    }
+    39.2857142857% {
+      transform: translateX(-22vw) translateY(-2vh) scale(0.47);
+    }
+    42.8571428571% {
+      transform: translateX(26vw) translateY(-3vh) scale(0.96);
+    }
+    46.4285714286% {
+      transform: translateX(22vw) translateY(39vh) scale(0.65);
+    }
+    50% {
+      transform: translateX(-49vw) translateY(48vh) scale(0.63);
+    }
+    53.5714285714% {
+      transform: translateX(43vw) translateY(-11vh) scale(0.37);
+    }
+    57.1428571429% {
+      transform: translateX(-44vw) translateY(43vh) scale(0.27);
+    }
+    60.7142857143% {
+      transform: translateX(36vw) translateY(-46vh) scale(0.74);
+    }
+    64.2857142857% {
+      transform: translateX(-48vw) translateY(-6vh) scale(0.71);
+    }
+    67.8571428571% {
+      transform: translateX(-47vw) translateY(-4vh) scale(0.97);
+    }
+    71.4285714286% {
+      transform: translateX(3vw) translateY(8vh) scale(0.7);
+    }
+    75% {
+      transform: translateX(-15vw) translateY(10vh) scale(0.78);
+    }
+    78.5714285714% {
+      transform: translateX(46vw) translateY(6vh) scale(0.71);
+    }
+    82.1428571429% {
+      transform: translateX(29vw) translateY(0vh) scale(0.88);
+    }
+    85.7142857143% {
+      transform: translateX(-9vw) translateY(38vh) scale(0.6);
+    }
+    89.2857142857% {
+      transform: translateX(29vw) translateY(-31vh) scale(0.71);
+    }
+    92.8571428571% {
+      transform: translateX(-38vw) translateY(39vh) scale(0.85);
+    }
+    96.4285714286% {
+      transform: translateX(24vw) translateY(-34vh) scale(0.34);
+    }
+    100% {
+      transform: translateX(25vw) translateY(23vh) scale(0.48);
+    }
+  }
+  .firefly:nth-child(15) {
+    animation-name: move15;
+  }
+  .firefly:nth-child(15)::before {
+    animation-duration: 14s;
+  }
+  .firefly:nth-child(15)::after {
+    animation-duration: 14s, 9426ms;
+    animation-delay: 0ms, 6974ms;
+  }
+  
+  @keyframes move15 {
+    0% {
+      transform: translateX(-37vw) translateY(50vh) scale(0.37);
+    }
+    4.347826087% {
+      transform: translateX(-32vw) translateY(46vh) scale(0.93);
+    }
+    8.6956521739% {
+      transform: translateX(23vw) translateY(-30vh) scale(0.85);
+    }
+    13.0434782609% {
+      transform: translateX(5vw) translateY(-30vh) scale(0.68);
+    }
+    17.3913043478% {
+      transform: translateX(-37vw) translateY(-26vh) scale(0.33);
+    }
+    21.7391304348% {
+      transform: translateX(-13vw) translateY(-15vh) scale(0.43);
+    }
+    26.0869565217% {
+      transform: translateX(-4vw) translateY(31vh) scale(0.72);
+    }
+    30.4347826087% {
+      transform: translateX(-41vw) translateY(1vh) scale(0.46);
+    }
+    34.7826086957% {
+      transform: translateX(48vw) translateY(30vh) scale(0.5);
+    }
+    39.1304347826% {
+      transform: translateX(5vw) translateY(-10vh) scale(0.81);
+    }
+    43.4782608696% {
+      transform: translateX(31vw) translateY(-49vh) scale(0.47);
+    }
+    47.8260869565% {
+      transform: translateX(42vw) translateY(33vh) scale(1);
+    }
+    52.1739130435% {
+      transform: translateX(-17vw) translateY(-11vh) scale(0.92);
+    }
+    56.5217391304% {
+      transform: translateX(37vw) translateY(-11vh) scale(0.6);
+    }
+    60.8695652174% {
+      transform: translateX(-9vw) translateY(-16vh) scale(0.77);
+    }
+    65.2173913043% {
+      transform: translateX(-45vw) translateY(13vh) scale(0.66);
+    }
+    69.5652173913% {
+      transform: translateX(31vw) translateY(3vh) scale(0.59);
+    }
+    73.9130434783% {
+      transform: translateX(32vw) translateY(-30vh) scale(0.9);
+    }
+    78.2608695652% {
+      transform: translateX(-14vw) translateY(41vh) scale(0.62);
+    }
+    82.6086956522% {
+      transform: translateX(15vw) translateY(9vh) scale(0.98);
+    }
+    86.9565217391% {
+      transform: translateX(-38vw) translateY(-29vh) scale(0.89);
+    }
+    91.3043478261% {
+      transform: translateX(46vw) translateY(-19vh) scale(0.82);
+    }
+    95.652173913% {
+      transform: translateX(28vw) translateY(-45vh) scale(0.76);
+    }
+    100% {
+      transform: translateX(-16vw) translateY(0vh) scale(0.57);
+    }
+  }
+  @keyframes drift {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes flash {
+    0%, 30%, 100% {
+      opacity: 0;
+      box-shadow: 0 0 0vw 0vw yellow;
+    }
+    5% {
+      opacity: 1;
+      box-shadow: 0 0 2vw 0.4vw yellow;
+    }
+  }
+  
+  /*# sourceMappingURL=style.css.map */
+</style>
+</html>
