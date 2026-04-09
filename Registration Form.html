@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///C:/Users/jayan/Downloads/Pr6RegistrationForm.html -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/Registration Form_files/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        a,
+        input[type="radio"],
+        input [type="radio"] {
+            font: rgb(0, 183, 255);
+            color: #00ccff;
+        }
+
+        value {
+            font-size: medium;
+            font-weight: bolder;
+        }
+
+        input {
+            font-size: 16px;
+            font-weight: bolder;
+        }
+
+        option,
+        select {
+            font-weight: bolder;
+            font-style: oblique;
+            border: #000;
+            font-size: small;
+        }
+
+        option,
+        select:hover {
+            border-color: #00ccff;
+            border: #00ccff;
+        }
+
+        /* #Registration_button {
+    position: relative;
+    width: 300px;
+    height: 30px;
+    transition: 1s;
+    margin-top:152px;
+    text-decoration: none;
+    z-index: 10;
+    cursor: pointer;
+    font-size: 22px;
+    letter-spacing: 2px;
+    border: 1px solid #00ccff;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #00ccff;
+    text-align: center;
+    padding: 8px 0;
+}
+
+#Registration_button:hover {
+    background-color: #00ccff;
+    color: #0c1022;
+} */
+        #Registration_button {
+            position: relative;
+            width: 300px;
+            height: 30px;
+            transition: 1s;
+            margin-top: 152px;
+            text-decoration: none;
+            z-index: 10;
+            cursor: pointer;
+            font-size: 22px;
+            letter-spacing: 2px;
+            border: 1px solid #000;
+            border-radius: 50px;
+            background-color: transparent;
+            color: #000;
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        #Registration_button::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            bottom: -2px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            border-radius: 50px;
+            box-shadow: 0 0 20px 10px #000;
+            z-index: -10;
+            opacity: 0;
+            transition: 1s;
+            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
+        }
+
+        #Registration_button:hover::before {
+            opacity: 1;
+        }
+
+        #Registration_button:hover {
+            background-color: #7b00ff;
+            color: rgb(0, 255, 242);
+        }
+
+        #Registration-button {
+            background-color: #7b00ff;
+            color: rgb(0, 255, 242);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            box-shadow: 0 0 10px #7b00ff;
+        }
+
+        #Registration-button:active {
+            box-shadow: 0 0 20px #7b00ff;
+        }
+
+        #Registration-button:hover {
+            box-shadow: 0 0 20px 0.5em 0.4em #7b00ff;
+        }
+
+        input {
+            background-color: #00ccff;
+            color: #d400d4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            letter-spacing: 1px;
+            background: #0c1022;
+        }
+
+        .Registration_form_container {
+            position: relative;
+            width: 400px;
+            height: 470px;
+            max-width: 400px;
+            max-height: 470px;
+            background: #040717;
+            border-radius: 50px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .Registration_form_container::before {
+            position: absolute;
+            width: 170%;
+            height: 170%;
+            content: '';
+            background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
+            animation: rotate_border 6s linear infinite;
+        }
+
+        .Registration_form_container::after {
+            position: absolute;
+            width: 170%;
+            height: 170%;
+            content: '';
+            background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+            animation: rotate_border 6s linear infinite;
+            animation-delay: -3s;
+        }
+
+        @keyframes rotate_border {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+
+                transform: rotate(360deg);
+            }
+
+        }
+
+        .Registration_form {
+            position: absolute;
+            content: '';
+            background: #0c1022;
+            border-radius: 50px 0px;
+            inset: 5px;
+            padding: 50px 40px;
+            z-index: 10;
+            color: #00ccff
+        }
+
+        h2 {
+            font-size: 40px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        input_group {
+            margin-top: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space;
+        }
+
+        .fa {
+            font-size: 10px !important;
+        }
+
+        .input_text {
+            width: 95%;
+            height: 30px;
+            background: transparent;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #00ccff;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+
+        ::placeholder {
+            font-size: 15px;
+            color: #0099ff52;
+            letter-spacing: 1px;
+        }
+
+        #Registration_button {
+            position: relative;
+            width: 300px;
+            height: 30px;
+            transition: 1s;
+            margin-top: 160px
+        }
+
+        #Registration_button {
+            position: absolute;
+            width: 75%;
+            height: 10%;
+            text-decoration: dotted;
+            z-index: 10;
+            cursor: pointer;
+            font-size: 22px;
+            letter-spacing: 2px;
+            border: 2px solid #00ccff;
+            border-radius: 50px;
+            background-color: #0c1022;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #00ccff;
+        }
+
+        .footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        .footer {
+            text-decoration: solid;
+            cursor: pointer;
+            font-size: 18px;
+
+        }
+
+        .glowIcon {
+            text-shadow: 0 0 10px #00ccff;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px #ff0000
+        }
+
+        .tab,
+        ::placeholder {
+            background-color: #0c1022;
+            border-color: #040717;
+            display: -moz-grid;
+        }
+
+        .fieldset,
+        legend,
+        option,
+        select,
+        border,
+        tab,
+        placeholder,
+        oninput,
+        this.className {
+            background-color: #0c1022;
+            border-color: #040717;
+            color: #00ccff;
+        }
+
+        /*This Effect has been paused Because some Circustances has not beeen completed yet */
+        .button_group::before {
+            position: absolute;
+            content: '';
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            border-radius: 50px;
+            z-index: 2;
+            transition: 1s;
+            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
+            filter: blur(20px);
+        }
+
+        .button_group::after {
+            position: absolute;
+            content: '';
+            top: -2px;
+            right: -2px;
+            border-radius: 50px;
+            z-index: 2;
+            transition: 1s;
+            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
+            filter: blur(20px);
+        }
+
+
+        .button_group {
+            border: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Registration_form_container">
+        <div class="Registration_form">
+
+            <h2>Contact Me</h2>
+            <center>
+                <!-- <h4>Competetive Exam</h4> -->
+
+                <!-- <h6>Fill the Details</h6> -->
+            </center>
+            <div class="input_group">
+                <!-- i.fafa-user -->
+                <i class="fa fa-user">
+                    <input type="text" placeholder="Name" class="input_text" autocomplete="off">
+                </i>
+            </div>
+            <div class="input_group">
+                <!-- i.fafa-unlock-alt -->
+                <i class="fa fa-unlock-alt">
+                    <input type="password" placeholder="Phone Number" class="input_text" autocomplete="off">
+                </i>
+            </div>
+            <div class="button_group" id="Registration_button">
+                <a>Submit</a>
+            </div>
+
+            <div class="tab">
+                <br>Birthdate &amp; Education<br>
+                <p><input type="Birthday" type="date" value="18-04-2003">
+                </p>
+            </div>
+            <div>
+                <select class="form-control dropdown" id="education" name="education">
+                    <!-- <option value="" selected="selected" disabled="disabled">-- select one --</option> -->
+                    <option value="No formal education"><em>No formal education</em></option>
+                    <option value="Primary education"><em>Primary education</em></option>
+                    <option value="Secondary education"><em>Secondary education or high school</em></option>
+                    <option value="GED">GED</option>
+                    <option value="Vocational qualification"><em>Vocational qualification</em></option>
+                    <option value="Bachelor&#39;s degree"><em>Bachelor's degree</em></option>
+                    <option value="Master&#39;s degree"><em>Master's degree</em></option>
+                    <option value="Doctorate or higher"><em>Doctorate or higher</em></option>
+                </select>
+            </div>
+            <form action="file://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
+                <br>
+                <p>Gender</p><br>
+                <input type="radio" name="gender" value="male"> Male
+                <input type="radio" name="gender" value="female" disabled> Female
+                <div class="footer" position="bottom">
+                    <a>Forgotten Details</a>
+                    <a>Signup</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- <div class="container">
+        <div class="form">
+            <h2>Registration Form</h2>
+            <form>
+                <div class="inputBox">
+                    <input type="text" name="" placeholder="Username">
+                </div>
+                <div class="inputBox">
+                    <input type="submit" value="RegistrationForm">
+                </div>
+            </form>
+        </div>
+    </div> -->
+
+    <script src="./Registration Form_files/jquery.min.js.download"></script>
+    <!-- <script src="style.js"></script> -->
+    <script>
+        $(".input_text").focus(function () {
+            $(this).prev('.fa').addClass('glowIcon');
+        });
+        $(".input_text").focus(function () {
+            $(this).prev('.fa').removeClass('glowIcon');
+        });
+        $("#Registration_button").hover(function () {
+            $(this).addClass('#Registration_button');
+        })
+        $('#Registration_button'.mouseleave(function () {
+            setTimeout(() => {
+                $(this).removeClass('#Registration_button')
+            }, 100);
+        }))
+            <? php
+
+// Connect to database
+$host = "host_name";
+        $username = "username";
+        $password = "password";
+        $dbname = "database_name";
+
+        $conn = mysqli_connect($host, $username, $password, $dbname);
+
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: ".mysqli_connect_error());
+        }
+
+        // Get form data
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        // Insert data into database
+        $sql = "INSERT INTO users (first_name, last_name, email, password)
+        VALUES('$first_name', '$last_name', '$email', '$password')";
+
+        if (mysqli_query($conn, $sql)) {
+    echo "New record created successfully";
+        } else {
+    echo "Error: ".$sql. "<br>".mysqli_error($conn);
+        }
+
+        // Close connection
+        mysqli_close($conn);
+
+?>
+
+    </script>
+</body>
+
+</html>
+<script>
+        document.getElementById("Registration_form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("form-handler.php", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => response.text())
+                .then(result => {
+                    console.log("Form submitted successfully:", result);
+                })
+                .catch(error => {
+                    console.error("Error submitting form:", error);
+                });
+        });
+
+</script>

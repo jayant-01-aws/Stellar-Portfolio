@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarvis & Eye Mouse Detector | Project Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --jarvis-blue: #00d2ff;
+            --jarvis-purple: #9d50bb;
+            --bg-dark: #05050a;
+            --card-bg: #0f0f1a;
+            --text-gray: #a0a0c0;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* --- Interface Header --- */
+        .project-header {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        /* --- Simulated UI Preview --- */
+        .ui-preview {
+            background: linear-gradient(180deg, #0a0a15 0%, #151525 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .bot { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .user { 
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .typing {
+            display: flex;
+            gap: 5px;
+            padding-left: 10px;
+        }
+
+        .typing span {
+            width: 8px;
+            height: 8px;
+            background: var(--jarvis-blue);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Project Content --- */
+        .content-body { padding: 40px; }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 0 0 15px 0;
+            background: linear-gradient(to right, #00d2ff, #9d50bb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .tags { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+        .tag {
+            background: rgba(157, 80, 187, 0.15);
+            border: 1px solid rgba(157, 80, 187, 0.3);
+            color: #d1adff;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* --- Technical Grid --- */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid var(--jarvis-blue);
+        }
+
+        .tech-card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--jarvis-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tech-card p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 0;
+        }
+
+        footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .live-indicator {
+            color: #4ade80;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .github-btn {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .github-btn:hover { background: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) {
+            .tech-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="project-header">
+        <div class="ui-preview" id="previewArea">
+            <div class="chat-bubble bot">Hello Jayant. How can I assist you today?</div>
+            <div class="chat-bubble user">Open my files, Jarvis</div>
+            <div class="chat-bubble bot">Eye tracking active. Following your gaze... 👁️</div>
+            <div class="typing">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <h1>Jarvis & Eye Mouse Detector</h1>
+            <p class="description">
+                A sophisticated automation ecosystem that blends voice-activated AI with hands-free peripheral control. 
+                Using MediaPipe's facial landmark detection, the system maps ocular movements to mouse coordinates, 
+                allowing users to navigate their OS through natural gaze.
+            </p>
+
+            <div class="tags">
+                <span class="tag">Python</span>
+                <span class="tag">OpenCV</span>
+                <span class="tag">MediaPipe</span>
+                <span class="tag">PyAutoGUI</span>
+                <span class="tag">NLP</span>
+            </div>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Computer Vision</h3>
+                    <p>Utilizes the Iris Solution to track 468 facial landmarks, calculating the specific iris centroid for 1:1 screen mapping.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Voice Interface</h3>
+                    <p>Integrated with Speech Recognition and pyttsx3 to provide a seamless, Iron Man-inspired conversational experience.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>System Hooks</h3>
+                    <p>Employs PyAutoGUI for low-level hardware control, enabling clicks via eye-blink detection (aspect ratio calculation).</p>
+                </div>
+                <div class="tech-card">
+                    <h3>Multithreading</h3>
+                    <p>Runs the CV engine and the Voice engine on separate threads to ensure zero lag in mouse movement during speech.</p>
+                </div>
+            </div>
+
+            <footer>
+                <div class="live-indicator">
+                    <i class="fas fa-circle" style="font-size: 8px; box-shadow: 0 0 5px #4ade80;"></i> System Active
+                </div>
+                <a href="https://github.com/Jayant987" target="_blank" class="github-btn">
+                    <i class="fab fa-github"></i> View Source Code
+                </a>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Logic to simulate a looping chat interaction
+    const chatData = [
+        { type: 'bot', text: 'Diagnostic complete. All systems nominal.' },
+        { type: 'user', text: 'Jarvis, scroll down.' },
+        { type: 'bot', text: 'Tracking eye verticality... Scrolling now.' }
+    ];
+
+    let currentMsg = 0;
+    const preview = document.getElementById('previewArea');
+
+    function addMessage() {
+        if (currentMsg >= chatData.length) return;
+
+        // Remove typing indicator if it exists
+        const typing = preview.querySelector('.typing');
+        if (typing) typing.remove();
+
+        const msg = chatData[currentMsg];
+        const div = document.createElement('div');
+        div.className = `chat-bubble ${msg.type}`;
+        div.textContent = msg.text;
+        preview.appendChild(div);
+
+        currentMsg++;
+
+        // Re-add typing indicator for next bot message
+        if (currentMsg < chatData.length) {
+            const newTyping = document.createElement('div');
+            newTyping.className = 'typing';
+            newTyping.innerHTML = '<span></span><span></span><span></span>';
+            preview.appendChild(newTyping);
+            setTimeout(addMessage, 3000);
+        }
+    }
+
+    // Start simulation after 4 seconds
+    setTimeout(addMessage, 4000);
+</script>
+
+</body>
+</html>

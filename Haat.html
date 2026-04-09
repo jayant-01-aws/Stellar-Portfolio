@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mughaliya Haat | Village Digital Archive</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --village-green: #2d5a27;
+            --earth-brown: #4a3728;
+            --gold: #d4af37;
+            --bg-dark: #0d1117;
+            --card-bg: #161b22;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1588714477688-cf28a52e821a?auto=format&fit=crop&q=80&w=1600') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin: 0;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- Layout Container --- */
+        .container {
+            max-width: 1100px;
+            margin: -50px auto 0;
+            padding: 0 20px 50px;
+            position: relative;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Icon Grid --- */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+            background: rgba(45, 90, 39, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .icon-box {
+            background: #21262d;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s;
+        }
+
+        .icon-box:hover { transform: translateY(-5px); background: var(--village-green); }
+
+        /* --- Content Sections --- */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .chart-container {
+            background: #21262d;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Image Gallery --- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img.portrait { height: 415px; grid-row: span 2; }
+
+        .gallery img:hover { filter: brightness(1.2); }
+
+        /* --- Panchayat Section --- */
+        .panchayat-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .member-card {
+            background: #21262d;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .member-card i { font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .grid-2col { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .gallery { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>Mughaliya Haat</h1>
+        <p style="color: #4ade80; font-weight: bold; letter-spacing: 2px;">DIGITAL VILLAGE ARCHIVE</p>
+    </section>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="icon-grid">
+                <div class="icon-box">🏛️</div>
+                <div class="icon-box">🌿</div>
+                <div class="icon-box">🕌</div>
+                <div class="icon-box">🌾</div>
+                <div class="icon-box">🏘️</div>
+                <div class="icon-box">📊</div>
+                <div class="icon-box">🌳</div>
+                <div class="icon-box">🛕</div>
+                <div class="icon-box">👨‍👩‍👧</div>
+                <div class="icon-box">💧</div>
+                <div class="icon-box">🌻</div>
+                <div class="icon-box">🗺️</div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="info-text">
+                    <h2 style="color: white; border-left: 4px solid var(--village-green); padding-left: 15px;">Village Overview</h2>
+                    <p>Mughaliya Haat is a vibrant village located in the heart of Madhya Pradesh. It serves as a cultural hub for surrounding settlements, known for its historic "Haat" (weekly market) that has been operational for generations.</p>
+                    <p>The village is self-sufficient, featuring dedicated sections for agriculture, religious landmarks, and a modernizing Gram Panchayat that focuses on digital literacy and water conservation.</p>
+                    
+                    <div class="tag-row" style="margin-top: 20px;">
+                        <span style="background:rgba(212,175,55,0.1); color:var(--gold); padding:5px 12px; border-radius:5px; border:1px solid var(--gold); margin-right:10px;">MP Tourism</span>
+                        <span style="background:rgba(74,222,128,0.1); color:#4ade80; padding:5px 12px; border-radius:5px; border:1px solid #4ade80;">Panchayat Raj</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="margin-top:0; color: white; text-align:center;">Population Trend</h3>
+                    <canvas id="popChart"></canvas>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 50px; color: white;">Landscape & Cultural Snapshots</h2>
+            <div class="gallery">
+                <!-- <img src="https://images.unsplash.com/photo-1517373116369-9bdb8cc51630?auto=format&fit=crop&q=80&w=800" alt="Village Landscape" title="Vibrant Fields"> -->
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=1000" alt="Village Landscape">
+                <!-- <img src="https://images.unsplash.com/photo-1540266300030-97593c6f665a?auto=format&fit=crop&q=80&w=600" class="portrait" alt="Village Life" title="Daily Traditions"> -->
+                 <!-- <img src="https://images.unsplash.com/photo-1519451241324-20b4ec2c4220?auto=format&fit=crop&q=80&w=800" alt="Market"> -->
+                  <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1200" alt="Village Sunrise">
+                  <img src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800" alt="Rural Doorway">
+                  <!-- <img src="https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&q=80&w=800" alt="Village People"> -->
+                <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&q=80&w=800" alt="Market" title="The Weekly Haat">
+                <img src="https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=800" alt="Architecture" title="Religious Landmarks">
+                <!-- <img src="https://images.unsplash.com/photo-1610116303244-881fbacbb51b?auto=format&fit=crop&q=80&w=800" alt="People" title="Village Community"> -->
+                 <img src="https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&q=80&w=1200" alt="People">
+            </div>
+
+            <h2 style="margin-top: 50px; color: white;">Gram Panchayat Members</h2>
+            <div class="panchayat-list">
+                <div class="member-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h4 style="color:white; margin:10px 0 5px;">Sarpanch</h4>
+                    <p style="font-size:0.9rem; margin:0;">Shri. Rajesh Kumar</p>
+                </div>
+                <div class="member-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h4 style="color:white; margin:10px 0 5px;">Secretary</h4>
+                    <p style="font-size:0.9rem; margin:0;">Smt. Anita Sharma</p>
+                </div>
+                <div class="member-card">
+                    <i class="fas fa-users-cog"></i>
+                    <h4 style="color:white; margin:10px 0 5px;">Gram Sevak</h4>
+                    <p style="font-size:0.9rem; margin:0;">Shri. Amit Patel</p>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 40px; color: #8b949e;">
+            <p>Designed for the Mughaliya Haat Community Project &copy; 2026</p>
+            <div style="font-size: 1.5rem; gap: 20px; display: flex; justify-content: center;">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-whatsapp"></i>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Charts.js Population Logic
+        const ctx = document.getElementById('popChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2000', '2005', '2010', '2015', '2020', '2025'],
+                datasets: [{
+                    label: 'Population',
+                    data: [1200, 1450, 1800, 2100, 2450, 2800],
+                    borderColor: '#4ade80',
+                    backgroundColor: 'rgba(74, 222, 128, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#8b949e' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#8b949e' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

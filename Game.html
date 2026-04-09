@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Dev Portfolio | Jayant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0d0221;
+            --card-bg: #1a1a2e;
+            --neon-purple: #bc13fe;
+            --neon-green: #26ff26;
+            --neon-red: #ff3131;
+            --text-main: #e0e0e0;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        /* --- Game Header --- */
+        .game-viewport {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, #000428, #004e92);
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .game-ui-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px var(--neon-green);
+            z-index: 10;
+        }
+
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .start-prompt {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid var(--neon-purple);
+            text-align: center;
+        }
+
+        /* --- Content Section --- */
+        .portfolio-body {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: white;
+        }
+
+        .status-tag {
+            background: rgba(249, 212, 35, 0.1);
+            border: 1px solid #f9d423;
+            color: #f9d423;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #b0b0cc;
+            margin-bottom: 30px;
+        }
+
+        .tag-row { display: flex; gap: 10px; margin-bottom: 40px; }
+        .tag {
+            background: rgba(188, 19, 254, 0.1);
+            border: 1px solid var(--neon-purple);
+            color: #d880ff;
+            padding: 6px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* --- Tech Stack & Roadmap --- */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .info-box h3 {
+            color: var(--neon-purple);
+            border-bottom: 1px solid rgba(188, 19, 254, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .info-box i { color: var(--neon-green); margin-top: 4px; }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .social-link:hover { color: var(--neon-purple); }
+
+        @media (max-width: 600px) {
+            .details-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="game-viewport" id="gameContainer">
+        <div class="game-ui-overlay">
+            SCORE: <span id="scoreVal">0</span> | LVL: <span id="lvlVal">1</span>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="start-prompt" id="startPrompt">
+            <i class="fas fa-gamepad" style="font-size: 2rem; color: var(--neon-purple);"></i>
+            <p>Click to Jump / Start Game</p>
+            <small>(Avoid the red blocks!)</small>
+        </div>
+    </div>
+
+    <div class="portfolio-body">
+        <div class="title-area">
+            <h1>Game Portfolio</h1>
+            <span class="status-tag">Work in Progress</span>
+        </div>
+
+        <p class="description">
+            Beyond web and AI, my passion lies in creating immersive interactive experiences. 
+            I focus on core mechanics, physics-based puzzles, and satisfying game loops using C# and Unity.
+        </p>
+
+        <div class="tag-row">
+            <span class="tag">Unity 3D/2D</span>
+            <span class="tag">C# Scripting</span>
+            <span class="tag">HLSL Shaders</span>
+            <span class="tag">Game Design</span>
+        </div>
+
+        <div class="details-grid">
+            <div class="info-box">
+                <h3><i class="fas fa-microchip"></i> Tech Stack</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> <strong>Unity:</strong> Primary engine for cross-platform deployment.</li>
+                    <li><i class="fas fa-check"></i> <strong>Entity Component System:</strong> Writing optimized, modular code.</li>
+                    <li><i class="fas fa-check"></i> <strong>Blender:</strong> Basic 3D modeling and UV unwrapping.</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <h3><i class="fas fa-rocket"></i> The Journey</h3>
+                <ul>
+                    <li><i class="fas fa-clock"></i> <strong>Current:</strong> Developing a 2D precise platformer.</li>
+                    <li><i class="fas fa-clock"></i> <strong>Upcoming:</strong> Experimenting with VR interactions.</li>
+                    <li><i class="fas fa-clock"></i> <strong>Goal:</strong> First Steam release by end of year.</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <a href="https://github.com/Jayant987" target="_blank" class="social-link">
+                View GitHub Game Repos <i class="fas fa-arrow-right"></i>
+            </a>
+        </footer>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('gameContainer');
+    const startPrompt = document.getElementById('startPrompt');
+    const scoreEl = document.getElementById('scoreVal');
+
+    let gameActive = false;
+    let score = 0;
+    let gameSpeed = 5;
+    
+    // Game Objects
+    const player = { x: 50, y: 200, w: 30, h: 50, dy: 0, jumpPower: -12, gravity: 0.6, grounded: false };
+    let obstacles = [];
+
+    function resize() {
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+    }
+
+    function spawnObstacle() {
+        if (!gameActive) return;
+        obstacles.push({ x: canvas.width, y: canvas.height - 40, w: 20, h: 40 });
+        setTimeout(spawnObstacle, 1500 + Math.random() * 2000);
+    }
+
+    function update() {
+        if (!gameActive) return;
+
+        // Player Physics
+        player.dy += player.gravity;
+        player.y += player.dy;
+
+        if (player.y + player.h > canvas.height - 20) {
+            player.y = canvas.height - 20 - player.h;
+            player.dy = 0;
+            player.grounded = true;
+        }
+
+        // Obstacles logic
+        obstacles.forEach((obs, index) => {
+            obs.x -= gameSpeed;
+
+            // Collision detection
+            if (player.x < obs.x + obs.w && player.x + player.w > obs.x &&
+                player.y < obs.y + obs.h && player.y + player.h > obs.y) {
+                gameOver();
+            }
+
+            if (obs.x + obs.w < 0) {
+                obstacles.splice(index, 1);
+                score += 10;
+                scoreEl.innerText = score;
+                gameSpeed += 0.1;
+            }
+        });
+
+        draw();
+        requestAnimationFrame(update);
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Ground
+        ctx.fillStyle = "#1b4d00";
+        ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
+
+        // Draw Stars (Visuals)
+        ctx.fillStyle = "white";
+        for(let i=0; i<10; i++) ctx.fillRect(i*100, 50, 2, 2);
+
+        // Draw Player
+        ctx.fillStyle = "#bc13fe";
+        ctx.fillRect(player.x, player.y, player.w, player.h);
+        ctx.fillStyle = "#d880ff";
+        ctx.fillRect(player.x + 5, player.y - 15, 20, 15); // Simple head
+
+        // Draw Obstacles
+        ctx.fillStyle = "#ff3131";
+        obstacles.forEach(obs => {
+            ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#ff3131";
+        });
+        ctx.shadowBlur = 0;
+    }
+
+    function gameOver() {
+        gameActive = false;
+        startPrompt.style.display = "block";
+        startPrompt.innerHTML = `<h3>Game Over!</h3><p>Score: ${score}</p><p>Click to Restart</p>`;
+    }
+
+    function startGame() {
+        if (gameActive) {
+            if (player.grounded) {
+                player.dy = player.jumpPower;
+                player.grounded = false;
+            }
+            return;
+        }
+        
+        // Reset game
+        gameActive = true;
+        score = 0;
+        gameSpeed = 5;
+        obstacles = [];
+        player.y = 200;
+        scoreEl.innerText = "0";
+        startPrompt.style.display = "none";
+        spawnObstacle();
+        update();
+    }
+
+    container.addEventListener('mousedown', startGame);
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+</script>
+
+</body>
+</html>
