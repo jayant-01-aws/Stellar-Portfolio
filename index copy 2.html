@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaNote – Text-Based Note Taking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Header Bar -->
+  <header id="topbar">
+    <div id="brand">
+      <span id="logo-icon">☕</span>
+      <div>
+        <h1>JavaNote</h1>
+        <span id="tagline">Text-Based Note Taking</span>
+      </div>
+    </div>
+    <div id="header-right">
+      <span id="save-status">All saved</span>
+      <button id="theme-btn" title="Toggle dark mode" onclick="toggleTheme()">◐</button>
+    </div>
+  </header>
+
+  <div id="app">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebar-top">
+        <button id="new-btn" onclick="newNote()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <line x1="6.5" y1="1" x2="6.5" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="1" y1="6.5" x2="12" y2="6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          New Note
+        </button>
+        <div id="search-wrap">
+          <svg id="search-icon" width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.3"/>
+            <line x1="8.5" y1="8.5" x2="12" y2="12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+          <input id="search" placeholder="Search notes…" oninput="filterNotes(this.value)" />
+        </div>
+      </div>
+
+      <div id="notes-count"></div>
+      <div id="notes-list"></div>
+
+      <div id="sidebar-footer">
+        <span id="footer-count">0 notes</span>
+        <span>JavaNote v1.0</span>
+      </div>
+    </aside>
+
+    <!-- Main Editor -->
+    <main id="editor-wrap">
+
+      <!-- Empty State -->
+      <div id="empty-state">
+        <div id="empty-inner">
+          <div id="empty-icon">☕</div>
+          <h2>Start with a fresh cup</h2>
+          <p>Create a new note or select one from the sidebar to begin writing.</p>
+          <button onclick="newNote()" id="empty-cta">+ Create your first note</button>
+        </div>
+      </div>
+
+      <!-- Active Note Editor -->
+      <div id="note-editor" class="hidden">
+        <!-- Note Title -->
+        <div id="title-row">
+          <input id="note-title" placeholder="Note title…" oninput="updateTitle(this.value)" />
+          <div id="title-meta">
+            <span id="note-date"></span>
+            <button id="delete-btn" onclick="deleteNote()" title="Delete note">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <polyline points="2,4 11,4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M5 4V2.5h3V4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3 4l.5 7h6l.5-7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <!-- Formatting Toolbar -->
+        <div id="toolbar">
+          <div class="tb-group">
+            <button class="tb-btn" title="Bold (Ctrl+B)" onclick="fmt('bold')"><b>B</b></button>
+            <button class="tb-btn" title="Italic (Ctrl+I)" onclick="fmt('italic')"><i>I</i></button>
+            <button class="tb-btn" title="Underline (Ctrl+U)" onclick="fmt('underline')"><u>U</u></button>
+            <button class="tb-btn" title="Strikethrough" onclick="fmt('strikeThrough')"><s>S</s></button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb-btn" title="Heading 1" onclick="fmt('formatBlock','h1')">H1</button>
+            <button class="tb-btn" title="Heading 2" onclick="fmt('formatBlock','h2')">H2</button>
+            <button class="tb-btn" title="Heading 3" onclick="fmt('formatBlock','h3')">H3</button>
+            <button class="tb-btn" title="Paragraph" onclick="fmt('formatBlock','p')">¶</button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb-btn" title="Bullet list" onclick="fmt('insertUnorderedList')">• List</button>
+            <button class="tb-btn" title="Numbered list" onclick="fmt('insertOrderedList')">1. List</button>
+            <button class="tb-btn" title="Blockquote" onclick="fmt('formatBlock','blockquote')">" Quote</button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb-btn" title="Inline code" onclick="wrapCode()">&lt;/&gt; Code</button>
+            <button class="tb-btn" title="Divider line" onclick="fmt('insertHorizontalRule')">— HR</button>
+            <button class="tb-btn" title="Align left" onclick="fmt('justifyLeft')">⬛ L</button>
+            <button class="tb-btn" title="Align center" onclick="fmt('justifyCenter')">⬛ C</button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb-btn" title="Undo" onclick="fmt('undo')">↩ Undo</button>
+            <button class="tb-btn" title="Redo" onclick="fmt('redo')">↪ Redo</button>
+          </div>
+          <div class="tb-spacer"></div>
+          <div id="word-count-badge">0 words</div>
+        </div>
+
+        <!-- Content Editable Area -->
+        <div id="editor"
+          contenteditable="true"
+          data-placeholder="Begin writing your thoughts here…"
+          oninput="onEditorInput()"
+          onkeydown="handleKeydown(event)"
+          spellcheck="true">
+        </div>
+
+        <!-- Status Bar -->
+        <div id="statusbar">
+          <span id="sb-words">0 words</span>
+          <span class="sb-dot">·</span>
+          <span id="sb-chars">0 characters</span>
+          <span class="sb-dot">·</span>
+          <span id="sb-lines">1 line</span>
+          <span class="sb-dot">·</span>
+          <span id="sb-read">~0 min read</span>
+          <div class="tb-spacer"></div>
+          <span id="sb-updated">Last saved: —</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
