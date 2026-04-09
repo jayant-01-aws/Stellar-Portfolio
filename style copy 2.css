@@ -1,0 +1,610 @@
+/* ─── JavaNote – style.css ─── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+/* ══════════════════════════════════════
+   CSS Variables (Light Mode)
+══════════════════════════════════════ */
+:root {
+  --ink:        #1a1108;
+  --paper:      #fdf6e3;
+  --coffee:     #7b4f21;
+  --espresso:   #3d2007;
+  --cream:      #f0e2c0;
+  --steam:      #dccfa8;
+  --roast:      #c47a2b;
+  --foam:       #faf3e0;
+  --sidebar-bg: #2e1a0e;
+  --sidebar-w:  240px;
+  --header-h:   48px;
+  --radius:     6px;
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'Crimson Pro', serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --transition:   0.15s ease;
+}
+
+/* Dark Mode */
+body.dark {
+  --ink:        #f0e2c0;
+  --paper:      #1a1108;
+  --coffee:     #c49a5a;
+  --espresso:   #f0e2c0;
+  --cream:      #2a1d0e;
+  --steam:      #3d2a14;
+  --roast:      #e89840;
+  --foam:       #1e1508;
+  --sidebar-bg: #0f0906;
+  --paper:      #1e1508;
+}
+
+/* ══════════════════════════════════════
+   Reset & Base
+══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════════
+   Top Header Bar
+══════════════════════════════════════ */
+#topbar {
+  height: var(--header-h);
+  background: var(--espresso);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+#brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#logo-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+#brand h1 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fdf6e3;
+  letter-spacing: 0.3px;
+}
+
+#tagline {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(253,246,227,0.45);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+#header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#save-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(253,246,227,0.45);
+  letter-spacing: 0.5px;
+  transition: color var(--transition);
+}
+
+#save-status.saving { color: var(--roast); }
+#save-status.saved  { color: rgba(100,200,130,0.7); }
+
+#theme-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  color: rgba(253,246,227,0.7);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+  transition: all var(--transition);
+}
+#theme-btn:hover { background: rgba(255,255,255,0.18); color: #fdf6e3; }
+
+/* ══════════════════════════════════════
+   Layout
+══════════════════════════════════════ */
+#app {
+  display: flex;
+  height: calc(100vh - var(--header-h));
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════
+   Sidebar
+══════════════════════════════════════ */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+#sidebar-top {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#new-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--roast);
+  border: none;
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  cursor: pointer;
+  color: #fdf6e3;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: background var(--transition), transform 0.1s;
+  width: 100%;
+}
+#new-btn:hover  { background: #d4882f; }
+#new-btn:active { transform: scale(0.98); }
+
+#search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#search-icon {
+  position: absolute;
+  left: 9px;
+  color: rgba(253,246,227,0.3);
+  pointer-events: none;
+}
+
+#search {
+  width: 100%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 7px 10px 7px 30px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #fdf6e3;
+  outline: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+#search::placeholder { color: rgba(253,246,227,0.25); }
+#search:focus {
+  border-color: var(--roast);
+  background: rgba(255,255,255,0.12);
+}
+
+#notes-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(253,246,227,0.25);
+  padding: 10px 14px 4px;
+}
+
+#notes-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0 8px;
+}
+
+#notes-list::-webkit-scrollbar { width: 3px; }
+#notes-list::-webkit-scrollbar-track { background: transparent; }
+#notes-list::-webkit-scrollbar-thumb {
+  background: rgba(196,122,43,0.35);
+  border-radius: 2px;
+}
+
+.note-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.12s;
+  position: relative;
+}
+.note-item:hover  { background: rgba(255,255,255,0.05); }
+.note-item.active {
+  background: rgba(196,122,43,0.18);
+  border-left-color: var(--roast);
+}
+
+.ni-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fdf6e3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ni-date {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(253,246,227,0.35);
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+.ni-preview {
+  font-size: 11px;
+  color: rgba(253,246,227,0.4);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-body);
+}
+
+.empty-notes-msg {
+  padding: 24px 14px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(253,246,227,0.25);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+#sidebar-footer {
+  padding: 8px 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(253,246,227,0.2);
+  letter-spacing: 0.5px;
+}
+
+/* ══════════════════════════════════════
+   Main Editor Area
+══════════════════════════════════════ */
+#editor-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--foam);
+}
+
+/* ── Empty State ── */
+#empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#empty-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0.5;
+}
+
+#empty-icon { font-size: 48px; line-height: 1; }
+
+#empty-inner h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--coffee);
+}
+
+#empty-inner p {
+  font-size: 15px;
+  color: var(--coffee);
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+#empty-cta {
+  background: var(--roast);
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  color: #fdf6e3;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--transition);
+  pointer-events: all;
+  margin-top: 4px;
+}
+#empty-cta:hover { background: #d4882f; }
+
+/* ── Note Editor ── */
+#note-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+#title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 40px 10px;
+  border-bottom: 1px solid var(--steam);
+  background: var(--cream);
+  flex-shrink: 0;
+}
+
+#note-title {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--espresso);
+}
+#note-title::placeholder { color: var(--steam); }
+
+#title-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+#note-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--coffee);
+  opacity: 0.5;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+#delete-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #c0392b;
+  transition: all var(--transition);
+}
+#delete-btn:hover {
+  background: rgba(192,57,43,0.08);
+  border-color: rgba(192,57,43,0.25);
+}
+
+/* ── Toolbar ── */
+#toolbar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 16px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--steam);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.tb-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tb-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--espresso);
+  line-height: 1.3;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.tb-btn:hover  { background: var(--steam); border-color: var(--steam); }
+.tb-btn:active { transform: scale(0.95); }
+
+.tb-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--steam);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.tb-spacer { flex: 1; }
+
+#word-count-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--roast);
+  opacity: 0.65;
+  padding: 3px 8px;
+  background: rgba(196,122,43,0.08);
+  border-radius: 4px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+/* ── Editor ── */
+#editor {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px 40px;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--ink);
+  caret-color: var(--coffee);
+}
+
+#editor::-webkit-scrollbar { width: 6px; }
+#editor::-webkit-scrollbar-track { background: transparent; }
+#editor::-webkit-scrollbar-thumb {
+  background: var(--steam);
+  border-radius: 3px;
+}
+
+#editor[data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--steam);
+  pointer-events: none;
+  font-style: italic;
+}
+
+/* Editor typography */
+#editor h1 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--espresso);
+  margin: 1.4em 0 0.5em;
+  line-height: 1.25;
+}
+#editor h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--espresso);
+  margin: 1.2em 0 0.4em;
+}
+#editor h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--coffee);
+  margin: 1em 0 0.3em;
+}
+#editor p     { margin: 0.4em 0; }
+#editor b, #editor strong { font-weight: 600; }
+#editor i, #editor em    { font-style: italic; }
+#editor u     { text-decoration: underline; text-decoration-color: var(--roast); }
+#editor s, #editor strike { text-decoration: line-through; color: var(--coffee); }
+
+#editor ul, #editor ol {
+  padding-left: 1.8em;
+  margin: 0.6em 0;
+}
+#editor li { margin: 0.25em 0; }
+
+#editor blockquote {
+  border-left: 3px solid var(--roast);
+  padding: 4px 0 4px 1.2em;
+  margin: 1em 0;
+  color: var(--coffee);
+  font-style: italic;
+}
+
+#editor code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--cream);
+  border: 1px solid var(--steam);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--espresso);
+}
+
+#editor hr {
+  border: none;
+  border-top: 1px solid var(--steam);
+  margin: 1.8em 0;
+}
+
+#editor a {
+  color: var(--coffee);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Status Bar ── */
+#statusbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 16px;
+  background: var(--cream);
+  border-top: 1px solid var(--steam);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--coffee);
+  opacity: 0.65;
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+
+.sb-dot { opacity: 0.4; }
+
+/* ══════════════════════════════════════
+   Utility
+══════════════════════════════════════ */
+.hidden { display: none !important; }
+
+/* ══════════════════════════════════════
+   Scrollbar (Firefox)
+══════════════════════════════════════ */
+#editor, #notes-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--steam) transparent;
+}
+
+/* ══════════════════════════════════════
+   Animations
+══════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.note-item {
+  animation: fadeIn 0.18s ease both;
+}
+
+#note-editor {
+  animation: fadeIn 0.2s ease both;
+}
