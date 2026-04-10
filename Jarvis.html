@@ -1,285 +1,960 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarvis & Eye Mouse Detector | Project Details</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --jarvis-blue: #00d2ff;
-            --jarvis-purple: #9d50bb;
-            --bg-dark: #05050a;
-            --card-bg: #0f0f1a;
-            --text-gray: #a0a0c0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J.A.R.V.I.S</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    :root {
+      --jarvis-blue: #00AAFF;
+      --jarvis-glow: rgba(0,170,255,0.4);
+      --bg: #000;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 40px 20px;
-        }
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-        }
+    /* ── BOOT SCREEN ── */
+    #bootScreen {
+      position: fixed; inset: 0;
+      background: #000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s;
+    }
+    #bootScreen.fade-out { opacity: 0; pointer-events: none; }
 
-        /* --- Interface Header --- */
-        .project-header {
-            background: var(--card-bg);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.1);
-            margin-bottom: 30px;
-        }
+    .svg-frame {
+      position: relative;
+      width: 300px; height: 300px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .svg-frame svg {
+      position: absolute;
+      width: 100%; height: 100%;
+      animation: spinSvg calc(var(--i, 0) * 3s + 4s) linear infinite;
+    }
+    @keyframes spinSvg { to { transform: rotate(360deg); } }
 
-        /* --- Simulated UI Preview --- */
-        .ui-preview {
-            background: linear-gradient(180deg, #0a0a15 0%, #151525 100%);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-height: 250px;
-            position: relative;
-        }
+    #WishMessage {
+      color: var(--jarvis-blue);
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-top: 20px;
+      text-shadow: 0 0 12px var(--jarvis-blue);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-        .chat-bubble {
-            max-width: 80%;
-            padding: 12px 18px;
-            border-radius: 15px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            animation: fadeIn 0.5s ease-out;
-        }
+    /* ── MAIN INTERFACE ── */
+    #mainInterface {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
 
-        .bot { 
-            background: rgba(255, 255, 255, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
+    /* Top HUD bar */
+    .hud-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      border-bottom: 1px solid rgba(0,170,255,0.2);
+      background: rgba(0,0,0,0.8);
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .hud-logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: var(--jarvis-blue);
+      text-shadow: 0 0 14px var(--jarvis-blue);
+    }
+    .hud-status {
+      display: flex; gap: 18px; align-items: center;
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hud-time { color: var(--jarvis-blue); font-size: 0.85rem; letter-spacing: 2px; }
 
-        .user { 
-            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
+    /* ── CENTER ORB AREA ── */
+    .orb-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 10px;
+    }
+    .orb-wrapper {
+      position: relative;
+      width: 260px; height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .orb-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid var(--jarvis-blue);
+      opacity: 0.6;
+    }
+    .orb-ring:nth-child(1) { width: 260px; height: 260px; animation: orbSpin1 8s linear infinite; }
+    .orb-ring:nth-child(2) { width: 200px; height: 200px; animation: orbSpin2 5s linear infinite reverse; opacity: 0.4; }
+    .orb-ring:nth-child(3) { width: 140px; height: 140px; animation: orbSpin1 6s linear infinite; opacity: 0.3; }
 
-        .typing {
-            display: flex;
-            gap: 5px;
-            padding-left: 10px;
-        }
+    @keyframes orbSpin1 { to { transform: rotate(360deg); } }
+    @keyframes orbSpin2 { to { transform: rotate(-360deg); } }
 
-        .typing span {
-            width: 8px;
-            height: 8px;
-            background: var(--jarvis-blue);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out;
-        }
-        .typing span:nth-child(2) { animation-delay: 0.2s; }
-        .typing span:nth-child(3) { animation-delay: 0.4s; }
+    .orb-core {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #003366, #000820);
+      box-shadow: 0 0 30px var(--jarvis-blue), 0 0 60px rgba(0,100,255,0.3), inset 0 0 20px rgba(0,170,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 2;
+      transition: all 0.3s;
+    }
+    .orb-core.listening {
+      box-shadow: 0 0 40px #ff4444, 0 0 80px rgba(255,50,50,0.4), inset 0 0 20px rgba(255,50,50,0.2);
+    }
+    .orb-icon { font-size: 2.2rem; color: var(--jarvis-blue); }
+    .orb-icon.listening { color: #ff4444; animation: iconPulse 0.5s ease infinite; }
+    @keyframes iconPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
 
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .orb-hint { color: rgba(0,170,255,0.6); font-size: 0.8rem; letter-spacing: 2px; margin-top: 14px; }
 
-        /* --- Project Content --- */
-        .content-body { padding: 40px; }
+    /* ── VISUALIZER BARS ── */
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 50px;
+      margin: 8px 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .visualizer.active { opacity: 1; }
+    .viz-bar {
+      width: 5px;
+      background: var(--jarvis-blue);
+      border-radius: 2px;
+      box-shadow: 0 0 4px var(--jarvis-blue);
+      animation: vizBounce 0.6s ease infinite alternate;
+    }
+    @keyframes vizBounce { from { height: 4px; } to { height: var(--h, 40px); } }
 
-        h1 {
-            font-size: 2.2rem;
-            margin: 0 0 15px 0;
-            background: linear-gradient(to right, #00d2ff, #9d50bb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    /* ── CHAT / RESPONSE AREA ── */
+    #chatArea {
+      background: rgba(0,10,30,0.8);
+      border: 1px solid rgba(0,170,255,0.15);
+      border-radius: 16px;
+      margin: 0 20px;
+      padding: 16px;
+      max-height: 260px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #00AAFF #000;
+    }
+    #chatArea::-webkit-scrollbar { width: 4px; }
+    #chatArea::-webkit-scrollbar-thumb { background: var(--jarvis-blue); border-radius: 4px; }
 
-        .description {
-            color: var(--text-gray);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+    .chat-msg {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      animation: msgSlide 0.3s ease-out;
+    }
+    @keyframes msgSlide { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-        .tags { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
-        .tag {
-            background: rgba(157, 80, 187, 0.15);
-            border: 1px solid rgba(157, 80, 187, 0.3);
-            color: #d1adff;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+    .chat-msg.user { flex-direction: row-reverse; }
+    .chat-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 600; flex-shrink: 0;
+    }
+    .chat-avatar.bot { background: rgba(0,170,255,0.15); color: var(--jarvis-blue); border: 1px solid rgba(0,170,255,0.3); }
+    .chat-avatar.user-av { background: rgba(100,50,200,0.2); color: #a78bfa; border: 1px solid rgba(100,50,200,0.3); }
+    .chat-bubble {
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    .chat-bubble.bot-b {
+      background: rgba(0,170,255,0.07);
+      border: 1px solid rgba(0,170,255,0.15);
+      color: #c0e8ff;
+      border-bottom-left-radius: 3px;
+    }
+    .chat-bubble.user-b {
+      background: rgba(99,60,255,0.15);
+      border: 1px solid rgba(99,60,255,0.25);
+      color: #d4bbff;
+      border-bottom-right-radius: 3px;
+    }
 
-        /* --- Technical Grid --- */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 20px;
-        }
+    .typing-dots span {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--jarvis-blue);
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: dotBounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dotBounce { 0%,80%,100%{transform:scale(0)} 40%{transform:scale(1)} }
 
-        .tech-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 3px solid var(--jarvis-blue);
-        }
+    /* ── INPUT AREA ── */
+    .input-area {
+      display: flex;
+      gap: 10px;
+      padding: 16px 20px;
+      align-items: center;
+    }
+    #chatbox {
+      flex: 1;
+      background: rgba(0,20,50,0.8);
+      border: 1px solid rgba(0,170,255,0.3);
+      border-radius: 30px;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #chatbox:focus {
+      border-color: var(--jarvis-blue);
+      box-shadow: 0 0 12px rgba(0,170,255,0.2);
+    }
+    #chatbox::placeholder { color: rgba(0,170,255,0.35); }
 
-        .tech-card h3 {
-            margin-top: 0;
-            font-size: 1rem;
-            color: var(--jarvis-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .icon-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,170,255,0.4);
+      background: rgba(0,20,50,0.8);
+      color: var(--jarvis-blue);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { background: rgba(0,170,255,0.15); box-shadow: 0 0 10px rgba(0,170,255,0.3); }
+    .icon-btn.active { background: rgba(255,50,50,0.15); border-color: #ff4444; color: #ff4444; box-shadow: 0 0 10px rgba(255,50,50,0.3); }
 
-        .tech-card p {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            margin-bottom: 0;
-        }
+    /* ── COMMAND GRID ── */
+    .cmd-section {
+      padding: 10px 20px 24px;
+    }
+    .cmd-section h6 {
+      color: rgba(0,170,255,0.5);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cmd-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 8px;
+    }
+    .cmd-chip {
+      background: rgba(0,20,50,0.7);
+      border: 1px solid rgba(0,170,255,0.2);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      color: rgba(0,200,255,0.8);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .cmd-chip:hover { background: rgba(0,170,255,0.12); border-color: rgba(0,170,255,0.5); transform: translateY(-1px); }
+    .cmd-chip .cmd-icon { display: block; font-size: 1.2rem; margin-bottom: 4px; }
 
-        footer {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+    /* ── INFO PANEL ── */
+    .info-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 0 20px 20px;
+    }
+    .info-card {
+      background: rgba(0,10,30,0.7);
+      border: 1px solid rgba(0,170,255,0.15);
+      border-left: 3px solid var(--jarvis-blue);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .info-card h5 { font-size: 0.65rem; color: var(--jarvis-blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+    .info-card p { font-size: 0.8rem; color: rgba(180,220,255,0.7); line-height: 1.4; }
 
-        .live-indicator {
-            color: #4ade80;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    /* ── WEATHER WIDGET ── */
+    #weatherCard { background: rgba(0,10,30,0.7); border: 1px solid rgba(0,170,255,0.15); border-left: 3px solid #4ade80; border-radius: 10px; padding: 12px 16px; }
+    #weatherCard h5 { font-size: 0.65rem; color: #4ade80; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+    #weatherValue { font-size: 1.3rem; color: #fff; }
+    #weatherDesc { font-size: 0.75rem; color: rgba(180,220,255,0.6); }
 
-        .github-btn {
-            color: white;
-            text-decoration: none;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
+    /* ── SCROLL ── */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--jarvis-blue); border-radius: 2px; }
 
-        .github-btn:hover { background: rgba(255,255,255,0.2); }
+    /* ── ABOUT TAB ── */
+    #aboutSection {
+      display: none;
+      padding: 20px;
+    }
+    .tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+    .tech-card {
+      background: rgba(0,10,30,0.7);
+      border: 1px solid rgba(0,170,255,0.15);
+      border-left: 3px solid var(--jarvis-blue);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .tech-card h3 { font-size: 0.75rem; color: var(--jarvis-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .tech-card p { font-size: 0.8rem; color: rgba(180,220,255,0.65); line-height: 1.45; margin: 0; }
 
-        @media (max-width: 600px) {
-            .tech-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    .nav-tabs-hud { display: flex; gap: 8px; padding: 0 20px 14px; }
+    .nav-tab {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid rgba(0,170,255,0.3);
+      color: rgba(0,170,255,0.6);
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .nav-tab.active { background: rgba(0,170,255,0.15); color: var(--jarvis-blue); border-color: var(--jarvis-blue); box-shadow: 0 0 10px rgba(0,170,255,0.2); }
+
+    @media (max-width: 600px) {
+      .tech-grid { grid-template-columns: 1fr; }
+      .cmd-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="project-header">
-        <div class="ui-preview" id="previewArea">
-            <div class="chat-bubble bot">Hello Jayant. How can I assist you today?</div>
-            <div class="chat-bubble user">Open my files, Jarvis</div>
-            <div class="chat-bubble bot">Eye tracking active. Following your gaze... 👁️</div>
-            <div class="typing">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-
-        <div class="content-body">
-            <h1>Jarvis & Eye Mouse Detector</h1>
-            <p class="description">
-                A sophisticated automation ecosystem that blends voice-activated AI with hands-free peripheral control. 
-                Using MediaPipe's facial landmark detection, the system maps ocular movements to mouse coordinates, 
-                allowing users to navigate their OS through natural gaze.
-            </p>
-
-            <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">OpenCV</span>
-                <span class="tag">MediaPipe</span>
-                <span class="tag">PyAutoGUI</span>
-                <span class="tag">NLP</span>
-            </div>
-
-            <div class="tech-grid">
-                <div class="tech-card">
-                    <h3>Computer Vision</h3>
-                    <p>Utilizes the Iris Solution to track 468 facial landmarks, calculating the specific iris centroid for 1:1 screen mapping.</p>
-                </div>
-                <div class="tech-card">
-                    <h3>Voice Interface</h3>
-                    <p>Integrated with Speech Recognition and pyttsx3 to provide a seamless, Iron Man-inspired conversational experience.</p>
-                </div>
-                <div class="tech-card">
-                    <h3>System Hooks</h3>
-                    <p>Employs PyAutoGUI for low-level hardware control, enabling clicks via eye-blink detection (aspect ratio calculation).</p>
-                </div>
-                <div class="tech-card">
-                    <h3>Multithreading</h3>
-                    <p>Runs the CV engine and the Voice engine on separate threads to ensure zero lag in mouse movement during speech.</p>
-                </div>
-            </div>
-
-            <footer>
-                <div class="live-indicator">
-                    <i class="fas fa-circle" style="font-size: 8px; box-shadow: 0 0 5px #4ade80;"></i> System Active
-                </div>
-                <a href="https://github.com/Jayant987" target="_blank" class="github-btn">
-                    <i class="fab fa-github"></i> View Source Code
-                </a>
-            </footer>
-        </div>
-    </div>
+<!-- ══════════════ BOOT SCREEN ══════════════ -->
+<div id="bootScreen">
+  <div class="svg-frame">
+    <!-- Outer ring -->
+    <svg viewBox="0 0 450 450" style="--i:0" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="225" cy="225" r="210" stroke="#00AAFF" stroke-width="1" fill="none" stroke-dasharray="4 12"/>
+      <path d="M225 15 A210 210 0 0 1 400 120 L390 130 A198 198 0 0 0 225 27 Z" fill="#00AAFF" opacity="0.8"/>
+    </svg>
+    <!-- Mid ring -->
+    <svg viewBox="0 0 450 450" style="--i:1" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="225" cy="225" r="160" stroke="#00AAFF" stroke-width="1.5" fill="none" stroke-dasharray="2 18"/>
+      <path d="M225 65 A160 160 0 0 1 370 175" stroke="#00AAFF" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </svg>
+    <!-- Inner ring -->
+    <svg viewBox="0 0 450 450" style="--i:2" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="225" cy="225" r="110" stroke="#00AAFF" stroke-width="2" fill="none" stroke-dasharray="1 20"/>
+      <circle cx="225" cy="115" r="6" fill="#00AAFF"/>
+    </svg>
+    <!-- Core glow -->
+    <svg viewBox="0 0 450 450" style="position:absolute;animation:none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="225" cy="225" r="55" fill="none" stroke="#00AAFF" stroke-width="2"/>
+      <circle cx="225" cy="225" r="35" fill="rgba(0,50,120,0.8)"/>
+      <circle cx="225" cy="225" r="12" fill="#00AAFF" opacity="0.9"/>
+      <line x1="175" y1="225" x2="275" y2="225" stroke="#00AAFF" stroke-width="1" opacity="0.5"/>
+      <line x1="225" y1="175" x2="225" y2="275" stroke="#00AAFF" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+  <div id="WishMessage">Initializing...</div>
 </div>
 
+<!-- ══════════════ MAIN INTERFACE ══════════════ -->
+<div id="mainInterface">
+
+  <!-- HUD BAR -->
+  <div class="hud-bar">
+    <div class="hud-logo">J.A.R.V.I.S</div>
+    <div class="hud-status">
+      <div class="status-dot"></div>
+      <span style="color:rgba(0,170,255,0.6);font-size:0.75rem;letter-spacing:1px">ONLINE</span>
+      <span class="hud-time" id="clockDisplay">00:00:00</span>
+    </div>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs-hud" style="margin-top:14px">
+    <button class="nav-tab active" onclick="showTab('main')">Interface</button>
+    <button class="nav-tab" onclick="showTab('about')">About</button>
+  </div>
+
+  <!-- MAIN TAB -->
+  <div id="mainSection">
+    <!-- ORB -->
+    <div class="orb-area">
+      <div class="orb-wrapper" onclick="toggleListen()">
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-core" id="orbCore">
+          <i class="bi bi-mic orb-icon" id="orbIcon"></i>
+        </div>
+      </div>
+      <div class="orb-hint" id="orbHint">TAP TO SPEAK</div>
+
+      <!-- Visualizer bars -->
+      <div class="visualizer" id="visualizer">
+        <div class="viz-bar" style="--h:20px; animation-delay:0s"></div>
+        <div class="viz-bar" style="--h:35px; animation-delay:0.1s"></div>
+        <div class="viz-bar" style="--h:45px; animation-delay:0.05s"></div>
+        <div class="viz-bar" style="--h:30px; animation-delay:0.15s"></div>
+        <div class="viz-bar" style="--h:48px; animation-delay:0.08s"></div>
+        <div class="viz-bar" style="--h:25px; animation-delay:0.12s"></div>
+        <div class="viz-bar" style="--h:40px; animation-delay:0.04s"></div>
+        <div class="viz-bar" style="--h:18px; animation-delay:0.18s"></div>
+        <div class="viz-bar" style="--h:35px; animation-delay:0.06s"></div>
+        <div class="viz-bar" style="--h:28px; animation-delay:0.14s"></div>
+      </div>
+    </div>
+
+    <!-- CHAT AREA -->
+    <div id="chatArea"></div>
+
+    <!-- INPUT -->
+    <div class="input-area">
+      <input type="text" id="chatbox" placeholder="Ask me anything or type a command..." autocomplete="off"/>
+      <button class="icon-btn" id="micBtn" onclick="toggleListen()" title="Voice Command">
+        <i class="bi bi-mic"></i>
+      </button>
+      <button class="icon-btn" onclick="sendTextCommand()" title="Send">
+        <i class="bi bi-send"></i>
+      </button>
+    </div>
+
+    <!-- QUICK COMMANDS -->
+    <div class="cmd-section">
+      <h6>Quick Commands</h6>
+      <div class="cmd-grid">
+        <div class="cmd-chip" onclick="runCommand('open youtube')"><span class="cmd-icon">▶</span>YouTube</div>
+        <div class="cmd-chip" onclick="runCommand('open google')"><span class="cmd-icon">🔍</span>Google</div>
+        <div class="cmd-chip" onclick="runCommand('open gmail')"><span class="cmd-icon">✉</span>Gmail</div>
+        <div class="cmd-chip" onclick="runCommand('open github')"><span class="cmd-icon"><i class="fab fa-github"></i></span>GitHub</div>
+        <div class="cmd-chip" onclick="runCommand('what time is it')"><span class="cmd-icon">🕐</span>Time</div>
+        <div class="cmd-chip" onclick="runCommand('what is the date today')"><span class="cmd-icon">📅</span>Date</div>
+        <div class="cmd-chip" onclick="runCommand('tell me a joke')"><span class="cmd-icon">😄</span>Joke</div>
+        <div class="cmd-chip" onclick="runCommand('tell me about yourself')"><span class="cmd-icon">🤖</span>About</div>
+        <div class="cmd-chip" onclick="runCommand('search wikipedia artificial intelligence')"><span class="cmd-icon">📖</span>Wikipedia</div>
+        <div class="cmd-chip" onclick="runCommand('take a screenshot')"><span class="cmd-icon">📸</span>Screenshot</div>
+        <div class="cmd-chip" onclick="runCommand('play music')"><span class="cmd-icon">🎵</span>Music</div>
+        <div class="cmd-chip" onclick="runCommand('what is the weather')"><span class="cmd-icon">🌤</span>Weather</div>
+      </div>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="info-panel">
+      <div class="info-card">
+        <h5>Voice Engine</h5>
+        <p>Web Speech API — speak naturally. Click the orb or mic button to activate.</p>
+      </div>
+      <div class="info-card">
+        <h5>Commands</h5>
+        <p>Open sites, check time & date, search Wikipedia, tell jokes, play music & more.</p>
+      </div>
+      <div id="weatherCard">
+        <h5>System</h5>
+        <div id="weatherValue">— —</div>
+        <div id="weatherDesc">Awaiting command</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT TAB -->
+  <div id="aboutSection">
+    <div style="background:rgba(0,10,30,0.7);border:1px solid rgba(0,170,255,0.2);border-radius:16px;overflow:hidden;">
+      <!-- Animated preview -->
+      <div style="background:linear-gradient(180deg,#0a0a18,#131325);padding:30px 28px;min-height:180px;display:flex;flex-direction:column;gap:12px;">
+        <div style="max-width:75%;padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);font-size:0.88rem;color:#c0d8f0;border-bottom-left-radius:3px">Hello Jayant. Systems are online. How can I assist?</div>
+        <div style="max-width:75%;padding:10px 16px;border-radius:12px;background:linear-gradient(90deg,#5a1aaa,#1a5aff);font-size:0.88rem;color:#fff;align-self:flex-end;border-bottom-right-radius:3px">Open my files, Jarvis.</div>
+        <div style="display:flex;gap:5px;padding-left:8px"><span style="width:7px;height:7px;background:var(--jarvis-blue);border-radius:50%;animation:dotBounce 1.2s 0s infinite"></span><span style="width:7px;height:7px;background:var(--jarvis-blue);border-radius:50%;animation:dotBounce 1.2s 0.2s infinite"></span><span style="width:7px;height:7px;background:var(--jarvis-blue);border-radius:50%;animation:dotBounce 1.2s 0.4s infinite"></span></div>
+      </div>
+      <div style="padding:28px">
+        <h1 style="font-size:1.8rem;font-weight:700;background:linear-gradient(to right,#00d2ff,#9d50bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px">Jarvis & Eye Mouse Detector</h1>
+        <p style="color:rgba(160,160,200,0.8);font-size:0.95rem;line-height:1.6;margin-bottom:20px">A sophisticated automation ecosystem blending voice-activated AI with hands-free peripheral control. Using MediaPipe's facial landmark detection, the system maps ocular movements to mouse coordinates — navigate your OS through natural gaze.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px">
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">Python</span>
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">OpenCV</span>
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">MediaPipe</span>
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">PyAutoGUI</span>
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">NLP</span>
+          <span style="background:rgba(157,80,187,0.15);border:1px solid rgba(157,80,187,0.3);color:#d1adff;padding:5px 14px;border-radius:20px;font-size:0.8rem;font-weight:600">EEL</span>
+        </div>
+        <div class="tech-grid">
+          <div class="tech-card"><h3>Computer Vision</h3><p>Tracks 468 facial landmarks using MediaPipe Iris Solution. Calculates iris centroid for 1:1 screen-coordinate mapping.</p></div>
+          <div class="tech-card"><h3>Voice Interface</h3><p>Speech Recognition + pyttsx3 provide an Iron Man-inspired conversational experience. Now enhanced with Web Speech API.</p></div>
+          <div class="tech-card"><h3>System Hooks</h3><p>PyAutoGUI provides low-level hardware control. Clicks triggered via eye-blink detection using facial aspect ratio calculation.</p></div>
+          <div class="tech-card"><h3>Multithreading</h3><p>CV engine and Voice engine run on separate threads — zero lag in mouse movement while processing speech commands.</p></div>
+        </div>
+        <div style="margin-top:28px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:gap:10px">
+          <div style="color:#4ade80;font-size:0.85rem;display:flex;align-items:center;gap:8px"><i class="fas fa-circle" style="font-size:8px"></i> System Active</div>
+          <a href="https://github.com/Jayant987" target="_blank" style="color:#fff;text-decoration:none;background:rgba(255,255,255,0.08);padding:9px 18px;border-radius:8px;font-size:0.85rem;transition:0.3s"><i class="fab fa-github"></i> View Source</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /mainInterface -->
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Logic to simulate a looping chat interaction
-    const chatData = [
-        { type: 'bot', text: 'Diagnostic complete. All systems nominal.' },
-        { type: 'user', text: 'Jarvis, scroll down.' },
-        { type: 'bot', text: 'Tracking eye verticality... Scrolling now.' }
-    ];
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  BOOT SEQUENCE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const bootMsgs = [
+  "Initializing core systems...",
+  "Loading neural interface...",
+  "Calibrating voice engine...",
+  "Establishing secure link...",
+  "Welcome, Jayant. I'm online."
+];
+let bi = 0;
+const wishEl = document.getElementById("WishMessage");
 
-    let currentMsg = 0;
-    const preview = document.getElementById('previewArea');
+const bootTimer = setInterval(() => {
+  if (bi < bootMsgs.length) {
+    wishEl.textContent = bootMsgs[bi++];
+  } else {
+    clearInterval(bootTimer);
+    setTimeout(launchInterface, 800);
+  }
+}, 900);
 
-    function addMessage() {
-        if (currentMsg >= chatData.length) return;
+function launchInterface() {
+  const boot = document.getElementById("bootScreen");
+  boot.classList.add("fade-out");
+  setTimeout(() => {
+    boot.style.display = "none";
+    const main = document.getElementById("mainInterface");
+    main.style.display = "flex";
+    main.style.flexDirection = "column";
+    speakJarvis("Good " + timeOfDay() + " Jayant. All systems online. How may I assist you today?");
+    addBotMessage("Good " + timeOfDay() + " Jayant. All systems online. How may I assist you?");
+  }, 800);
+}
 
-        // Remove typing indicator if it exists
-        const typing = preview.querySelector('.typing');
-        if (typing) typing.remove();
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  CLOCK
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById("clockDisplay").textContent = h + ":" + m + ":" + s;
+}
+setInterval(updateClock, 1000);
+updateClock();
 
-        const msg = chatData[currentMsg];
-        const div = document.createElement('div');
-        div.className = `chat-bubble ${msg.type}`;
-        div.textContent = msg.text;
-        preview.appendChild(div);
+function timeOfDay() {
+  const h = new Date().getHours();
+  if (h < 12) return "morning";
+  if (h < 17) return "afternoon";
+  return "evening";
+}
 
-        currentMsg++;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  TABS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function showTab(tab) {
+  document.getElementById("mainSection").style.display = tab === 'main' ? 'block' : 'none';
+  document.getElementById("aboutSection").style.display = tab === 'about' ? 'block' : 'none';
+  document.querySelectorAll(".nav-tab").forEach((el, i) => {
+    el.classList.toggle("active", (i === 0 && tab === 'main') || (i === 1 && tab === 'about'));
+  });
+}
 
-        // Re-add typing indicator for next bot message
-        if (currentMsg < chatData.length) {
-            const newTyping = document.createElement('div');
-            newTyping.className = 'typing';
-            newTyping.innerHTML = '<span></span><span></span><span></span>';
-            preview.appendChild(newTyping);
-            setTimeout(addMessage, 3000);
-        }
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  CHAT UI
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const chatArea = document.getElementById("chatArea");
+
+function addUserMessage(text) {
+  const div = document.createElement("div");
+  div.className = "chat-msg user";
+  div.innerHTML = `<div class="chat-avatar user-av">YOU</div><div class="chat-bubble user-b">${text}</div>`;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function addBotMessage(text) {
+  const div = document.createElement("div");
+  div.className = "chat-msg";
+  div.innerHTML = `<div class="chat-avatar bot">JAR</div><div class="chat-bubble bot-b">${text}</div>`;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function showTyping() {
+  const div = document.createElement("div");
+  div.className = "chat-msg";
+  div.id = "typingIndicator";
+  div.innerHTML = `<div class="chat-avatar bot">JAR</div><div class="chat-bubble bot-b typing-dots"><span></span><span></span><span></span></div>`;
+  chatArea.appendChild(div);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById("typingIndicator");
+  if (t) t.remove();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  SPEECH SYNTHESIS (TTS)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function speakJarvis(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.95;
+  utter.pitch = 0.85;
+  utter.volume = 1;
+
+  // Try to pick a deep/male voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => /david|male|mark|george|daniel/i.test(v.name))
+    || voices.find(v => v.lang === 'en-US')
+    || voices[0];
+  if (preferred) utter.voice = preferred;
+
+  window.speechSynthesis.speak(utter);
+}
+
+// Voices load async
+window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  VOICE RECOGNITION (STT)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let recognition = null;
+let isListening = false;
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+
+  recognition.onresult = (e) => {
+    const transcript = e.results[0][0].transcript.toLowerCase().trim();
+    document.getElementById("chatbox").value = transcript;
+    stopListeningUI();
+    addUserMessage(transcript);
+    processCommand(transcript);
+  };
+
+  recognition.onerror = (e) => {
+    stopListeningUI();
+    addBotMessage("Voice input error: " + e.error + ". Please try again or type your command.");
+  };
+
+  recognition.onend = () => stopListeningUI();
+} else {
+  document.getElementById("orbHint").textContent = "TYPE YOUR COMMAND";
+}
+
+function toggleListen() {
+  if (!recognition) {
+    addBotMessage("Voice recognition is not supported in this browser. Please use Chrome.");
+    return;
+  }
+  if (isListening) {
+    recognition.stop();
+    stopListeningUI();
+  } else {
+    startListeningUI();
+    recognition.start();
+  }
+}
+
+function startListeningUI() {
+  isListening = true;
+  document.getElementById("orbCore").classList.add("listening");
+  document.getElementById("orbIcon").classList.add("listening");
+  document.getElementById("orbIcon").className = "bi bi-mic-fill orb-icon listening";
+  document.getElementById("orbHint").textContent = "LISTENING...";
+  document.getElementById("visualizer").classList.add("active");
+  document.getElementById("micBtn").classList.add("active");
+}
+
+function stopListeningUI() {
+  isListening = false;
+  document.getElementById("orbCore").classList.remove("listening");
+  document.getElementById("orbIcon").className = "bi bi-mic orb-icon";
+  document.getElementById("orbHint").textContent = "TAP TO SPEAK";
+  document.getElementById("visualizer").classList.remove("active");
+  document.getElementById("micBtn").classList.remove("active");
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  TEXT INPUT
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.getElementById("chatbox").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendTextCommand();
+});
+
+function sendTextCommand() {
+  const val = document.getElementById("chatbox").value.trim();
+  if (!val) return;
+  addUserMessage(val);
+  document.getElementById("chatbox").value = "";
+  processCommand(val.toLowerCase());
+}
+
+function runCommand(cmd) {
+  addUserMessage(cmd);
+  processCommand(cmd.toLowerCase());
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  COMMAND PROCESSOR
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const jokes = [
+  "Why don't scientists trust atoms? Because they make up everything!",
+  "I told my computer I needed a break. Now it won't stop sending me Kit-Kat ads.",
+  "Why do programmers prefer dark mode? Because light attracts bugs!",
+  "Why was the computer cold? It left its Windows open.",
+  "I would tell you a UDP joke, but you might not get it.",
+  "A SQL query walks into a bar, walks up to two tables and asks... 'Can I join you?'"
+];
+
+function processCommand(cmd) {
+  showTyping();
+
+  setTimeout(() => {
+    removeTyping();
+    let response = "";
+
+    // ── Time
+    if (cmd.includes("time")) {
+      const now = new Date();
+      response = "The current time is " + now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',hour12:true}) + ".";
+
+    // ── Date
+    } else if (cmd.includes("date") || cmd.includes("today")) {
+      const now = new Date();
+      response = "Today is " + now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'}) + ".";
+
+    // ── YouTube
+    } else if (cmd.includes("youtube")) {
+      response = "Opening YouTube for you.";
+      setTimeout(() => window.open("https://www.youtube.com", "_blank"), 500);
+
+    // ── Google
+    } else if (cmd.includes("google") && !cmd.includes("search")) {
+      response = "Opening Google.";
+      setTimeout(() => window.open("https://www.google.com", "_blank"), 500);
+
+    // ── Gmail
+    } else if (cmd.includes("gmail") || cmd.includes("email")) {
+      response = "Opening Gmail.";
+      setTimeout(() => window.open("https://mail.google.com", "_blank"), 500);
+
+    // ── GitHub
+    } else if (cmd.includes("github")) {
+      response = "Opening GitHub. Happy coding!";
+      setTimeout(() => window.open("https://github.com/Jayant987", "_blank"), 500);
+
+    // ── Wikipedia search
+    } else if (cmd.includes("wikipedia") || cmd.includes("wiki")) {
+      const query = cmd.replace(/search|wikipedia|wiki|on|about/gi, "").trim();
+      if (query) {
+        response = "Searching Wikipedia for: " + query;
+        setTimeout(() => window.open("https://en.wikipedia.org/wiki/" + encodeURIComponent(query), "_blank"), 500);
+      } else {
+        response = "What would you like me to search on Wikipedia?";
+      }
+
+    // ── Google search
+    } else if (cmd.includes("search")) {
+      const query = cmd.replace(/search|google|for|jarvis/gi, "").trim();
+      if (query) {
+        response = "Searching Google for: " + query;
+        setTimeout(() => window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank"), 500);
+      } else {
+        response = "What would you like me to search?";
+      }
+
+    // ── Joke
+    } else if (cmd.includes("joke")) {
+      response = jokes[Math.floor(Math.random() * jokes.length)];
+
+    // ── About / Who are you
+    } else if (cmd.includes("about yourself") || cmd.includes("who are you") || cmd.includes("what are you")) {
+      response = "I am J.A.R.V.I.S — Just A Rather Very Intelligent System. Created by Jayant, I can open websites, search the internet, tell time, answer questions, and much more. How may I assist you?";
+
+    // ── Music
+    } else if (cmd.includes("music") || cmd.includes("play music") || cmd.includes("song")) {
+      response = "Opening YouTube Music for you!";
+      setTimeout(() => window.open("https://music.youtube.com", "_blank"), 500);
+
+    // ── Weather
+    } else if (cmd.includes("weather")) {
+      response = "Fetching weather data... For accurate local weather, I'm opening a weather service.";
+      document.getElementById("weatherValue").textContent = "Fetching...";
+      document.getElementById("weatherDesc").textContent = "Requesting location access";
+      fetchWeather();
+
+    // ── Screenshot
+    } else if (cmd.includes("screenshot")) {
+      response = "I cannot take system screenshots from the browser, but I can open the Snipping Tool for you. Press Windows+Shift+S to capture.";
+
+    // ── Calculator
+    } else if (cmd.includes("calculator") || cmd.includes("calculate")) {
+      // Try to evaluate math
+      const mathExpr = cmd.replace(/calculate|what is|jarvis|the|answer/gi, "").trim();
+      try {
+        const result = Function('"use strict"; return (' + mathExpr + ')')();
+        if (!isNaN(result)) {
+          response = "The answer is " + result + ".";
+        } else { throw new Error(); }
+      } catch {
+        response = "I can calculate simple math. Try saying 'calculate 25 times 4' or type an expression.";
+      }
+
+    // ── Math expressions with numbers
+    } else if (/\d+\s*[\+\-\*\/x]\s*\d+/.test(cmd)) {
+      const cleanExpr = cmd.replace(/x/g, '*').replace(/[^0-9\+\-\*\/\.\(\)\s]/g, '').trim();
+      try {
+        const result = Function('"use strict"; return (' + cleanExpr + ')')();
+        response = "That equals " + result + ".";
+      } catch {
+        response = "I couldn't compute that. Please rephrase.";
+      }
+
+    // ── Hello / Hi
+    } else if (/^(hello|hi|hey|greetings)/.test(cmd)) {
+      response = "Hello Jayant! I'm fully operational. What can I do for you?";
+
+    // ── Thanks
+    } else if (cmd.includes("thank")) {
+      response = "You're welcome! Always at your service.";
+
+    // ── Goodbye
+    } else if (cmd.includes("bye") || cmd.includes("goodbye") || cmd.includes("shutdown")) {
+      response = "Goodbye Jayant. Powering down interface. Stay brilliant.";
+
+    // ── News
+    } else if (cmd.includes("news")) {
+      response = "Opening Google News for the latest headlines.";
+      setTimeout(() => window.open("https://news.google.com", "_blank"), 500);
+
+    // ── Maps
+    } else if (cmd.includes("map") || cmd.includes("location") || cmd.includes("navigate")) {
+      const query = cmd.replace(/map|maps|navigate|to|open|show|location/gi, "").trim();
+      const url = query ? "https://maps.google.com/maps?q=" + encodeURIComponent(query) : "https://maps.google.com";
+      response = query ? "Opening Google Maps for: " + query : "Opening Google Maps.";
+      setTimeout(() => window.open(url, "_blank"), 500);
+
+    // ── Instagram
+    } else if (cmd.includes("instagram")) {
+      response = "Opening Instagram.";
+      setTimeout(() => window.open("https://www.instagram.com", "_blank"), 500);
+
+    // ── WhatsApp
+    } else if (cmd.includes("whatsapp")) {
+      response = "Opening WhatsApp Web.";
+      setTimeout(() => window.open("https://web.whatsapp.com", "_blank"), 500);
+
+    // ── LinkedIn
+    } else if (cmd.includes("linkedin")) {
+      response = "Opening LinkedIn.";
+      setTimeout(() => window.open("https://www.linkedin.com", "_blank"), 500);
+
+    // ── ChatGPT
+    } else if (cmd.includes("chatgpt") || cmd.includes("chat gpt")) {
+      response = "Opening ChatGPT.";
+      setTimeout(() => window.open("https://chat.openai.com", "_blank"), 500);
+
+    // ── Fallback
+    } else {
+      response = "I heard: \"" + cmd + "\". I'm working on understanding that. Try asking me to open a website, check the time, search something, or tell a joke!";
     }
 
-    // Start simulation after 4 seconds
-    setTimeout(addMessage, 4000);
+    addBotMessage(response);
+    speakJarvis(response);
+
+  }, 600 + Math.random() * 400);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  WEATHER (Geolocation + Open-Meteo)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function fetchWeather() {
+  if (!navigator.geolocation) {
+    document.getElementById("weatherValue").textContent = "N/A";
+    document.getElementById("weatherDesc").textContent = "Geolocation not supported";
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude.toFixed(2);
+    const lon = pos.coords.longitude.toFixed(2);
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`;
+    fetch(url)
+      .then(r => r.json())
+      .then(data => {
+        const temp = data.current_weather.temperature;
+        const wcode = data.current_weather.weathercode;
+        const desc = weatherDesc(wcode);
+        document.getElementById("weatherValue").textContent = temp + "°C";
+        document.getElementById("weatherDesc").textContent = desc + " · Lat " + lat;
+        addBotMessage("Current temperature is " + temp + "°C with " + desc + " conditions.");
+        speakJarvis("Current temperature is " + temp + " degrees Celsius with " + desc + " conditions.");
+      })
+      .catch(() => {
+        document.getElementById("weatherValue").textContent = "Error";
+        document.getElementById("weatherDesc").textContent = "Could not fetch weather";
+      });
+  }, () => {
+    document.getElementById("weatherValue").textContent = "Denied";
+    document.getElementById("weatherDesc").textContent = "Location access denied";
+    addBotMessage("Location access was denied. Please allow location to get weather data.");
+  });
+}
+
+function weatherDesc(code) {
+  if (code === 0) return "Clear sky";
+  if (code <= 3) return "Partly cloudy";
+  if (code <= 9) return "Foggy";
+  if (code <= 19) return "Drizzle";
+  if (code <= 29) return "Rain";
+  if (code <= 39) return "Snowfall";
+  if (code <= 49) return "Freezing fog";
+  if (code <= 59) return "Heavy drizzle";
+  if (code <= 69) return "Heavy rain";
+  if (code <= 79) return "Heavy snow";
+  if (code <= 84) return "Rain showers";
+  if (code <= 94) return "Snow showers";
+  return "Thunderstorm";
+}
 </script>
 
 </body>
