@@ -1248,8 +1248,138 @@ nav .icon h3 { margin: 0.3rem; font-size: 14px; white-space: nowrap; }
     <i class="fas fa-arrow-right proj-link-icon"></i>
   </div>
 </a>
+      <a class="proj-card" href="IOS.html" target="_blank">
+  <div class="proj-card-preview">
+    <div class="preview-inner prev-ios-icons">
+      <div class="iphone-shell">
+        <div class="lock-header">
+          <div class="time-text">12:10</div>
+          <div class="date-text">Saturday, April 11</div>
+        </div>
+        <div class="icon-launcher">
+          <div class="app-row">
+            <div class="icon i-mail"><i class="fas fa-envelope"></i></div>
+            <div class="icon i-chat"><i class="fas fa-comment"></i></div>
+          </div>
+          <div class="app-row">
+            <div class="icon i-cam"><i class="fas fa-camera"></i></div>
+            <div class="icon i-music"><i class="fas fa-music"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="note-tag">iOS 17</div>
+    </div>
+  </div>
+  <div class="proj-card-body">
+    <div class="proj-card-title">iOS Springboard UI</div>
+    <div class="proj-card-desc">
+      A high-fidelity mobile interface simulation featuring staggered icon 
+      physics, pixel-perfect typography, and responsive glassmorphic layouts.
+    </div>
+    <div class="proj-card-tags">
+      <span class="tag">CSS Grid</span>
+      <span class="tag">UI Logic</span>
+      <span class="tag">Frontend</span>
+    </div>
+  </div>
+  <div class="proj-card-footer">
+    <span class="proj-status">Live</span>
+    <i class="fas fa-arrow-right proj-link-icon"></i>
+  </div>
+</a>
     </div><!-- end projects-grid -->
   </section>
+  <style>
+    /* iOS Icon & Time Preview Styling */
+.prev-ios-icons {
+  background: radial-gradient(circle at center, #1a1a2e, #000);
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* Horizontal Center */
+  justify-content: center; /* Vertical Center */
+  padding: 20px;
+  gap: 15px;              /* Locked spacing for centering */
+  --ios-accent: #00f2ff;
+}
+
+.iphone-shell {
+  width: 75px;
+  height: 130px;
+  background: #000;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+}
+
+/* Time & Date Header */
+.lock-header {
+  margin-top: 12px;
+  text-align: center;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.time-text { font-size: 11px; font-weight: 700; }
+.date-text { font-size: 4px; letter-spacing: 0.3px; opacity: 0.7; }
+
+.icon-launcher {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-row {
+  display: flex;
+  gap: 8px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: var(--ios-accent);
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Staggered Pop-In Animation */
+.i-mail  { animation: iconPop 3s infinite ease-out; }
+.i-chat  { animation: iconPop 3s infinite ease-out 0.2s; }
+.i-cam   { animation: iconPop 3s infinite ease-out 0.4s; }
+.i-music { animation: iconPop 3s infinite ease-out 0.6s; }
+
+@keyframes iconPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  15% { transform: scale(1.1); opacity: 1; }
+  25% { transform: scale(1); opacity: 1; }
+  85% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.5); opacity: 0; }
+}
+
+/* Centered Tag */
+.note-tag {
+  margin: 0; 
+  font-family: 'Monoton', cursive;
+  font-size: 10px;
+  color: var(--ios-accent);
+  letter-spacing: 2px;
+  opacity: 0.6;
+  text-align: center;
+  width: 100%;
+}
+    </style>
   <style>
     /* Neural Mesh Preview Styling */
 .prev-mesh {
