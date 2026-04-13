@@ -1,297 +1,2255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Systems | Woodland VP4 & Battery Man</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --db-purple: #9f0fef;
-            --db-dark: #120a1d;
-            --bg-deep: #08050e;
-            --text-muted: #a0a0c0;
-            --row-alt: rgba(159, 15, 239, 0.05);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VP4 ULTIMATE UNIVERSE — The Complete Game Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #00ffe7;
+    --neon2: #ff006e;
+    --neon3: #ffe600;
+    --neon4: #7b2fff;
+    --dark: #03050f;
+    --panel: rgba(0,255,231,0.04);
+    --border: rgba(0,255,231,0.18);
+    --text: #c8f0eb;
+    --muted: #4a7a74;
+    --red: #ff3c5a;
+    --green: #00ff88;
+    --yellow: #ffe600;
+    --gold: #ffd700;
+  }
 
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background-color: var(--bg-deep);
-            color: #e0e0e0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .project-container {
-            max-width: 900px;
-            width: 100%;
-        }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(123,47,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(0,255,231,0.07) 0%, transparent 60%),
+      linear-gradient(180deg, #03050f 0%, #060d1a 100%);
+  }
 
-        /* --- Dashboard Header --- */
-        .db-dashboard {
-            background: var(--db-dark);
-            border-radius: 20px 20px 0 0;
-            border: 1px solid rgba(159, 15, 239, 0.3);
-            border-bottom: none;
-            padding: 30px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
-        }
+  /* ── SCANLINES ── */
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:999;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  }
 
-        .db-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-        }
+  /* ── HEADER ── */
+  #header {
+    padding: 28px 32px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  #header::after {
+    content:''; position:absolute; bottom:-1px; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    animation: scanH 4s linear infinite;
+  }
+  @keyframes scanH { 0%{opacity:0.2} 50%{opacity:1} 100%{opacity:0.2} }
 
-        .db-table th {
-            text-align: left;
-            padding: 12px;
-            background: var(--db-purple);
-            color: white;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+  .logo-block h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem; font-weight: 900;
+    color: var(--neon);
+    text-shadow: 0 0 24px var(--neon), 0 0 60px rgba(0,255,231,0.3);
+    letter-spacing: 4px;
+    line-height:1;
+  }
+  .logo-block .subtitle {
+    font-family:'Rajdhani', sans-serif;
+    font-size:0.85rem; letter-spacing:6px; color:var(--muted);
+    text-transform: uppercase; margin-top:4px;
+  }
+  .live-badge {
+    display:flex; align-items:center; gap:8px;
+    font-size:0.75rem; letter-spacing:2px; color:var(--green);
+    border:1px solid var(--green); padding:4px 12px; border-radius:3px;
+  }
+  .live-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:blink 1.1s infinite; }
+  @keyframes blink { 50%{opacity:0.1} }
 
-        .db-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
+  /* ── NAV TABS ── */
+  #nav {
+    display:flex; gap:0; padding:0 32px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.3);
+  }
+  .tab {
+    font-family:'Orbitron', sans-serif;
+    font-size:0.68rem; letter-spacing:2px; text-transform:uppercase;
+    padding:14px 22px; cursor:pointer; color:var(--muted);
+    border-bottom:2px solid transparent; transition:all 0.2s;
+    border-right:1px solid var(--border);
+  }
+  .tab:hover { color:var(--neon); }
+  .tab.active { color:var(--neon); border-bottom-color:var(--neon); background:rgba(0,255,231,0.05); }
 
-        .db-table tr:nth-child(even) { background: var(--row-alt); }
+  /* ── MAIN CONTENT ── */
+  #content { padding:28px 32px; max-width:1400px; margin:0 auto; }
 
-        .sql-console {
-            margin-top: 20px;
-            background: #000;
-            padding: 15px;
-            border-radius: 8px;
-            color: #c77dff;
-            font-family: 'Fira Code', monospace;
-            display: flex;
-            gap: 10px;
-        }
+  /* panels */
+  .panel {
+    background: var(--panel);
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:22px;
+    position:relative;
+  }
+  .panel::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--neon) 50%, transparent);
+    opacity:0.5;
+  }
+  .panel-title {
+    font-family:'Orbitron', sans-serif;
+    font-size:0.7rem; letter-spacing:3px; color:var(--neon);
+    text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .panel-title::before { content:'▶'; font-size:0.55rem; }
 
-        .cursor {
-            width: 8px;
-            background: #c77dff;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
+  /* grid layouts */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
 
-        /* --- Main Content --- */
-        .content-card {
-            background: #1a1525;
-            border-radius: 0 0 20px 20px;
-            padding: 40px;
-            border: 1px solid rgba(159, 15, 239, 0.2);
-        }
+  /* stat cards */
+  .stat-card {
+    background:rgba(0,255,231,0.03);
+    border:1px solid rgba(0,255,231,0.12);
+    border-radius:4px; padding:16px 18px;
+    text-align:center; position:relative; overflow:hidden;
+  }
+  .stat-card .sv { font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900; color:var(--neon); }
+  .stat-card .sl { font-size:0.68rem; letter-spacing:2px; color:var(--muted); margin-top:4px; }
+  .stat-card.red .sv { color:var(--red); }
+  .stat-card.gold .sv { color:var(--gold); }
+  .stat-card.purple .sv { color:var(--neon4); }
+  .stat-card.green .sv { color:var(--green); }
 
-        .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 25px;
-        }
+  /* tables */
+  table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  th { text-align:left; padding:8px 12px; background:rgba(0,255,231,0.07);
+       color:var(--neon); font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; }
+  td { padding:9px 12px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--text); }
+  tr:hover td { background:rgba(0,255,231,0.04); }
+  .id-col { color:var(--neon4); font-weight:bold; }
+  .ok { color:var(--green); }
+  .warn { color:var(--yellow); }
+  .danger { color:var(--red); }
 
-        h1 {
-            font-size: 2rem;
-            margin: 0;
-            color: white;
-        }
+  /* SQL console */
+  .sql-console {
+    background:#000; border:1px solid rgba(0,255,231,0.2);
+    border-radius:3px; padding:12px 16px;
+    font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--neon);
+    display:flex; align-items:center; gap:10px; margin-top:14px;
+  }
+  .cursor-blink { display:inline-block; width:9px; height:14px; background:var(--neon); animation:blink 0.8s infinite; vertical-align:middle; }
 
-        .status-badge {
-            background: rgba(74, 222, 128, 0.1);
-            color: #4ade80;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
+  /* buttons */
+  .btn {
+    font-family:'Orbitron',sans-serif; font-size:0.65rem; letter-spacing:2px;
+    padding:8px 18px; border:1px solid var(--neon); background:transparent;
+    color:var(--neon); cursor:pointer; text-transform:uppercase; transition:all 0.18s;
+  }
+  .btn:hover { background:rgba(0,255,231,0.12); box-shadow:0 0 14px rgba(0,255,231,0.3); }
+  .btn.red { border-color:var(--red); color:var(--red); }
+  .btn.red:hover { background:rgba(255,60,90,0.1); }
+  .btn.gold { border-color:var(--gold); color:var(--gold); }
+  .btn.gold:hover { background:rgba(255,215,0,0.08); }
+  .btn.purple { border-color:var(--neon4); color:var(--neon4); }
+  .btn.purple:hover { background:rgba(123,47,255,0.12); }
 
-        .description {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            margin-bottom: 35px;
-        }
+  /* input */
+  input, select {
+    background:rgba(0,255,231,0.05); border:1px solid var(--border);
+    color:var(--text); font-family:'Share Tech Mono',monospace;
+    padding:8px 12px; font-size:0.82rem; outline:none; width:100%;
+  }
+  input:focus, select:focus { border-color:var(--neon); box-shadow:0 0 8px rgba(0,255,231,0.2); }
+  label { font-size:0.68rem; letter-spacing:2px; color:var(--muted); display:block; margin-bottom:4px; }
+  .form-row { margin-bottom:14px; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 
-        .tag-row { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
-        .tag {
-            background: rgba(159, 15, 239, 0.1);
-            border: 1px solid var(--db-purple);
-            color: #d880ff;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
+  /* notifications */
+  #notify {
+    position:fixed; top:20px; right:20px; z-index:9999;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .notif {
+    background:#000; border:1px solid var(--neon); padding:10px 18px;
+    font-size:0.78rem; animation:slideIn 0.3s; min-width:280px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .notif.red { border-color:var(--red); color:var(--red); }
+  .notif.gold { border-color:var(--gold); color:var(--gold); }
+  @keyframes slideIn { from{transform:translateX(50px);opacity:0} to{transform:none;opacity:1} }
 
-        /* --- Details Sections --- */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-top: 30px;
-        }
+  /* progress bar */
+  .bar-wrap { background:rgba(255,255,255,0.06); border-radius:2px; height:6px; }
+  .bar-fill { height:100%; border-radius:2px; background:var(--neon); transition:width 0.6s; }
+  .bar-fill.red { background:var(--red); }
+  .bar-fill.gold { background:var(--gold); }
 
-        .section-box h3 {
-            color: #c77dff;
-            border-left: 3px solid var(--db-purple);
-            padding-left: 12px;
-            margin-bottom: 20px;
-        }
+  /* section */
+  section { display:none; }
+  section.active { display:block; }
 
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
+  /* hero banner */
+  .hero {
+    padding:40px; background:var(--panel);
+    border:1px solid var(--border); border-radius:4px; text-align:center;
+    position:relative; overflow:hidden; margin-bottom:24px;
+  }
+  .hero::after {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(0,255,231,0.05) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero h2 { font-family:'Orbitron',sans-serif; font-size:3rem; font-weight:900;
+    color:var(--neon); text-shadow:0 0 40px rgba(0,255,231,0.5); }
+  .hero p { color:var(--muted); margin-top:10px; font-size:0.9rem; letter-spacing:1px; }
 
-        .feature-list li {
-            margin-bottom: 12px;
-            display: flex;
-            gap: 10px;
-            font-size: 0.95rem;
-            color: #cfcfdf;
-        }
+  /* comic card */
+  .comic-card {
+    background:var(--panel); border:1px solid var(--border); border-radius:4px;
+    padding:18px; display:flex; flex-direction:column; gap:12px;
+  }
+  .comic-issue { font-family:'Orbitron',sans-serif; font-size:0.65rem; color:var(--neon4); letter-spacing:3px; }
+  .comic-title { font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; color:var(--neon2); }
+  .comic-desc { font-size:0.78rem; color:var(--muted); line-height:1.6; }
 
-        .feature-list i { color: var(--db-purple); margin-top: 4px; }
+  /* shoe card */
+  .shoe-card {
+    background:var(--panel); border:1px solid var(--border); border-radius:4px;
+    padding:20px; position:relative; overflow:hidden;
+  }
+  .shoe-card::before { content:''; position:absolute; top:0; right:0; width:60px; height:60px;
+    background:radial-gradient(circle, rgba(0,255,231,0.12) 0%, transparent 70%); }
+  .shoe-name { font-family:'Orbitron',sans-serif; font-size:0.9rem; color:var(--neon); margin-bottom:6px; }
+  .shoe-price { font-family:'Rajdhani',sans-serif; font-size:1.5rem; font-weight:700; color:var(--gold); }
 
-        footer {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+  /* game section */
+  #game-canvas-wrap { position:relative; border:1px solid var(--border); border-radius:4px; overflow:hidden; }
+  canvas { display:block; background:#000; }
 
-        .source-link {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  /* hotel rooms grid */
+  .room-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .room-cell {
+    aspect-ratio:1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; border-radius:3px;
+    font-size:0.65rem; cursor:pointer; transition:all 0.18s;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .room-cell.free { background:rgba(0,255,136,0.08); border-color:rgba(0,255,136,0.3); color:var(--green); }
+  .room-cell.occupied { background:rgba(255,60,90,0.08); border-color:rgba(255,60,90,0.3); color:var(--red); }
+  .room-cell:hover { transform:scale(1.06); }
+  .room-num { font-family:'Orbitron',sans-serif; font-size:0.75rem; font-weight:700; }
 
-        .source-link:hover { color: #c77dff; }
+  /* university modules */
+  .uni-card {
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:4px; padding:18px;
+  }
+  .uni-card h4 { font-family:'Orbitron',sans-serif; font-size:0.7rem; color:var(--neon4); letter-spacing:2px; margin-bottom:10px; }
 
-        @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } }
-    </style>
+  /* search box */
+  .search-row { display:flex; gap:10px; margin-bottom:16px; }
+  .search-row input { flex:1; }
+
+  /* result highlight */
+  .result-row td { transition:background 0.3s; }
+  .result-row.highlight td { background:rgba(0,255,231,0.08); }
+
+  /* file sources */
+  .source-tag {
+    display:inline-block; font-size:0.6rem; letter-spacing:1px;
+    padding:2px 8px; border-radius:2px; margin-left:8px; vertical-align:middle;
+  }
+  .source-tag.hotel { background:rgba(255,214,0,0.12); color:var(--gold); border:1px solid rgba(255,214,0,0.3); }
+  .source-tag.uni { background:rgba(123,47,255,0.12); color:var(--neon4); border:1px solid rgba(123,47,255,0.3); }
+  .source-tag.tel { background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.3); }
+  .source-tag.comic { background:rgba(255,0,110,0.1); color:var(--neon2); border:1px solid rgba(255,0,110,0.3); }
+
+  /* chart bar */
+  .chart-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:0.75rem; }
+  .chart-label { width:130px; color:var(--muted); }
+  .chart-bar { flex:1; height:14px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden; }
+  .chart-bar-fill { height:100%; border-radius:2px; }
+  .chart-val { width:50px; text-align:right; color:var(--text); }
+
+  /* modal */
+  .modal-bg {
+    position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:500;
+    display:none; align-items:center; justify-content:center;
+  }
+  .modal-bg.open { display:flex; }
+  .modal {
+    background:#070d18; border:1px solid var(--neon);
+    border-radius:4px; padding:28px; width:520px; max-width:95vw;
+    position:relative;
+  }
+  .modal h3 { font-family:'Orbitron',sans-serif; font-size:0.9rem; color:var(--neon); margin-bottom:20px; letter-spacing:2px; }
+  .modal-close { position:absolute; top:14px; right:16px; cursor:pointer; color:var(--muted); font-size:1.2rem; }
+  .modal-close:hover { color:var(--red); }
+
+
+  /* ── COUNTDOWN TIMER ── */
+  .cd-display {
+    font-family:'Orbitron',sans-serif; font-size:5rem; font-weight:900;
+    color:var(--neon); text-shadow:0 0 40px rgba(0,255,231,0.6);
+    text-align:center; letter-spacing:8px; padding:30px 0;
+    background:linear-gradient(135deg,#fff,#031321);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .cd-label { font-size:0.65rem; letter-spacing:4px; color:var(--muted); text-align:center; }
+  .cd-inputs { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:20px 0; }
+  .cd-unit { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .cd-unit input { width:80px; text-align:center; font-family:'Orbitron',sans-serif; font-size:1.4rem; padding:10px; }
+  .cd-unit label { font-size:0.62rem; letter-spacing:3px; color:var(--muted); }
+  .cd-ring { position:relative; display:inline-block; }
+
+  /* ── WOODLAND GAME ENGINE DOCS ── */
+  .code-block {
+    background:#000; border:1px solid rgba(0,255,231,0.15);
+    border-radius:3px; padding:16px; font-family:'Share Tech Mono',monospace;
+    font-size:0.75rem; color:#7ec8c8; overflow-x:auto; margin:12px 0;
+    max-height:280px; overflow-y:auto;
+  }
+  .code-block .kw { color:#7b2fff; }
+  .code-block .fn { color:#00ffe7; }
+  .code-block .cm { color:#4a7a74; font-style:italic; }
+  .code-block .st { color:#ff006e; }
+  .code-block .nm { color:#ffe600; }
+  .arch-node {
+    background:var(--panel); border:1px solid var(--border); border-radius:4px;
+    padding:16px; position:relative;
+  }
+  .arch-node h4 { font-family:'Orbitron',sans-serif; font-size:0.68rem; color:var(--neon); letter-spacing:2px; margin-bottom:8px; }
+  .arch-node .badge { display:inline-block; font-size:0.6rem; padding:2px 8px; border-radius:2px; margin-right:6px; margin-bottom:6px; }
+  .badge-cpp { background:rgba(123,47,255,0.2); color:var(--neon4); border:1px solid var(--neon4); }
+  .badge-ue { background:rgba(0,255,231,0.1); color:var(--neon); border:1px solid var(--neon); }
+  .badge-net { background:rgba(255,0,110,0.15); color:var(--neon2); border:1px solid var(--neon2); }
+  .badge-js { background:rgba(255,230,0,0.12); color:var(--yellow); border:1px solid var(--yellow); }
+  .method-row { display:flex; align-items:flex-start; gap:12px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.78rem; }
+  .method-name { color:var(--neon); font-family:'Share Tech Mono',monospace; min-width:200px; }
+  .method-desc { color:var(--muted); flex:1; }
+  .method-type { font-size:0.62rem; padding:2px 6px; border-radius:2px; background:rgba(123,47,255,0.15); color:var(--neon4); white-space:nowrap; }
+
+  /* ── DIGITAL PET ── */
+  #pet-canvas { display:block; margin:0 auto; }
+  .pet-stat-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; font-size:0.78rem; }
+  .pet-stat-label { width:100px; color:var(--muted); font-size:0.68rem; letter-spacing:1px; }
+  .pet-stat-bar { flex:1; height:8px; background:rgba(255,255,255,0.07); border-radius:4px; overflow:hidden; }
+  .pet-stat-fill { height:100%; border-radius:4px; transition:width 0.8s; }
+  .pet-log { background:#000; border:1px solid rgba(0,255,231,0.12); border-radius:3px; padding:10px 14px; font-size:0.72rem; color:var(--neon); max-height:150px; overflow-y:auto; font-family:'Share Tech Mono',monospace; }
+  .pet-log div { border-bottom:1px solid rgba(0,255,231,0.05); padding:3px 0; }
+  .pet-badge { display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.65rem; letter-spacing:1px; margin:3px; }
+  .pet-event-btn { font-family:'Orbitron',sans-serif; font-size:0.6rem; letter-spacing:1px; padding:8px 14px; border:1px solid; cursor:pointer; text-transform:uppercase; transition:all 0.18s; background:transparent; }
+  .pet-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+
+  @media(max-width:768px) {
+    .grid2,.grid3,.grid4 { grid-template-columns:1fr; }
+    .form-grid { grid-template-columns:1fr; }
+    .room-grid { grid-template-columns:repeat(4,1fr); }
+    #header { flex-direction:column; gap:12px; }
+    .logo-block h1 { font-size:1.4rem; }
+    #nav { overflow-x:auto; }
+    .tab { font-size:0.6rem; padding:12px 14px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="project-container">
-    <div class="db-dashboard">
-        <table class="db-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Product</th>
-                    <th>Category</th>
-                    <th>Stock</th>
-                </tr>
-            </thead>
-            <tbody id="inventoryBody">
-                </tbody>
-        </table>
-        <div class="sql-console">
-            <span>→</span>
-            <span id="sqlCommand">SELECT * FROM products;</span>
-            <div class="cursor"></div>
-        </div>
-    </div>
+<div id="notify"></div>
 
-    <div class="content-card">
-        <div class="header-row">
-            <h1>Woodland VP4 & Battery Man</h1>
-            <span class="status-badge"><i class="fas fa-check-circle"></i> LIVE SYSTEM</span>
-        </div>
-
-        <p class="description">
-            A dual-module database solution managing high-volume inventory for retail (Woodland VP4) 
-            and cataloging creative assets for a comic series (Battery Man). This project focuses on 
-            <strong>relational integrity</strong> and <strong>efficient query optimization</strong>.
-        </p>
-
-        <div class="tag-row">
-            <span class="tag">MySQL</span>
-            <span class="tag">PHP 8.x</span>
-            <span class="tag">CRUD Architecture</span>
-            <span class="tag">Responsive UI</span>
-        </div>
-
-        <div class="grid">
-            <div class="section-box">
-                <h3><i class="fas fa-database"></i> Architecture</h3>
-                <ul class="feature-list">
-                    <li><i class="fas fa-microchip"></i> Normalized SQL schema (3NF) to minimize data redundancy.</li>
-                    <li><i class="fas fa-lock"></i> Prepared statements in PHP to prevent SQL injection attacks.</li>
-                    <li><i class="fas fa-bolt"></i> Indexed product IDs for sub-millisecond query response.</li>
-                </ul>
-            </div>
-            <div class="section-box">
-                <h3><i class="fas fa-layer-group"></i> Key Features</h3>
-                <ul class="feature-list">
-                    <li><i class="fas fa-boxes"></i> Real-time stock alerts for low-inventory "VP4" models.</li>
-                    <li><i class="fas fa-book-open"></i> Relational mapping between comic issues and characters.</li>
-                    <li><i class="fas fa-chart-line"></i> Dynamic dashboard for "In-Stock" vs "Out-of-Stock" tracking.</li>
-                </ul>
-            </div>
-        </div>
-
-        <footer>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">Integrated SQL + Web Project</span>
-            <a href="https://github.com/Jayant987" target="_blank" class="source-link">
-                View Repository <i class="fas fa-arrow-right"></i>
-            </a>
-        </footer>
-    </div>
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeModal()">✕</span>
+    <h3 id="modal-title">Details</h3>
+    <div id="modal-body"></div>
+  </div>
 </div>
 
+<!-- HEADER -->
+<div id="header">
+  <div class="logo-block">
+    <h1>VP4 ULTIMATE UNIVERSE</h1>
+    <div class="subtitle">Integrated Command Dashboard · All Systems Online</div>
+  </div>
+  <div class="live-badge"><div class="live-dot"></div>LIVE SYSTEM</div>
+</div>
+
+<!-- NAV -->
+<div id="nav">
+  <div class="tab active" onclick="showTab('home')">⚡ Command</div>
+  <div class="tab" onclick="showTab('inventory')">📦 Inventory <span class="source-tag comic">VP4</span></div>
+  <div class="tab" onclick="showTab('hotel')">🏨 Hotel <span class="source-tag hotel">HMS</span></div>
+  <div class="tab" onclick="showTab('university')">🎓 University <span class="source-tag uni">UNI</span></div>
+  <div class="tab" onclick="showTab('directory')">📞 Directory <span class="source-tag tel">TEL</span></div>
+  <div class="tab" onclick="showTab('comics')">💥 Comics <span class="source-tag comic">BM-X</span></div>
+  <div class="tab" onclick="showTab('game')">🎮 Mini-Game</div>
+  <div class="tab" onclick="showTab('countdown')">⏱ Countdown</div>
+  <div class="tab" onclick="showTab('woodlands')">🚀 WoodLand Engine</div>
+  <div class="tab" onclick="showTab('pet')">🐾 Dev Pet</div>
+
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
+<!-- ═══════════════════════════════════════════════════════ HOME ═══ -->
+<section id="tab-home" class="active">
+  <div class="hero">
+    <h2>VP4 ULTIMATE</h2>
+    <p>One dashboard. Five systems. Infinite power. — Woodland VP4 · Battery Man X · Hotel HMS · University · Telephone Directory</p>
+  </div>
+
+  <div class="grid4" style="margin-bottom:20px;" id="home-stats">
+    <div class="stat-card green"><div class="sv" id="hs-stock">351</div><div class="sl">Total Stock Units</div></div>
+    <div class="stat-card gold"><div class="sv" id="hs-guests">0</div><div class="sl">Hotel Guests</div></div>
+    <div class="stat-card purple"><div class="sv" id="hs-students">0</div><div class="sl">Students Enrolled</div></div>
+    <div class="stat-card red"><div class="sv" id="hs-alerts">2</div><div class="sl">Low-Stock Alerts</div></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel">
+      <div class="panel-title">Live SQL Console <span class="source-tag comic">VP4 DB</span></div>
+      <table>
+        <thead><tr><th>ID</th><th>Product</th><th>Category</th><th>Stock</th></tr></thead>
+        <tbody id="home-table"></tbody>
+      </table>
+      <div class="sql-console">
+        <span style="color:var(--neon4)">→</span>
+        <span id="sql-cmd">SELECT * FROM products ORDER BY stock DESC;</span>
+        <div class="cursor-blink"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">System Status</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span>Hotel HMS <span class="source-tag hotel">hotel_management_system.cpp</span></span><span class="ok">ONLINE</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span>University <span class="source-tag uni">UNIVERSE.CPP</span></span><span class="ok">ONLINE</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:73%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span>Tel. Directory <span class="source-tag tel">TelephoneDictionary2.cpp</span></span><span class="ok">ONLINE</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:62%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span>VP4 Inventory <span class="source-tag comic">VP4.html</span></span><span class="ok">ONLINE</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:95%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:4px;"><span>Battery Man X Comics <span class="source-tag comic">BM-X</span></span><span class="warn">ACTIVE</span></div>
+          <div class="bar-wrap"><div class="bar-fill gold" style="width:59%"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <div class="panel-title">Quick Actions</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <button class="btn" onclick="showTab('hotel');openModal('addGuest')">+ Add Guest</button>
+          <button class="btn purple" onclick="showTab('university');openModal('addStudent')">+ Add Student</button>
+          <button class="btn gold" onclick="showTab('inventory')">+ Restock VP4</button>
+          <button class="btn red" onclick="showTab('game')">▶ Play Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Analytics — Stock vs Demand</div>
+    <div id="home-chart"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ INVENTORY ═══ -->
+<section id="tab-inventory">
+  <div class="grid4" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="sv" id="inv-total">0</div><div class="sl">Total SKUs</div></div>
+    <div class="stat-card green"><div class="sv" id="inv-in">0</div><div class="sl">In Stock</div></div>
+    <div class="stat-card red"><div class="sv" id="inv-low">0</div><div class="sl">Low Stock</div></div>
+    <div class="stat-card gold"><div class="sv" id="inv-val">0</div><div class="sl">Total Value ₹</div></div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="panel-title">Product Inventory <span class="source-tag comic">VP4.html translated</span></div>
+      <div class="search-row">
+        <input type="text" placeholder="Search product..." id="inv-search" oninput="filterInventory()">
+        <button class="btn gold" onclick="openModal('addProduct')">+ Add Product</button>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>Product</th><th>Category</th><th>Price ₹</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="inv-table"></tbody>
+      </table>
+      <div class="sql-console">
+        <span style="color:var(--neon4)">→</span>
+        <span id="inv-sql">SELECT * FROM products WHERE stock &gt; 0 ORDER BY category;</span>
+        <div class="cursor-blink"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Woodland VP4 — Shoe Line</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" id="shoe-cards"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ HOTEL ═══ -->
+<section id="tab-hotel">
+  <div class="grid4" style="margin-bottom:20px;">
+    <div class="stat-card green"><div class="sv" id="h-free">0</div><div class="sl">Free Rooms</div></div>
+    <div class="stat-card red"><div class="sv" id="h-occ">0</div><div class="sl">Occupied</div></div>
+    <div class="stat-card gold"><div class="sv" id="h-rev">₹0</div><div class="sl">Revenue Today</div></div>
+    <div class="stat-card purple"><div class="sv" id="h-food">0</div><div class="sl">Food Orders</div></div>
+  </div>
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel">
+      <div class="panel-title">Room Map — THE TIME HOTEL <span class="source-tag hotel">hotel_management_system.cpp</span></div>
+      <div class="room-grid" id="room-grid" style="margin-bottom:14px;"></div>
+      <div style="display:flex;gap:16px;font-size:0.7rem;">
+        <span class="ok">● Free</span><span class="danger">● Occupied</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Food Menu — HMS Food Class</div>
+      <div class="search-row">
+        <input type="text" placeholder="Search food item..." id="food-search" oninput="filterFood()">
+        <button class="btn gold" onclick="openModal('addFood')">+ Add Item</button>
+      </div>
+      <table>
+        <thead><tr><th>S.N.</th><th>Item Name</th><th>Price ₹</th><th>Action</th></tr></thead>
+        <tbody id="food-table"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Guest Records — Customer Class <span class="source-tag hotel">hotel_management_system.cpp</span></div>
+    <div class="search-row">
+      <input type="text" placeholder="Search guests..." id="guest-search" oninput="filterGuests()">
+      <button class="btn" onclick="openModal('addGuest')">+ Check In</button>
+      <button class="btn red" onclick="checkoutGuest()">Check Out</button>
+    </div>
+    <table>
+      <thead><tr><th>Cust#</th><th>Name</th><th>Address</th><th>Room</th><th>Arrival</th><th>Days</th><th>Bill ₹</th><th>Action</th></tr></thead>
+      <tbody id="guest-table"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ UNIVERSITY ═══ -->
+<section id="tab-university">
+  <div class="grid4" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="sv" id="u-col">0</div><div class="sl">Colleges</div></div>
+    <div class="stat-card purple"><div class="sv" id="u-stu">0</div><div class="sl">Students</div></div>
+    <div class="stat-card gold"><div class="sv" id="u-exam">0</div><div class="sl">Exams Scheduled</div></div>
+    <div class="stat-card green"><div class="sv" id="u-pass">0</div><div class="sl">Results Entered</div></div>
+  </div>
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel">
+      <div class="panel-title">College Registry <span class="source-tag uni">UNIVERSE.CPP — college class</span></div>
+      <div class="search-row">
+        <input type="text" placeholder="Search college..." id="col-search" oninput="filterColleges()">
+        <button class="btn purple" onclick="openModal('addCollege')">+ New College</button>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Location</th><th>Stream</th><th>Degree-I</th><th>Degree-II</th></tr></thead>
+        <tbody id="col-table"></tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Student Registry <span class="source-tag uni">UNIVERSE.CPP — student class</span></div>
+      <div class="search-row">
+        <input type="text" placeholder="Search student..." id="stu-search" oninput="filterStudents()">
+        <button class="btn purple" onclick="openModal('addStudent')">+ New Student</button>
+      </div>
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Father</th><th>City</th><th>Stream</th><th>Degree</th></tr></thead>
+        <tbody id="stu-table"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Exam Schedule <span class="source-tag uni">UNIVERSE.CPP — examinfo class</span></div>
+    <table>
+      <thead><tr><th>Degree</th><th>Start Date</th><th>End Date</th><th>Start Month</th><th>End Month</th><th>Year</th></tr></thead>
+      <tbody id="exam-table"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ DIRECTORY ═══ -->
+<section id="tab-directory">
+  <div class="grid4" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="sv" id="d-total">0</div><div class="sl">Total Records</div></div>
+    <div class="stat-card green"><div class="sv" id="d-cgpa-top">0.0</div><div class="sl">Top CGPA</div></div>
+    <div class="stat-card gold"><div class="sv" id="d-avg">0.0</div><div class="sl">Avg CGPA</div></div>
+    <div class="stat-card purple"><div class="sv">CRUD</div><div class="sl">Full Operations</div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Telephone Directory <span class="source-tag tel">TelephoneDictionary2.cpp — Student class</span></div>
+    <div class="search-row">
+      <input type="text" placeholder="Search by Name or ID..." id="dir-search" oninput="filterDirectory()">
+      <button class="btn" onclick="openModal('addDir')">+ Insert</button>
+      <button class="btn red" onclick="deleteSelected()">Delete</button>
+    </div>
+    <table>
+      <thead><tr><th><input type="checkbox" id="chk-all" onclick="toggleAll()"></th><th>ID</th><th>Name</th><th>Address</th><th>Phone</th><th>CGPA</th><th>Actions</th></tr></thead>
+      <tbody id="dir-table"></tbody>
+    </table>
+    <div class="sql-console">
+      <span style="color:var(--neon4)">→</span>
+      <span id="dir-sql">SELECT * FROM Telephone_directory ORDER BY CGPA DESC;</span>
+      <div class="cursor-blink"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ COMICS ═══ -->
+<section id="tab-comics">
+  <div class="hero" style="background:linear-gradient(135deg,rgba(255,0,110,0.08),rgba(123,47,255,0.08));margin-bottom:20px;">
+    <h2 style="color:var(--neon2);text-shadow:0 0 40px rgba(255,0,110,0.5);">BATTERY MAN X</h2>
+    <p>The electrifying superhero comic universe — Issue tracker, character roster & story arcs</p>
+  </div>
+  <div class="grid3" style="margin-bottom:20px;" id="comic-cards"></div>
+  <div class="grid2">
+    <div class="panel">
+      <div class="panel-title">Character Roster <span class="source-tag comic">BM-X Universe</span></div>
+      <table>
+        <thead><tr><th>Char ID</th><th>Name</th><th>Role</th><th>Power Level</th><th>Appears In</th></tr></thead>
+        <tbody id="char-table"></tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Story Arcs — Issue Mapping</div>
+      <table>
+        <thead><tr><th>Arc</th><th>Issues</th><th>Status</th><th>Rating</th></tr></thead>
+        <tbody id="arc-table"></tbody>
+      </table>
+      <div style="margin-top:18px;">
+        <div class="panel-title">Sales Performance</div>
+        <div id="comic-chart"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════ GAME ═══ -->
+<section id="tab-game">
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title">VP4 Runner — Collect Shoe Boxes, Avoid Obstacles!</div>
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
+      <div style="font-size:0.8rem;">Score: <span id="g-score" style="color:var(--neon);font-family:Orbitron,sans-serif;">0</span></div>
+      <div style="font-size:0.8rem;">High Score: <span id="g-hi" style="color:var(--gold);font-family:Orbitron,sans-serif;">0</span></div>
+      <div style="font-size:0.8rem;">Lives: <span id="g-lives" style="color:var(--red);">♥♥♥</span></div>
+      <button class="btn" onclick="startGame()" id="g-btn">▶ START</button>
+      <span style="font-size:0.72rem;color:var(--muted);">SPACE / TAP to jump · Collect VP4 boxes · Avoid obstacles</span>
+    </div>
+    <div id="game-canvas-wrap">
+      <canvas id="gameCanvas" width="800" height="240"></canvas>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="panel"><div class="panel-title">How to Play</div>
+      <div style="font-size:0.8rem;color:var(--muted);line-height:1.9;">
+        <div>🎮 Press SPACE or click to jump</div>
+        <div>📦 Collect VP4 boxes for +10 pts</div>
+        <div>💥 Collect Battery Man capsules for +25 pts</div>
+        <div>🚫 Avoid red obstacles</div>
+        <div>❤️ 3 lives per round</div>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-title">Power-Ups</div>
+      <div style="font-size:0.8rem;line-height:2;">
+        <div><span style="color:var(--neon)">■</span> VP4 Box — +10 pts</div>
+        <div><span style="color:var(--neon2)">⚡</span> BM Capsule — +25 pts</div>
+        <div><span style="color:var(--gold)">★</span> Gold Star — +50 pts</div>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-title">Leaderboard</div>
+      <div id="leaderboard" style="font-size:0.78rem;"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════ COUNTDOWN TIMER ═══ -->
+<section id="tab-countdown">
+  <div class="hero" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(3,19,33,0.9),rgba(0,255,231,0.04));">
+    <h2 style="font-size:2rem;">⏱ COUNTDOWN MISSION CLOCK</h2>
+    <p>Set target. Lock in. Execute. — Translated from CountDowwnTimer.html</p>
+  </div>
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel" style="text-align:center;">
+      <div class="panel-title">Active Countdown</div>
+      <div id="cd-main" style="padding:20px 0;">
+        <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px;">
+          <div><div id="cd-h" class="cd-display" style="font-size:4rem;">00</div><div class="cd-label">HOURS</div></div>
+          <div style="display:flex;align-items:center;padding-bottom:30px;color:var(--neon);font-size:3rem;font-family:Orbitron,sans-serif;">:</div>
+          <div><div id="cd-m" class="cd-display" style="font-size:4rem;">00</div><div class="cd-label">MINUTES</div></div>
+          <div style="display:flex;align-items:center;padding-bottom:30px;color:var(--neon);font-size:3rem;font-family:Orbitron,sans-serif;">:</div>
+          <div><div id="cd-s" class="cd-display" style="font-size:4rem;">00</div><div class="cd-label">SECONDS</div></div>
+        </div>
+        <div id="cd-message" style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;">Set a target time or countdown duration to begin.</div>
+        <div style="width:90%;margin:0 auto 18px;">
+          <div class="bar-wrap" style="height:10px;"><div class="bar-fill" id="cd-progress" style="width:0%;transition:width 0.5s;"></div></div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn" onclick="cdStart()" id="cd-start-btn">▶ START</button>
+          <button class="btn red" onclick="cdPause()" id="cd-pause-btn">⏸ PAUSE</button>
+          <button class="btn gold" onclick="cdReset()">↺ RESET</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Set Countdown Parameters</div>
+      <div class="cd-inputs">
+        <div class="cd-unit"><label>HOURS</label><input type="number" id="cd-set-h" min="0" max="99" value="0" placeholder="HH"></div>
+        <div class="cd-unit"><label>MINUTES</label><input type="number" id="cd-set-m" min="0" max="59" value="5" placeholder="MM"></div>
+        <div class="cd-unit"><label>SECONDS</label><input type="number" id="cd-set-s" min="0" max="59" value="0" placeholder="SS"></div>
+      </div>
+      <div class="form-row" style="margin:14px 0;">
+        <label>Mission Label</label>
+        <input type="text" id="cd-label-input" placeholder="e.g. Code Review Session, Sprint End..." value="VP4 Mission">
+      </div>
+      <button class="btn" style="width:100%;margin-bottom:10px;" onclick="cdSetAndStart()">▶ SET & LAUNCH COUNTDOWN</button>
+      <div class="panel-title" style="margin-top:18px;">Quick Presets</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+        <button class="btn" style="font-size:0.6rem;" onclick="cdPreset(0,5,0)">5 MIN</button>
+        <button class="btn" style="font-size:0.6rem;" onclick="cdPreset(0,10,0)">10 MIN</button>
+        <button class="btn" style="font-size:0.6rem;" onclick="cdPreset(0,25,0)">🍅 25 MIN</button>
+        <button class="btn" style="font-size:0.6rem;" onclick="cdPreset(1,0,0)">1 HOUR</button>
+        <button class="btn gold" style="font-size:0.6rem;" onclick="cdPreset(0,30,0)">30 MIN</button>
+        <button class="btn purple" style="font-size:0.6rem;" onclick="cdPreset(2,0,0)">2 HOURS</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="panel"><div class="panel-title">Countdown Log</div><div id="cd-log" class="pet-log"><div style="color:var(--muted);">— No sessions logged yet —</div></div></div>
+    <div class="panel"><div class="panel-title">Session Stats</div>
+      <div style="font-size:0.8rem;line-height:2.2;">
+        <div>Sessions Completed: <span id="cd-sess" style="color:var(--neon);">0</span></div>
+        <div>Total Focus Time: <span id="cd-total-time" style="color:var(--gold);">0 min</span></div>
+        <div>Current Streak: <span id="cd-streak" style="color:var(--green);">0 🔥</span></div>
+        <div>Longest Session: <span id="cd-longest" style="color:var(--neon2);">0 min</span></div>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-title">Source Reference</div>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:2;">
+        <div>📄 <span style="color:var(--neon)">CountDowwnTimer.html</span></div>
+        <div>⏱ Core countdown logic in JS</div>
+        <div>🎨 CSS gradient timer display</div>
+        <div>🔔 Auto-notify on completion</div>
+        <div style="margin-top:10px;padding:10px;background:rgba(0,255,231,0.04);border-left:2px solid var(--neon);font-size:0.7rem;">
+          Original: setInterval-based countdown<br>
+          Enhanced: Progress bar, presets,<br>session tracking, log history
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════ WOODLAND ENGINE DOCS ═══ -->
+<section id="tab-woodlands">
+  <div class="hero" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(123,47,255,0.08),rgba(0,255,231,0.04));">
+    <h2 style="color:var(--neon4);text-shadow:0 0 40px rgba(123,47,255,0.5);">🚀 WOODLAND V4 ENGINE</h2>
+    <p>Unreal Engine 5 · Multiplayer Flight Shooter · Full C++ Source Documentation — JellyPlane · VPlane · WoodLandv4</p>
+  </div>
+
+  <!-- Architecture Overview -->
+  <div class="grid4" style="margin-bottom:20px;">
+    <div class="stat-card purple"><div class="sv">3</div><div class="sl">C++ Classes</div></div>
+    <div class="stat-card"><div class="sv">16</div><div class="sl">Server RPCs</div></div>
+    <div class="stat-card green"><div class="sv">8</div><div class="sl">Input Bindings</div></div>
+    <div class="stat-card red"><div class="sv">UE5</div><div class="sl">Engine Version</div></div>
+  </div>
+
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel">
+      <div class="panel-title">Class Hierarchy <span class="source-tag uni">WoodLandv4 Project</span></div>
+      <div style="font-size:0.78rem;line-height:2.4;padding:8px 0;">
+        <div style="color:var(--muted);font-size:0.65rem;letter-spacing:2px;margin-bottom:8px;">INHERITANCE CHAIN</div>
+        <div style="padding-left:0px;">
+          <span style="color:var(--neon4)">APawn</span>
+          <span style="color:var(--muted);font-size:0.7rem;"> [Unreal Engine Base]</span>
+        </div>
+        <div style="padding-left:24px;">
+          └── <span style="color:var(--neon)">AVPlane</span>
+          <span class="badge badge-cpp">VPlane.h/.cpp</span>
+          <span style="color:var(--muted);font-size:0.7rem;">Base flight pawn with mesh + muzzles</span>
+        </div>
+        <div style="padding-left:48px;">
+          └── <span style="color:var(--neon2)">AJellyPlane</span>
+          <span class="badge badge-cpp">JellyPlane.h/.cpp</span>
+          <span style="color:var(--muted);font-size:0.7rem;">Full player-controlled aircraft</span>
+        </div>
+        <div style="margin-top:12px;padding-left:0px;">
+          <span style="color:var(--neon4)">AGameModeBase</span>
+          <span style="color:var(--muted);font-size:0.7rem;"> [Unreal Engine Base]</span>
+        </div>
+        <div style="padding-left:24px;">
+          └── <span style="color:var(--neon)">AWoodLandv4GameModeBase</span>
+          <span class="badge badge-cpp">GameModeBase.h/.cpp</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Network Architecture <span class="source-tag comic">Multiplayer Replication</span></div>
+      <div style="font-size:0.78rem;">
+        <div style="margin-bottom:12px;padding:10px;background:rgba(255,0,110,0.06);border-left:2px solid var(--neon2);">
+          <div style="color:var(--neon2);font-size:0.68rem;letter-spacing:2px;margin-bottom:4px;">SERVER RPCs (Reliable)</div>
+          <div style="color:var(--muted);line-height:1.8;">serverFire · serverStopFire · serverSAbility · serverThrottleUp · serverThrottleDown · serverTurn · serverRoll · serverLookUp · serverDash · serverDashStop</div>
+        </div>
+        <div style="padding:10px;background:rgba(0,255,231,0.04);border-left:2px solid var(--neon);">
+          <div style="color:var(--neon);font-size:0.68rem;letter-spacing:2px;margin-bottom:4px;">MULTICAST RPC</div>
+          <div style="color:var(--muted);">spawnEmitters — broadcasts particle FX to all clients</div>
+        </div>
+        <div style="margin-top:12px;padding:10px;background:rgba(123,47,255,0.06);border-left:2px solid var(--neon4);">
+          <div style="color:var(--neon4);font-size:0.68rem;letter-spacing:2px;margin-bottom:4px;">REPLICATED PROPERTIES</div>
+          <div style="color:var(--muted);line-height:1.8;">CurrentHealth · ThrottleAmount · Range · bThrottleUp · bThrottleDown · Flash · AirControl · sensitivity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JellyPlane Methods -->
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title">AJellyPlane — Method Reference <span class="source-tag cpp">JellyPlane.cpp · 370 lines</span></div>
+    <div id="wl-methods-tab" style="display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid var(--border);">
+      <div class="tab active" style="font-size:0.62rem;padding:8px 16px;" onclick="wlTab('movement')">Movement</div>
+      <div class="tab" style="font-size:0.62rem;padding:8px 16px;" onclick="wlTab('combat')">Combat</div>
+      <div class="tab" style="font-size:0.62rem;padding:8px 16px;" onclick="wlTab('network')">Network</div>
+      <div class="tab" style="font-size:0.62rem;padding:8px 16px;" onclick="wlTab('lifecycle')">Lifecycle</div>
+    </div>
+    <div id="wl-movement" class="wl-panel">
+      <div class="method-row"><div class="method-name">LookUp(float value)</div><div class="method-desc">Sends pitch input to server via serverLookUp RPC. Rotates plane on X axis for up/down aiming.</div><div class="method-type">Input</div></div>
+      <div class="method-row"><div class="method-name">Turn(float value)</div><div class="method-desc">Sends yaw input to server. Applies DeltaRot.Yaw = value × sensitivity × DeltaSeconds.</div><div class="method-type">Input</div></div>
+      <div class="method-row"><div class="method-name">MoveRight(float value)</div><div class="method-desc">Applies yaw rotation AND torque via PlaneBody.GetUpVector × AirControl. Local-client side.</div><div class="method-type">Input</div></div>
+      <div class="method-row"><div class="method-name">Roll(float value)</div><div class="method-desc">Delegates to serverRoll. Applies torque via PlaneBody.GetForwardVector × AirControl_Roll.</div><div class="method-type">Input</div></div>
+      <div class="method-row"><div class="method-name">Throttle()</div><div class="method-desc">Called every 50ms via timer. Increments/decrements ThrottleAmount clamped to [0, MaxSpeed].</div><div class="method-type">Timer</div></div>
+      <div class="method-row"><div class="method-name">CalculateSpeed()</div><div class="method-desc">Tick: SetPhysicsLinearVelocity → Lerp toward ForwardVector × ThrottleAmount × Speed at 0.01 alpha.</div><div class="method-type">Tick</div></div>
+      <div class="method-row"><div class="method-name">Dash() / DashStop()</div><div class="method-desc">Dash sets MaxSpeed=700, ThrottleAmount+10. DashStop resets MaxSpeed=100.</div><div class="method-type">Ability</div></div>
+    </div>
+    <div id="wl-combat" class="wl-panel" style="display:none;">
+      <div class="method-row"><div class="method-name">Fire()</div><div class="method-desc">Triggers serverFire. Sets 0.1s timer repeating. Line traces ECC_GameTraceChannel1 from camera. Applies 10.f FPointDamageEvent on hit.</div><div class="method-type">Server RPC</div></div>
+      <div class="method-row"><div class="method-name">StopFire()</div><div class="method-desc">Calls serverStopFire. Clears the fire timer to stop auto-fire loop.</div><div class="method-type">Server RPC</div></div>
+      <div class="method-row"><div class="method-name">TakeDamage(...)</div><div class="method-desc">Overrides base. Clamps health [0,500]. If ≤ 0 → calls OnDeath(DamageCausor) then Destroy().</div><div class="method-type">Override</div></div>
+      <div class="method-row"><div class="method-name">SAbility()</div><div class="method-desc">Special ability. Sphere overlap with 4000 unit radius. Logs all overlapping actors. Uses ECC_Visibility channel.</div><div class="method-type">Ability</div></div>
+      <div class="method-row"><div class="method-name">FireOnhalt(bool,FRotator,FHitResult)</div><div class="method-desc">Legacy hit-confirm function. Spawns Flash emitter at hit point, applies FPointDamageEvent 10.f.</div><div class="method-type">Combat</div></div>
+      <div class="method-row"><div class="method-name">spawnEmitters(Location, Rotation)</div><div class="method-desc">NetMulticast. Spawns Flash particle at given location — broadcast to all connected clients.</div><div class="method-type">Multicast</div></div>
+    </div>
+    <div id="wl-network" class="wl-panel" style="display:none;">
+      <div class="method-row"><div class="method-name">GetLifetimeReplicatedProps</div><div class="method-desc">Registers: CurrentHealth, ThrottleAmount, Range, bThrottleUp, bThrottleDown, Flash, AirControl, AirControl_Roll, sensitivity using DOREPLIFETIME macro.</div><div class="method-type">Replication</div></div>
+      <div class="method-row"><div class="method-name">serverFire_Validate()</div><div class="method-desc">Returns true — basic server-side validation for fire RPC. Prevents unauthorized fire calls.</div><div class="method-type">Validation</div></div>
+      <div class="method-row"><div class="method-name">serverSAbility_Validate()</div><div class="method-desc">Returns true — validates special ability server call.</div><div class="method-type">Validation</div></div>
+      <div class="method-row"><div class="method-name">serverStopFire_Validate()</div><div class="method-desc">Returns true — validates stop fire RPC.</div><div class="method-type">Validation</div></div>
+      <div class="method-row"><div class="method-name">Input → Server flow</div><div class="method-desc">ALL input functions (Turn, LookUp, Roll, ThrottleUp, etc.) call their Server_Reliable counterparts. No local prediction — pure authoritative server movement.</div><div class="method-type">Design</div></div>
+    </div>
+    <div id="wl-lifecycle" class="wl-panel" style="display:none;">
+      <div class="method-row"><div class="method-name">AJellyPlane() Constructor</div><div class="method-desc">Creates SpringArm + Camera attached to PlaneBody. Enables tick. Replication commented out (SetReplicates).</div><div class="method-type">Constructor</div></div>
+      <div class="method-row"><div class="method-name">BeginPlay()</div><div class="method-desc">Sets 0.05s repeating Throttle timer. Initializes CurrentHealth = MaxHealth (500).</div><div class="method-type">Lifecycle</div></div>
+      <div class="method-row"><div class="method-name">Tick(float DeltaTime)</div><div class="method-desc">Applies angular damping: -PlaneBody.AngularVelocity × 2 as counter-torque. Calls CalculateSpeed().</div><div class="method-type">Tick</div></div>
+      <div class="method-row"><div class="method-name">SetupPlayerInputComponent</div><div class="method-desc">Binds: ThrottleUp(pressed/released), ThrottleDown, Fire, Dash, Special_Ability (Actions). LookUp, Turn, MoveRight, Roll (Axes).</div><div class="method-type">Input Setup</div></div>
+      <div class="method-row"><div class="method-name">GetHealth() / SetHealth()</div><div class="method-desc">BlueprintCallable getters/setters for CurrentHealth. Used by UI/HUD blueprints.</div><div class="method-type">Blueprint</div></div>
+      <div class="method-row"><div class="method-name">Destroyed_Event()</div><div class="method-desc">BlueprintCallable. Calls Destroy() — used to trigger destruction from Blueprint events.</div><div class="method-type">Blueprint</div></div>
+      <div class="method-row"><div class="method-name">OnDeath(AActor*) [BlueprintEvent]</div><div class="method-desc">BlueprintImplementableEvent — implement death FX, respawn, scoring in Blueprint visual scripting.</div><div class="method-type">BP Event</div></div>
+    </div>
+  </div>
+
+  <!-- Source Files grid -->
+  <div class="grid3" style="margin-bottom:20px;">
+    <div class="arch-node">
+      <h4>VPlane.cpp / .h</h4>
+      <span class="badge badge-cpp">Base Class</span><span class="badge badge-ue">APawn</span>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;margin-top:8px;">
+        Creates <span style="color:var(--neon)">PlaneBody</span> (UStaticMeshComponent)<br>
+        Creates <span style="color:var(--neon)">R_Muzzel</span> + <span style="color:var(--neon)">L_Muzzel</span> (USceneComponent)<br>
+        All attached to RootComponent via SetupAttachment<br>
+        Pure virtual base — minimal logic, maximum extensibility
+      </div>
+    </div>
+    <div class="arch-node">
+      <h4>WoodLandv4GameModeBase</h4>
+      <span class="badge badge-ue">GameMode</span><span class="badge badge-ue">AGameModeBase</span>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;margin-top:8px;">
+        Sets <span style="color:var(--neon)">DefaultPawnClass</span> → JellyPlane Blueprint<br>
+        Sets <span style="color:var(--neon)">HUDClass</span> → ACrosshairHUD<br>
+        Uses FClassFinder at <span style="color:var(--yellow)">/Game/Blueprints/JellyPlane</span><br>
+        Entry point for the WoodLand v4 game session
+      </div>
+    </div>
+    <div class="arch-node">
+      <h4>WoodLandv4.Build.cs</h4>
+      <span class="badge badge-ue">Module Rules</span><span class="badge badge-cpp">C#</span>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:1.8;margin-top:8px;">
+        Module: <span style="color:var(--neon)">WoodLandv4</span><br>
+        PCHUsage: UseExplicitOrSharedPCHs<br>
+        Public deps: Core, CoreUObject, Engine, InputCore<br>
+        Optional: Slate, OnlineSubsystem (commented)
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Viewer -->
+  <div class="panel" style="margin-bottom:20px;">
+    <div class="panel-title">Source Viewer — Key Snippets</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      <button class="btn" style="font-size:0.6rem;" onclick="showSnippet('throttle')">Throttle System</button>
+      <button class="btn purple" style="font-size:0.6rem;" onclick="showSnippet('fire')">Fire & Raycast</button>
+      <button class="btn red" style="font-size:0.6rem;" onclick="showSnippet('damage')">Damage System</button>
+      <button class="btn gold" style="font-size:0.6rem;" onclick="showSnippet('sability')">Special Ability</button>
+      <button class="btn" style="font-size:0.6rem;" onclick="showSnippet('replication')">Replication Setup</button>
+      <button class="btn purple" style="font-size:0.6rem;" onclick="showSnippet('countdown')">Countdown JS</button>
+    </div>
+    <div id="snippet-display" class="code-block">
+      <span class="cm">// Select a snippet above to view the translated source code</span>
+    </div>
+  </div>
+
+  <!-- Known Bugs / Observations -->
+  <div class="panel">
+    <div class="panel-title">Code Analysis — Issues & Observations</div>
+    <table>
+      <thead><tr><th>File</th><th>Line / Location</th><th>Issue</th><th>Severity</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="id-col">JellyPlane.cpp</td><td>serverLookUp_Implementation</td><td>Incomplete AddActorLocalRotation call — <code style="color:var(--neon)">(DeltaRot, true);</code> missing object</td><td class="danger">BUG</td><td>Should be <code style="color:var(--neon)">AddActorLocalRotation(DeltaRot, true);</code></td></tr>
+        <tr><td class="id-col">JellyPlane.cpp</td><td>Bottom of file</td><td>Python code appended: <code style="color:var(--yellow)">while true: n=int(input())...</code></td><td class="warn">FOREIGN CODE</td><td>Python snippet accidentally left in C++ file — remove before compile</td></tr>
+        <tr><td class="id-col">JellyPlane.h</td><td>ThrottleTimer, FireTimer</td><td>FTimerHandle members marked <code style="color:var(--neon)">Replicated</code></td><td class="warn">DESIGN</td><td>Timer handles are not network-serializable — remove Replicated specifier</td></tr>
+        <tr><td class="id-col">JellyPlane.cpp</td><td>serverFire_Implementation</td><td>SetTimer called before line trace — fires timer even on miss</td><td class="warn">LOGIC</td><td>Timer should only start after confirmed fire intent</td></tr>
+        <tr><td class="id-col">WoodLandv4GameModeBase.cpp</td><td>#include path</td><td>Absolute path <code style="color:var(--neon)">#include "/JellyPlane/JellyPlane.h"</code></td><td class="warn">PORTABILITY</td><td>Use relative path: <code style="color:var(--neon)">"JellyPlane/JellyPlane.h"</code></td></tr>
+        <tr><td class="id-col">CountDowwnTimer.html</td><td>&lt;script src=...&gt;</td><td>References external JS file "Countdown Timer.js" (not uploaded)</td><td class="warn">MISSING</td><td>Logic reimplemented inline in VP4 Ultimate</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ DEV PET ═══ -->
+<section id="tab-pet">
+  <div class="hero" style="margin-bottom:20px;background:linear-gradient(135deg,rgba(0,255,136,0.06),rgba(123,47,255,0.06));">
+    <h2 style="color:var(--green);text-shadow:0 0 40px rgba(0,255,136,0.4);">🐾 BYTE — Your Dev Pet</h2>
+    <p>Feed your pet by coding. Neglect the keyboard and watch it wither. Byte grows with every commit.</p>
+  </div>
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="panel" style="text-align:center;">
+      <div class="panel-title">Byte's State</div>
+      <canvas id="pet-canvas" width="280" height="220"></canvas>
+      <div id="pet-mood" style="font-family:Orbitron,sans-serif;font-size:0.8rem;color:var(--neon);margin-top:10px;letter-spacing:2px;">INITIALIZING...</div>
+      <div id="pet-level-badge" style="margin-top:6px;font-size:0.7rem;color:var(--muted);">Level 1 · Hatchling</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Byte's Stats</div>
+      <div style="margin-bottom:18px;">
+        <div class="pet-stat-row"><div class="pet-stat-label">⚡ ENERGY</div><div class="pet-stat-bar"><div class="pet-stat-fill" id="ps-energy" style="width:70%;background:var(--neon);"></div></div><span id="ps-energy-v" style="font-size:0.72rem;color:var(--neon);min-width:35px;text-align:right;">70</span></div>
+        <div class="pet-stat-row"><div class="pet-stat-label">🧠 FOCUS</div><div class="pet-stat-bar"><div class="pet-stat-fill" id="ps-focus" style="width:50%;background:var(--neon4);"></div></div><span id="ps-focus-v" style="font-size:0.72rem;color:var(--neon4);min-width:35px;text-align:right;">50</span></div>
+        <div class="pet-stat-row"><div class="pet-stat-label">💻 SKILL</div><div class="pet-stat-bar"><div class="pet-stat-fill" id="ps-skill" style="width:30%;background:var(--gold);"></div></div><span id="ps-skill-v" style="font-size:0.72rem;color:var(--gold);min-width:35px;text-align:right;">30</span></div>
+        <div class="pet-stat-row"><div class="pet-stat-label">😊 MOOD</div><div class="pet-stat-bar"><div class="pet-stat-fill" id="ps-mood" style="width:80%;background:var(--green);"></div></div><span id="ps-mood-v" style="font-size:0.72rem;color:var(--green);min-width:35px;text-align:right;">80</span></div>
+        <div class="pet-stat-row"><div class="pet-stat-label">🔥 XP</div><div class="pet-stat-bar"><div class="pet-stat-fill" id="ps-xp" style="width:10%;background:var(--neon2);"></div></div><span id="ps-xp-v" style="font-size:0.72rem;color:var(--neon2);min-width:35px;text-align:right;">10</span></div>
+      </div>
+      <div class="panel-title">Log a Coding Activity</div>
+      <div class="pet-grid">
+        <button class="pet-event-btn" style="border-color:var(--neon);color:var(--neon);" onclick="petEvent('commit')">📦 Commit</button>
+        <button class="pet-event-btn" style="border-color:var(--neon4);color:var(--neon4);" onclick="petEvent('debug')">🐛 Debug</button>
+        <button class="pet-event-btn" style="border-color:var(--gold);color:var(--gold);" onclick="petEvent('feature')">✨ Feature</button>
+        <button class="pet-event-btn" style="border-color:var(--green);color:var(--green);" onclick="petEvent('review')">👁 Review</button>
+        <button class="pet-event-btn" style="border-color:var(--neon2);color:var(--neon2);" onclick="petEvent('deploy')">🚀 Deploy</button>
+        <button class="pet-event-btn" style="border-color:var(--red);color:var(--red);" onclick="petEvent('break')">😴 Break</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="panel"><div class="panel-title">Activity Log</div><div id="pet-log" class="pet-log"><div style="color:var(--muted);">— Start coding to feed Byte! —</div></div></div>
+    <div class="panel"><div class="panel-title">Achievements</div><div id="pet-achievements" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;"></div></div>
+    <div class="panel"><div class="panel-title">Byte's Milestones</div>
+      <div style="font-size:0.78rem;line-height:2.2;color:var(--muted);">
+        <div>🥚 <span style="color:var(--neon)">Hatchling</span> — Start (0 XP)</div>
+        <div>🐣 <span style="color:var(--neon)">Chick</span> — 100 XP</div>
+        <div>🐱 <span style="color:var(--neon4)">Coder Cat</span> — 300 XP</div>
+        <div>🤖 <span style="color:var(--gold)">Debug Bot</span> — 600 XP</div>
+        <div>🦅 <span style="color:var(--neon2)">Ace Dev</span> — 1000 XP</div>
+        <div>🔮 <span style="color:var(--gold)">Code Wizard</span> — 2000 XP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div><!-- /content -->
+
 <script>
-    const data = [
-        { id: '001', name: 'Woodland VP4', cat: 'Shoes', stock: 42 },
-        { id: '002', name: 'Battery Man X', cat: 'Comics', stock: 150 },
-        { id: '003', name: 'VP4 Pro', cat: 'Shoes', stock: 18 },
-        { id: '004', name: 'BM Issue #5', cat: 'Comics', stock: 89 }
-    ];
+// ═══════════════════════ DATA STORES ═══════════════════════════
 
-    function renderTable() {
-        const tbody = document.getElementById('inventoryBody');
-        tbody.innerHTML = data.map(item => `
-            <tr>
-                <td style="color: #c77dff; font-weight: bold;">${item.id}</td>
-                <td>${item.name}</td>
-                <td style="color: var(--text-muted);">${item.cat}</td>
-                <td style="color: ${item.stock < 20 ? '#ff4e50' : '#4ade80'};">${item.stock}</td>
-            </tr>
-        `).join('');
+const DB = {
+  products: [
+    {id:'001', name:'Woodland VP4', cat:'Shoes', price:3499, stock:42},
+    {id:'002', name:'Battery Man X', cat:'Comics', price:199, stock:150},
+    {id:'003', name:'VP4 Pro', cat:'Shoes', price:4299, stock:18},
+    {id:'004', name:'BM Issue #5', cat:'Comics', price:249, stock:89},
+    {id:'005', name:'VP4 Trail', cat:'Shoes', price:3799, stock:5},
+    {id:'006', name:'VP4 Urban', cat:'Shoes', price:3299, stock:33},
+    {id:'007', name:'BM Issue #10', cat:'Comics', price:299, stock:72},
+    {id:'008', name:'VP4 Classic', cat:'Shoes', price:2999, stock:14},
+  ],
+  guests: [],
+  food: [
+    {id:1, name:'Butter Chicken', price:320},
+    {id:2, name:'Paneer Tikka', price:280},
+    {id:3, name:'Dal Makhani', price:210},
+    {id:4, name:'Biryani', price:380},
+    {id:5, name:'Naan (4pcs)', price:90},
+    {id:6, name:'Lassi', price:60},
+  ],
+  rooms: Array.from({length:20}, (_,i) => ({no:i+1, type:i<10?'Deluxe':'Standard', rate:i<10?250:150, guest:null})),
+  colleges: [
+    {id:1, name:'St. Xavier College', loc:'Mumbai', stream:'Science', degI:'B.Sc', degII:'M.Sc'},
+    {id:2, name:'Delhi College of Arts', loc:'Delhi', stream:'Arts', degI:'B.A', degII:'M.A'},
+    {id:3, name:'Commerce Hub', loc:'Pune', stream:'Commerce', degI:'B.Com', degII:'M.Com'},
+  ],
+  students: [
+    {id:1, name:'Arjun Sharma', fname:'Ravi Sharma', add:'221 Baker St', city:'Mumbai', state:'MH', zip:'400001', contact:'9876543210', code:'022', stream:'Science', deg:'B.Sc-I'},
+    {id:2, name:'Priya Mehta', fname:'Anil Mehta', add:'45 Park Ave', city:'Delhi', state:'DL', zip:'110001', contact:'8765432109', code:'011', stream:'Arts', deg:'B.A-II'},
+    {id:3, name:'Rohit Verma', fname:'Suresh Verma', add:'12 MG Road', city:'Pune', state:'MH', zip:'411001', contact:'7654321098', code:'020', stream:'Commerce', deg:'B.Com-I'},
+  ],
+  exams: [
+    {deg:'B.Sc-I', sd:'01', ed:'25', sm:'April', em:'May', sy:'2025', ey:'2025'},
+    {deg:'B.A-II', sd:'03', ed:'28', sm:'April', em:'May', sy:'2025', ey:'2025'},
+    {deg:'B.Com-I', sd:'05', ed:'30', sm:'April', em:'May', sy:'2025', ey:'2025'},
+  ],
+  directory: [
+    {id:'STU001', name:'Rahul Gupta', address:'Sector-14, Raipur', phone:'9988776655', cgpa:8.7},
+    {id:'STU002', name:'Sneha Patel', address:'Civil Lines, Nagpur', phone:'8877665544', cgpa:9.1},
+    {id:'STU003', name:'Amit Joshi', address:'Indira Nagar, Lucknow', phone:'7766554433', cgpa:7.8},
+    {id:'STU004', name:'Kavya Reddy', address:'Banjara Hills, Hyderabad', phone:'6655443322', cgpa:8.4},
+  ],
+  comics: [
+    {id:'BM-001', title:'Battery Man X: Origin', issue:'Issue #1', year:2021, desc:'The birth of the Battery Man — a technician struck by experimental energy, gains electro-kinetic powers.', stock:150, rating:'★★★★★'},
+    {id:'BM-005', title:'Voltage Crisis', issue:'Issue #5', year:2022, desc:'Battery Man battles the Blackout Syndicate threatening the city power grid.', stock:89, rating:'★★★★☆'},
+    {id:'BM-010', title:'Charged Reckoning', issue:'Issue #10', year:2023, desc:'The epic showdown — Battery Man vs Dark Ohm in the power plant finale.', stock:72, rating:'★★★★★'},
+    {id:'BM-012', title:'Recharge', issue:'Issue #12', year:2024, desc:'A new ally emerges. Battery Man rebuilds after defeat and gains new abilities.', stock:45, rating:'★★★★☆'},
+    {id:'BM-SPEC', title:'Battery Man Special Edition', issue:'Annual #1', year:2024, desc:'Collector edition with artwork gallery and origin retelling.', stock:20, rating:'★★★★★'},
+    {id:'BM-013', title:'Static Rising', issue:'Issue #13', year:2025, desc:'Battery Man teams up with Voltage Girl to face a multidimensional threat.', stock:98, rating:'★★★☆☆'},
+  ],
+  characters: [
+    {id:'C001', name:'Battery Man X', role:'Protagonist', power:95, issues:'#1-#13'},
+    {id:'C002', name:'Dark Ohm', role:'Main Villain', power:88, issues:'#5-#10'},
+    {id:'C003', name:'Voltage Girl', role:'Ally', power:72, issues:'#12-#13'},
+    {id:'C004', name:'The Engineer', role:'Mentor', power:60, issues:'#1-#3'},
+    {id:'C005', name:'Blackout', role:'Villain', power:80, issues:'#5-#7'},
+  ],
+  arcs: [
+    {name:'Origin Arc', issues:'#1-#3', status:'Complete', rating:9.2},
+    {name:'Blackout Saga', issues:'#4-#7', status:'Complete', rating:8.7},
+    {name:'Dark Ohm Chronicles', issues:'#8-#10', status:'Complete', rating:9.5},
+    {name:'Rebirth Saga', issues:'#11-#13', status:'Ongoing', rating:8.1},
+  ],
+  leaderboard: [],
+};
+
+// ═══════════════════════ TABS ═══════════════════════════════════
+function showTab(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  const map = ['home','inventory','hotel','university','directory','comics','game'];
+  const idx = map.indexOf(id);
+  if(tabs[idx]) tabs[idx].classList.add('active');
+  renderAll();
+}
+
+// ═══════════════════════ RENDER ════════════════════════════════
+function renderAll() {
+  renderHomeTable(); renderHomStats(); renderHomeChart();
+  renderInventory(); renderInvStats(); renderShoeCards();
+  renderRooms(); renderFood(); renderGuests(); renderHotelStats();
+  renderColleges(); renderStudents(); renderExams(); renderUniStats();
+  renderDirectory(); renderDirStats();
+  renderComics(); renderChars(); renderArcs(); renderComicChart();
+}
+
+// ─── HOME ───
+const SQL_CMDS = [
+  "SELECT * FROM products ORDER BY stock DESC;",
+  "UPDATE stock SET count=count-1 WHERE id='001';",
+  "SELECT * FROM products WHERE category='Comics';",
+  "INSERT INTO guests(name,room) VALUES(?,?);",
+  "SELECT AVG(cgpa) FROM telephone_directory;",
+  "SELECT * FROM colleges JOIN students ON coll_id=college_id;",
+];
+let sqlIdx=0;
+setInterval(()=>{
+  document.getElementById('sql-cmd').textContent = SQL_CMDS[sqlIdx%SQL_CMDS.length];
+  sqlIdx++;
+  // Simulate stock changes
+  const p = DB.products[Math.floor(Math.random()*DB.products.length)];
+  if(p.stock>0) p.stock--;
+  renderAll();
+}, 3000);
+
+function renderHomeTable() {
+  const tb = document.getElementById('home-table');
+  if(!tb) return;
+  tb.innerHTML = DB.products.slice(0,6).map(p=>`
+    <tr>
+      <td class="id-col">${p.id}</td>
+      <td>${p.name}</td>
+      <td style="color:var(--muted)">${p.cat}</td>
+      <td style="color:${p.stock<20?'var(--red)':p.stock<50?'var(--yellow)':'var(--green)'}">${p.stock}</td>
+    </tr>
+  `).join('');
+}
+
+function renderHomStats() {
+  const total = DB.products.reduce((a,p)=>a+p.stock,0);
+  const alerts = DB.products.filter(p=>p.stock<20).length;
+  document.getElementById('hs-stock').textContent = total;
+  document.getElementById('hs-guests').textContent = DB.guests.length;
+  document.getElementById('hs-students').textContent = DB.students.length;
+  document.getElementById('hs-alerts').textContent = alerts;
+}
+
+function renderHomeChart() {
+  const wrap = document.getElementById('home-chart');
+  if(!wrap) return;
+  const maxS = Math.max(...DB.products.map(p=>p.stock));
+  wrap.innerHTML = DB.products.map(p=>`
+    <div class="chart-row">
+      <div class="chart-label">${p.name.substring(0,16)}</div>
+      <div class="chart-bar"><div class="chart-bar-fill" style="width:${(p.stock/maxS)*100}%;background:${p.cat==='Comics'?'var(--neon2)':'var(--neon)'};"></div></div>
+      <div class="chart-val">${p.stock}</div>
+    </div>
+  `).join('');
+}
+
+// ─── INVENTORY ───
+let invFilter='';
+function filterInventory(){ invFilter=document.getElementById('inv-search').value.toLowerCase(); renderInventory(); }
+function renderInventory() {
+  const tb = document.getElementById('inv-table');
+  if(!tb) return;
+  const rows = DB.products.filter(p=>p.name.toLowerCase().includes(invFilter)||p.cat.toLowerCase().includes(invFilter));
+  tb.innerHTML = rows.map(p=>`
+    <tr>
+      <td class="id-col">${p.id}</td>
+      <td>${p.name}</td>
+      <td>${p.cat}</td>
+      <td style="color:var(--gold)">₹${p.price.toLocaleString()}</td>
+      <td>${p.stock}</td>
+      <td class="${p.stock<10?'danger':p.stock<30?'warn':'ok'}">${p.stock<10?'CRITICAL':p.stock<30?'LOW':'OK'}</td>
+      <td style="display:flex;gap:6px;">
+        <button class="btn" style="padding:4px 8px;font-size:0.58rem;" onclick="restock('${p.id}')">Restock</button>
+        <button class="btn red" style="padding:4px 8px;font-size:0.58rem;" onclick="sellItem('${p.id}')">Sell</button>
+      </td>
+    </tr>
+  `).join('');
+}
+function renderInvStats() {
+  const total = DB.products.length;
+  const inStock = DB.products.filter(p=>p.stock>0).length;
+  const low = DB.products.filter(p=>p.stock<20).length;
+  const val = DB.products.reduce((a,p)=>a+p.stock*p.price,0);
+  document.getElementById('inv-total').textContent = total;
+  document.getElementById('inv-in').textContent = inStock;
+  document.getElementById('inv-low').textContent = low;
+  document.getElementById('inv-val').textContent = '₹'+Math.round(val/1000)+'K';
+}
+function renderShoeCards() {
+  const shoes = DB.products.filter(p=>p.cat==='Shoes');
+  const wrap = document.getElementById('shoe-cards');
+  if(!wrap) return;
+  wrap.innerHTML = shoes.map(s=>`
+    <div class="shoe-card">
+      <div class="shoe-name">${s.name}</div>
+      <div class="shoe-price">₹${s.price.toLocaleString()}</div>
+      <div class="bar-wrap" style="margin-top:10px;"><div class="bar-fill ${s.stock<20?'red':''}" style="width:${Math.min(100,s.stock/60*100)}%"></div></div>
+      <div style="font-size:0.7rem;color:var(--muted);margin-top:4px;">Stock: ${s.stock}</div>
+    </div>
+  `).join('');
+}
+function restock(id) {
+  const p = DB.products.find(x=>x.id===id);
+  if(p){ p.stock+=50; notify(`Restocked ${p.name} +50 units`,'ok'); renderAll(); }
+}
+function sellItem(id) {
+  const p = DB.products.find(x=>x.id===id);
+  if(p&&p.stock>0){ p.stock--; notify(`Sold 1x ${p.name}`,'gold'); renderAll(); }
+}
+
+// ─── HOTEL ───
+function renderRooms() {
+  const g = document.getElementById('room-grid');
+  if(!g) return;
+  g.innerHTML = DB.rooms.map(r=>`
+    <div class="room-cell ${r.guest?'occupied':'free'}" onclick="roomClick(${r.no})">
+      <div class="room-num">${r.no}</div>
+      <div>${r.type.substring(0,3)}</div>
+      ${r.guest?`<div style="font-size:0.55rem;">${r.guest.split(' ')[0]}</div>`:'<div>Free</div>'}
+    </div>
+  `).join('');
+}
+function roomClick(no) {
+  const r = DB.rooms.find(x=>x.no===no);
+  if(!r) return;
+  if(r.guest) {
+    openModal('roomInfo', r);
+  } else {
+    openModal('addGuest', {roomNo:no});
+  }
+}
+function renderFood() {
+  const tb = document.getElementById('food-table');
+  if(!tb) return;
+  const f = document.getElementById('food-search');
+  const q = f?f.value.toLowerCase():'';
+  tb.innerHTML = DB.food.filter(x=>x.name.toLowerCase().includes(q)).map((f,i)=>`
+    <tr>
+      <td class="id-col">${i+1}</td>
+      <td>${f.name}</td>
+      <td style="color:var(--gold)">₹${f.price}</td>
+      <td><button class="btn gold" style="padding:3px 10px;font-size:0.6rem;" onclick="orderFood(${f.id})">Order</button></td>
+    </tr>
+  `).join('');
+}
+function filterFood(){ renderFood(); }
+function orderFood(id) {
+  const item = DB.food.find(f=>f.id===id);
+  if(item){ DB.hotelRevenue=(DB.hotelRevenue||0)+item.price; DB.foodOrders=(DB.foodOrders||0)+1; notify(`Ordered: ${item.name} ₹${item.price}`,'gold'); renderAll(); }
+}
+function renderGuests() {
+  const tb = document.getElementById('guest-table');
+  if(!tb) return;
+  const q = (document.getElementById('guest-search')||{}).value||'';
+  const rows = DB.guests.filter(g=>g.name.toLowerCase().includes(q.toLowerCase()));
+  tb.innerHTML = rows.map(g=>`
+    <tr>
+      <td class="id-col">${g.id}</td>
+      <td>${g.name}</td>
+      <td>${g.address}</td>
+      <td>${g.room}</td>
+      <td>${g.arrival}</td>
+      <td>${g.days}</td>
+      <td style="color:var(--gold)">₹${g.bill}</td>
+      <td><button class="btn red" style="padding:3px 10px;font-size:0.6rem;" onclick="checkoutById(${g.id})">Checkout</button></td>
+    </tr>
+  `).join('');
+}
+function filterGuests(){ renderGuests(); }
+function renderHotelStats() {
+  const occ = DB.rooms.filter(r=>r.guest).length;
+  document.getElementById('h-free').textContent = 20-occ;
+  document.getElementById('h-occ').textContent = occ;
+  document.getElementById('h-rev').textContent = '₹'+(DB.hotelRevenue||0).toLocaleString();
+  document.getElementById('h-food').textContent = DB.foodOrders||0;
+}
+function checkoutGuest() {
+  const g = DB.guests[DB.guests.length-1];
+  if(!g){ notify('No guests to checkout','red'); return; }
+  checkoutById(g.id);
+}
+function checkoutById(id) {
+  const idx = DB.guests.findIndex(g=>g.id===id);
+  if(idx===-1) return;
+  const g = DB.guests[idx];
+  DB.hotelRevenue=(DB.hotelRevenue||0)+g.bill;
+  const room = DB.rooms.find(r=>r.no===g.room);
+  if(room) room.guest=null;
+  DB.guests.splice(idx,1);
+  notify(`${g.name} checked out. Bill: ₹${g.bill}`,'gold');
+  renderAll();
+}
+
+// ─── UNIVERSITY ───
+let colFilter='', stuFilter='';
+function filterColleges(){ colFilter=document.getElementById('col-search').value.toLowerCase(); renderColleges(); }
+function filterStudents(){ stuFilter=document.getElementById('stu-search').value.toLowerCase(); renderStudents(); }
+function renderColleges() {
+  const tb = document.getElementById('col-table');
+  if(!tb) return;
+  tb.innerHTML = DB.colleges.filter(c=>c.name.toLowerCase().includes(colFilter)||c.loc.toLowerCase().includes(colFilter)).map(c=>`
+    <tr>
+      <td class="id-col">${c.id}</td>
+      <td>${c.name}</td>
+      <td>${c.loc}</td>
+      <td>${c.stream}</td>
+      <td>${c.degI}</td>
+      <td>${c.degII}</td>
+    </tr>
+  `).join('');
+}
+function renderStudents() {
+  const tb = document.getElementById('stu-table');
+  if(!tb) return;
+  tb.innerHTML = DB.students.filter(s=>s.name.toLowerCase().includes(stuFilter)||s.id.toString().includes(stuFilter)).map(s=>`
+    <tr>
+      <td class="id-col">${s.id}</td>
+      <td>${s.name}</td>
+      <td>${s.fname}</td>
+      <td>${s.city}</td>
+      <td>${s.stream}</td>
+      <td style="color:var(--neon4)">${s.deg}</td>
+    </tr>
+  `).join('');
+}
+function renderExams() {
+  const tb = document.getElementById('exam-table');
+  if(!tb) return;
+  tb.innerHTML = DB.exams.map(e=>`
+    <tr>
+      <td style="color:var(--neon4)">${e.deg}</td>
+      <td>${e.sd}</td>
+      <td>${e.ed}</td>
+      <td>${e.sm}</td>
+      <td>${e.em}</td>
+      <td>${e.sy}</td>
+    </tr>
+  `).join('');
+}
+function renderUniStats() {
+  document.getElementById('u-col').textContent = DB.colleges.length;
+  document.getElementById('u-stu').textContent = DB.students.length;
+  document.getElementById('u-exam').textContent = DB.exams.length;
+  document.getElementById('u-pass').textContent = Math.floor(DB.students.length*0.8);
+}
+
+// ─── DIRECTORY ───
+let dirFilter='';
+function filterDirectory(){ dirFilter=document.getElementById('dir-search').value.toLowerCase(); renderDirectory(); }
+function renderDirectory() {
+  const tb = document.getElementById('dir-table');
+  if(!tb) return;
+  tb.innerHTML = DB.directory.filter(d=>d.name.toLowerCase().includes(dirFilter)||d.id.toLowerCase().includes(dirFilter)).map(d=>`
+    <tr class="result-row">
+      <td><input type="checkbox" class="row-chk" value="${d.id}"></td>
+      <td class="id-col">${d.id}</td>
+      <td>${d.name}</td>
+      <td>${d.address}</td>
+      <td>${d.phone}</td>
+      <td style="color:${d.cgpa>=9?'var(--green)':d.cgpa>=8?'var(--yellow)':'var(--muted)'}">${d.cgpa}</td>
+      <td style="display:flex;gap:6px;">
+        <button class="btn" style="padding:4px 8px;font-size:0.58rem;" onclick="editDir('${d.id}')">Edit</button>
+        <button class="btn red" style="padding:4px 8px;font-size:0.58rem;" onclick="deleteDir('${d.id}')">Del</button>
+      </td>
+    </tr>
+  `).join('');
+  const sqls=['SELECT * FROM Telephone_directory ORDER BY CGPA DESC;',
+    `SELECT * FROM Telephone_directory WHERE name LIKE '%${dirFilter}%';`,
+    'SELECT COUNT(*) FROM Telephone_directory;'];
+  const el=document.getElementById('dir-sql');
+  if(el) el.textContent = sqls[Math.floor(Math.random()*sqls.length)];
+}
+function renderDirStats() {
+  document.getElementById('d-total').textContent = DB.directory.length;
+  const top = Math.max(...DB.directory.map(d=>d.cgpa));
+  const avg = (DB.directory.reduce((a,d)=>a+d.cgpa,0)/DB.directory.length).toFixed(1);
+  document.getElementById('d-cgpa-top').textContent = top;
+  document.getElementById('d-avg').textContent = avg;
+}
+function toggleAll() {
+  const all = document.getElementById('chk-all').checked;
+  document.querySelectorAll('.row-chk').forEach(c=>c.checked=all);
+}
+function deleteSelected() {
+  const ids = [...document.querySelectorAll('.row-chk:checked')].map(c=>c.value);
+  if(!ids.length){ notify('Select records to delete','red'); return; }
+  DB.directory = DB.directory.filter(d=>!ids.includes(d.id));
+  notify(`Deleted ${ids.length} record(s)`,'red');
+  renderAll();
+}
+function deleteDir(id) {
+  DB.directory = DB.directory.filter(d=>d.id!==id);
+  notify(`Record ${id} deleted`,'red'); renderAll();
+}
+function editDir(id) {
+  const d = DB.directory.find(x=>x.id===id);
+  openModal('editDir', d);
+}
+
+// ─── COMICS ───
+function renderComics() {
+  const wrap = document.getElementById('comic-cards');
+  if(!wrap) return;
+  wrap.innerHTML = DB.comics.map(c=>`
+    <div class="comic-card">
+      <div class="comic-issue">${c.issue} · ${c.year}</div>
+      <div class="comic-title">${c.title}</div>
+      <div class="comic-desc">${c.desc}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+        <div style="color:var(--neon2);font-size:0.8rem;">${c.rating}</div>
+        <div style="color:var(--muted);font-size:0.72rem;">Stock: <span style="color:${c.stock<30?'var(--red)':'var(--green)'}">${c.stock}</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+function renderChars() {
+  const tb = document.getElementById('char-table');
+  if(!tb) return;
+  tb.innerHTML = DB.characters.map(c=>`
+    <tr>
+      <td class="id-col">${c.id}</td>
+      <td style="color:${c.role==='Protagonist'?'var(--neon)':c.role.includes('Villain')?'var(--red)':'var(--yellow)'};">${c.name}</td>
+      <td style="color:var(--muted)">${c.role}</td>
+      <td>
+        <div class="bar-wrap"><div class="bar-fill ${c.power>85?'':'gold'}" style="width:${c.power}%"></div></div>
+        <div style="font-size:0.65rem;color:var(--muted)">${c.power}/100</div>
+      </td>
+      <td style="color:var(--muted)">${c.issues}</td>
+    </tr>
+  `).join('');
+}
+function renderArcs() {
+  const tb = document.getElementById('arc-table');
+  if(!tb) return;
+  tb.innerHTML = DB.arcs.map(a=>`
+    <tr>
+      <td>${a.name}</td>
+      <td style="color:var(--muted)">${a.issues}</td>
+      <td class="${a.status==='Complete'?'ok':'warn'}">${a.status}</td>
+      <td style="color:var(--gold)">${a.rating}</td>
+    </tr>
+  `).join('');
+}
+function renderComicChart() {
+  const wrap = document.getElementById('comic-chart');
+  if(!wrap) return;
+  const max = Math.max(...DB.comics.map(c=>c.stock));
+  wrap.innerHTML = DB.comics.slice(0,5).map(c=>`
+    <div class="chart-row">
+      <div class="chart-label" style="font-size:0.65rem;">${c.id}</div>
+      <div class="chart-bar"><div class="chart-bar-fill" style="width:${c.stock/max*100}%;background:var(--neon2);"></div></div>
+      <div class="chart-val">${c.stock}</div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════ MODALS ════════════════════════════════
+function openModal(type, data) {
+  const bg = document.getElementById('modal');
+  const title = document.getElementById('modal-title');
+  const body = document.getElementById('modal-body');
+  bg.classList.add('open');
+
+  if(type==='addGuest') {
+    const roomNo = data?.roomNo||'';
+    title.textContent = 'CHECK-IN NEW GUEST';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Guest Name</label><input id="m-name" placeholder="Full Name"></div>
+        <div class="form-row"><label>Address</label><input id="m-addr" placeholder="Address"></div>
+        <div class="form-row"><label>Room Number (1-20)</label><input id="m-room" type="number" min="1" max="20" value="${roomNo}"></div>
+        <div class="form-row"><label>Days of Stay</label><input id="m-days" type="number" min="1" value="1"></div>
+      </div>
+      <button class="btn" style="margin-top:14px;" onclick="addGuest()">CONFIRM CHECK-IN</button>
+    `;
+  } else if(type==='addProduct') {
+    title.textContent = 'ADD NEW PRODUCT';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Product Name</label><input id="m-pname" placeholder="e.g. VP4 Pro Max"></div>
+        <div class="form-row"><label>Category</label><select id="m-pcat"><option>Shoes</option><option>Comics</option><option>Accessories</option></select></div>
+        <div class="form-row"><label>Price ₹</label><input id="m-pprice" type="number" placeholder="3499"></div>
+        <div class="form-row"><label>Initial Stock</label><input id="m-pstock" type="number" placeholder="50"></div>
+      </div>
+      <button class="btn gold" style="margin-top:14px;" onclick="addProduct()">ADD PRODUCT</button>
+    `;
+  } else if(type==='addFood') {
+    title.textContent = 'ADD FOOD ITEM';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Item Name</label><input id="m-fname" placeholder="e.g. Paneer Masala"></div>
+        <div class="form-row"><label>Price ₹</label><input id="m-fprice" type="number" placeholder="280"></div>
+      </div>
+      <button class="btn gold" style="margin-top:14px;" onclick="addFoodItem()">ADD ITEM</button>
+    `;
+  } else if(type==='addCollege') {
+    title.textContent = 'NEW COLLEGE — UNIVERSE.CPP';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>College Name</label><input id="m-cname" placeholder="College name"></div>
+        <div class="form-row"><label>Location</label><input id="m-cloc" placeholder="City"></div>
+        <div class="form-row"><label>Stream</label><input id="m-cstream" placeholder="Arts/Science/Commerce"></div>
+        <div class="form-row"><label>Degree-I (Bachelor)</label><input id="m-cdegI" placeholder="B.A/B.Sc/B.Com"></div>
+        <div class="form-row"><label>Degree-II (Master)</label><input id="m-cdegII" placeholder="M.A/M.Sc/M.Com"></div>
+      </div>
+      <button class="btn purple" style="margin-top:14px;" onclick="addCollege()">SAVE COLLEGE</button>
+    `;
+  } else if(type==='addStudent') {
+    title.textContent = 'NEW STUDENT — UNIVERSE.CPP';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Student Name</label><input id="m-sname" placeholder="Full name"></div>
+        <div class="form-row"><label>Father's Name</label><input id="m-sfname" placeholder="Father's name"></div>
+        <div class="form-row"><label>City</label><input id="m-scity" placeholder="City"></div>
+        <div class="form-row"><label>Stream</label><input id="m-sstream" placeholder="Arts/Science/Commerce"></div>
+        <div class="form-row"><label>Degree</label><input id="m-sdeg" placeholder="B.A-I / B.Sc-II ..."></div>
+        <div class="form-row"><label>Contact</label><input id="m-scontact" placeholder="Phone number"></div>
+      </div>
+      <button class="btn purple" style="margin-top:14px;" onclick="addStudent()">ENROLL STUDENT</button>
+    `;
+  } else if(type==='addDir') {
+    title.textContent = 'INSERT STUDENT — TELEPHONE DIRECTORY';
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Student ID</label><input id="m-did" placeholder="STU005"></div>
+        <div class="form-row"><label>Name</label><input id="m-dname" placeholder="Full Name"></div>
+        <div class="form-row"><label>Address</label><input id="m-daddr" placeholder="Address"></div>
+        <div class="form-row"><label>Phone Number</label><input id="m-dphone" placeholder="9876543210"></div>
+        <div class="form-row"><label>CGPA</label><input id="m-dcgpa" type="number" step="0.1" min="0" max="10" placeholder="8.5"></div>
+      </div>
+      <button class="btn" style="margin-top:14px;" onclick="addDirEntry()">INSERT RECORD</button>
+    `;
+  } else if(type==='editDir' && data) {
+    title.textContent = 'UPDATE RECORD — '+data.id;
+    body.innerHTML = `
+      <div class="form-grid">
+        <div class="form-row"><label>Name</label><input id="m-ename" value="${data.name}"></div>
+        <div class="form-row"><label>Address</label><input id="m-eaddr" value="${data.address}"></div>
+        <div class="form-row"><label>Phone</label><input id="m-ephone" value="${data.phone}"></div>
+        <div class="form-row"><label>CGPA</label><input id="m-ecgpa" type="number" step="0.1" value="${data.cgpa}"></div>
+      </div>
+      <button class="btn" style="margin-top:14px;" onclick="saveEditDir('${data.id}')">UPDATE RECORD</button>
+    `;
+  } else if(type==='roomInfo' && data) {
+    title.textContent = 'ROOM '+data.no+' INFO';
+    const g = DB.guests.find(x=>x.name===data.guest);
+    body.innerHTML = `
+      <div style="line-height:2.2;font-size:0.85rem;">
+        <div>Room #: <span style="color:var(--neon)">${data.no}</span></div>
+        <div>Type: <span style="color:var(--gold)">${data.type}</span></div>
+        <div>Rate: <span style="color:var(--gold)">₹${data.rate}/night</span></div>
+        ${data.guest?`<div>Guest: <span style="color:var(--neon2)">${data.guest}</span></div>`:'<div style="color:var(--green)">AVAILABLE</div>'}
+        ${g?`<div>Days: ${g.days} | Bill: <span style="color:var(--gold)">₹${g.bill}</span></div>`:''}
+      </div>
+      ${data.guest?`<button class="btn red" style="margin-top:14px;" onclick="checkoutById(${g?.id||0});closeModal()">CHECKOUT</button>`:''}
+    `;
+  }
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+// ─── FORM ACTIONS ───
+let guestIdCounter=1;
+function addGuest() {
+  const name=document.getElementById('m-name')?.value;
+  const addr=document.getElementById('m-addr')?.value;
+  const room=parseInt(document.getElementById('m-room')?.value||1);
+  const days=parseInt(document.getElementById('m-days')?.value||1);
+  if(!name){notify('Enter guest name','red');return;}
+  const r = DB.rooms.find(x=>x.no===room);
+  if(!r){notify('Invalid room number','red');return;}
+  if(r.guest){notify('Room '+room+' is occupied!','red');return;}
+  const bill = days*r.rate;
+  r.guest=name;
+  DB.guests.push({id:guestIdCounter++,name,address:addr||'N/A',room,arrival:new Date().toLocaleDateString('en-IN'),days,bill});
+  closeModal(); notify(`${name} checked into Room ${room}`,'ok'); renderAll();
+}
+
+function addProduct() {
+  const name=document.getElementById('m-pname')?.value;
+  const cat=document.getElementById('m-pcat')?.value;
+  const price=parseInt(document.getElementById('m-pprice')?.value||0);
+  const stock=parseInt(document.getElementById('m-pstock')?.value||0);
+  if(!name){notify('Enter product name','red');return;}
+  const id=String(DB.products.length+1).padStart(3,'0');
+  DB.products.push({id,name,cat,price,stock});
+  closeModal(); notify(`Added: ${name}`,'ok'); renderAll();
+}
+
+function addFoodItem() {
+  const name=document.getElementById('m-fname')?.value;
+  const price=parseInt(document.getElementById('m-fprice')?.value||0);
+  if(!name){notify('Enter item name','red');return;}
+  DB.food.push({id:DB.food.length+1,name,price});
+  closeModal(); notify(`Food item added: ${name}`,'ok'); renderAll();
+}
+
+function addCollege() {
+  const name=document.getElementById('m-cname')?.value;
+  const loc=document.getElementById('m-cloc')?.value;
+  const stream=document.getElementById('m-cstream')?.value;
+  const degI=document.getElementById('m-cdegI')?.value;
+  const degII=document.getElementById('m-cdegII')?.value;
+  if(!name){notify('Enter college name','red');return;}
+  DB.colleges.push({id:DB.colleges.length+1,name,loc:loc||'',stream:stream||'',degI:degI||'',degII:degII||''});
+  closeModal(); notify(`College added: ${name}`,'ok'); renderAll();
+}
+
+function addStudent() {
+  const name=document.getElementById('m-sname')?.value;
+  const fname=document.getElementById('m-sfname')?.value;
+  const city=document.getElementById('m-scity')?.value;
+  const stream=document.getElementById('m-sstream')?.value;
+  const deg=document.getElementById('m-sdeg')?.value;
+  const contact=document.getElementById('m-scontact')?.value;
+  if(!name){notify('Enter student name','red');return;}
+  const id=DB.students.length+1;
+  DB.students.push({id,name,fname:fname||'',add:'',city:city||'',state:'',zip:'',contact:contact||'',code:'',stream:stream||'',deg:deg||''});
+  closeModal(); notify(`Student enrolled: ${name}`,'ok'); renderAll();
+}
+
+function addDirEntry() {
+  const id=document.getElementById('m-did')?.value;
+  const name=document.getElementById('m-dname')?.value;
+  const address=document.getElementById('m-daddr')?.value;
+  const phone=document.getElementById('m-dphone')?.value;
+  const cgpa=parseFloat(document.getElementById('m-dcgpa')?.value||0);
+  if(!id||!name){notify('Fill required fields','red');return;}
+  DB.directory.push({id,name,address:address||'',phone:phone||'',cgpa});
+  closeModal(); notify(`Inserted: ${name}`,'ok'); renderAll();
+}
+
+function saveEditDir(id) {
+  const d=DB.directory.find(x=>x.id===id);
+  if(!d) return;
+  d.name=document.getElementById('m-ename')?.value||d.name;
+  d.address=document.getElementById('m-eaddr')?.value||d.address;
+  d.phone=document.getElementById('m-ephone')?.value||d.phone;
+  d.cgpa=parseFloat(document.getElementById('m-ecgpa')?.value||d.cgpa);
+  closeModal(); notify(`Record ${id} updated`,'ok'); renderAll();
+}
+
+// ═══════════════════════ NOTIFICATIONS ═════════════════════════
+function notify(msg, type='ok') {
+  const wrap=document.getElementById('notify');
+  const el=document.createElement('div');
+  el.className='notif'+(type==='red'?' red':type==='gold'?' gold':'');
+  el.innerHTML='<span>'+({'ok':'✓','red':'✕','gold':'★'}[type]||'•')+'</span>'+msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity 0.4s';setTimeout(()=>el.remove(),400);},2800);
+}
+
+// ═══════════════════════ GAME ENGINE ═══════════════════════════
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let gameState = 'idle', score=0, hiScore=0, lives=3, frame=0, speed=3;
+let player={x:80,y:180,w:30,h:40,vy:0,jumping:false};
+let obstacles=[], collectibles=[], groundY=200;
+let gameLoop=null;
+
+function startGame() {
+  if(gameState==='running') return;
+  score=0; lives=3; speed=3; frame=0;
+  player={x:80,y:groundY-player.h,w:30,h:40,vy:0,jumping:false};
+  obstacles=[]; collectibles=[];
+  gameState='running';
+  document.getElementById('g-btn').textContent='■ STOP';
+  if(gameLoop) clearInterval(gameLoop);
+  gameLoop=setInterval(tick,1000/60);
+}
+
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();jump();}});
+canvas.addEventListener('click',jump);
+
+function jump() {
+  if(gameState!=='running') {startGame();return;}
+  if(!player.jumping){player.vy=-12;player.jumping=true;}
+}
+
+function tick() {
+  frame++;
+  // Physics
+  player.vy+=0.6;
+  player.y+=player.vy;
+  if(player.y>=groundY-player.h){player.y=groundY-player.h;player.vy=0;player.jumping=false;}
+
+  // Speed up
+  if(frame%600===0) speed+=0.5;
+
+  // Spawn obstacles
+  if(frame%Math.max(40,100-score/5)===0) {
+    obstacles.push({x:800,y:groundY-35,w:20,h:35});
+  }
+  // Spawn collectibles
+  if(frame%80===0) {
+    const types=['vp4','bm','star'];
+    const t=types[Math.floor(Math.random()*types.length)];
+    const pts={vp4:10,bm:25,star:50};
+    collectibles.push({x:800,y:groundY-60-Math.random()*60,w:22,h:22,type:t,pts:pts[t]});
+  }
+
+  // Move obstacles
+  obstacles.forEach(o=>o.x-=speed);
+  collectibles.forEach(c=>c.x-=speed);
+  obstacles=obstacles.filter(o=>o.x>-40);
+  collectibles=collectibles.filter(c=>c.x>-40);
+
+  // Collision — obstacles
+  obstacles.forEach((o,i)=>{
+    if(player.x+player.w>o.x+4&&player.x<o.x+o.w-4&&player.y+player.h>o.y+4&&player.y<o.y+o.h){
+      lives--;
+      obstacles.splice(i,1);
+      if(lives<=0){gameOver();return;}
     }
+  });
 
-    // Simple interaction: Simulate stock decreasing
-    function simulateActivity() {
-        const target = Math.floor(Math.random() * data.length);
-        if(data[target].stock > 0) {
-            data[target].stock--;
-            renderTable();
-        }
-        
-        // Randomly update the SQL console text
-        const queries = [
-            "SELECT * FROM products;",
-            "UPDATE stock SET count = count - 1 WHERE id = '001';",
-            "SELECT name FROM products WHERE category = 'Comics';",
-            "ORDER BY stock DESC;"
-        ];
-        document.getElementById('sqlCommand').innerText = queries[Math.floor(Math.random() * queries.length)];
+  // Collision — collectibles
+  collectibles.forEach((c,i)=>{
+    if(player.x+player.w>c.x&&player.x<c.x+c.w&&player.y+player.h>c.y&&player.y<c.y+c.h){
+      score+=c.pts;
+      collectibles.splice(i,1);
     }
+  });
 
-    renderTable();
-    setInterval(simulateActivity, 3000);
+  if(score>hiScore) hiScore=score;
+  updateGameUI();
+  draw();
+}
+
+function draw() {
+  ctx.clearRect(0,0,800,240);
+
+  // Background
+  ctx.fillStyle='#020812';
+  ctx.fillRect(0,0,800,240);
+
+  // Grid lines
+  ctx.strokeStyle='rgba(0,255,231,0.05)';
+  ctx.lineWidth=1;
+  for(let x=0;x<800;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,240);ctx.stroke();}
+  for(let y=0;y<240;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(800,y);ctx.stroke();}
+
+  // Ground
+  ctx.strokeStyle='rgba(0,255,231,0.4)';
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(0,groundY);ctx.lineTo(800,groundY);ctx.stroke();
+
+  // Player (VP4 box character)
+  ctx.fillStyle='#00ffe7';
+  ctx.shadowBlur=12; ctx.shadowColor='#00ffe7';
+  ctx.fillRect(player.x,player.y,player.w,player.h);
+  ctx.fillStyle='#000'; ctx.font='bold 10px monospace'; ctx.shadowBlur=0;
+  ctx.fillText('VP4',player.x+3,player.y+player.h/2+4);
+  ctx.strokeStyle='#007a70'; ctx.lineWidth=1;
+  ctx.strokeRect(player.x,player.y,player.w,player.h);
+
+  // Obstacles
+  obstacles.forEach(o=>{
+    ctx.fillStyle='rgba(255,60,90,0.85)';
+    ctx.shadowBlur=8; ctx.shadowColor='#ff3c5a';
+    ctx.fillRect(o.x,o.y,o.w,o.h);
+    ctx.shadowBlur=0;
+  });
+
+  // Collectibles
+  collectibles.forEach(c=>{
+    if(c.type==='vp4'){ctx.fillStyle='#ffe600';ctx.shadowColor='#ffe600';}
+    else if(c.type==='bm'){ctx.fillStyle='#ff006e';ctx.shadowColor='#ff006e';}
+    else{ctx.fillStyle='#ffd700';ctx.shadowColor='#ffd700';}
+    ctx.shadowBlur=10;
+    ctx.fillRect(c.x,c.y,c.w,c.w);
+    ctx.fillStyle='#000'; ctx.font='9px monospace'; ctx.shadowBlur=0;
+    ctx.fillText({vp4:'VP',bm:'⚡',star:'★'}[c.type], c.x+3, c.y+c.w-5);
+  });
+
+  // HUD
+  ctx.shadowBlur=0;
+  ctx.fillStyle='rgba(0,255,231,0.7)'; ctx.font='11px Orbitron,monospace';
+  ctx.fillText(`SCORE: ${score}`, 10, 20);
+  ctx.fillStyle='rgba(255,215,0,0.7)';
+  ctx.fillText(`BEST: ${hiScore}`, 10, 36);
+  ctx.fillStyle='rgba(255,60,90,0.9)';
+  ctx.fillText('♥'.repeat(lives), 700, 20);
+}
+
+function gameOver() {
+  gameState='idle';
+  clearInterval(gameLoop);
+  document.getElementById('g-btn').textContent='▶ START';
+  if(score>0) {
+    DB.leaderboard.push({score,date:new Date().toLocaleTimeString()});
+    DB.leaderboard.sort((a,b)=>b.score-a.score);
+    DB.leaderboard=DB.leaderboard.slice(0,5);
+    renderLeaderboard();
+  }
+  notify(`Game Over! Score: ${score}`,'gold');
+  // Draw game over screen
+  ctx.fillStyle='rgba(0,0,0,0.7)';
+  ctx.fillRect(0,0,800,240);
+  ctx.fillStyle='#ff006e'; ctx.font='bold 40px Orbitron,monospace';
+  ctx.textAlign='center';
+  ctx.fillText('GAME OVER',400,110);
+  ctx.fillStyle='#00ffe7'; ctx.font='16px monospace';
+  ctx.fillText(`Score: ${score} | Best: ${hiScore}`,400,145);
+  ctx.textAlign='left';
+}
+
+function updateGameUI() {
+  document.getElementById('g-score').textContent=score;
+  document.getElementById('g-hi').textContent=hiScore;
+  document.getElementById('g-lives').textContent='♥'.repeat(Math.max(0,lives));
+}
+
+function renderLeaderboard() {
+  const el=document.getElementById('leaderboard');
+  if(!el) return;
+  el.innerHTML=DB.leaderboard.length?DB.leaderboard.map((e,i)=>`
+    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.75rem;">
+      <span style="color:${i===0?'var(--gold)':'var(--muted)'}">#${i+1}</span>
+      <span style="color:${i===0?'var(--gold)':'var(--neon)'}">${e.score}</span>
+      <span style="color:var(--muted)">${e.date}</span>
+    </div>
+  `).join(''):'<div style="color:var(--muted);font-size:0.75rem;">No scores yet. Play to record!</div>';
+}
+
+// ═════════════════════════ INIT ════════════════════════════════
+window.addEventListener('click',e=>{
+  if(e.target===document.getElementById('modal')) closeModal();
+});
+renderAll();
+renderLeaderboard();
+
+// ═══════════════════════ WOODLAND TABS ════════════════════════
+function wlTab(id) {
+  document.querySelectorAll('.wl-panel').forEach(p => p.style.display='none');
+  document.getElementById('wl-'+id).style.display='block';
+  document.querySelectorAll('#wl-methods-tab .tab').forEach((t,i) => {
+    t.classList.toggle('active', ['movement','combat','network','lifecycle'][i]===id);
+  });
+}
+
+const SNIPPETS = {
+  throttle: `<span class="cm">// JellyPlane.cpp — Throttle System</span>
+<span class="cm">// Called every 0.05s via timer set in BeginPlay()</span>
+
+<span class="kw">void</span> <span class="fn">AJellyPlane::Throttle</span>() {
+    <span class="kw">if</span>(bThrottleUp){
+        ThrottleAmount = FMath::<span class="fn">Clamp</span>(++ThrottleAmount, <span class="nm">0</span>, MaxSpeed);
+    }
+    <span class="kw">else if</span> (bThrottleDown) {
+        ThrottleAmount = FMath::<span class="fn">Clamp</span>(ThrottleAmount-<span class="nm">8</span>, <span class="nm">0</span>, MaxSpeed);
+    }
+}
+
+<span class="cm">// CalculateSpeed — runs every Tick()</span>
+<span class="kw">void</span> <span class="fn">AJellyPlane::CalculateSpeed</span>() {
+    <span class="kw">float</span> Speeed = FMath::<span class="fn">Clamp</span>(ThrottleAmount * Speed, <span class="nm">0.0f</span>, Speed * <span class="nm">10</span>);
+    FVector ForwardVector = PlaneBody-><span class="fn">GetForwardVector</span>() * Speeed;
+    FVector PVelocity = PlaneBody-><span class="fn">GetPhysicsLinearVelocity</span>();
+    PlaneBody-><span class="fn">SetPhysicsLinearVelocity</span>(FMath::<span class="fn">Lerp</span>(PVelocity, ForwardVector, <span class="nm">0.01f</span>));
+}`,
+
+  fire: `<span class="cm">// JellyPlane.cpp — Fire & Line Trace (Server RPC)</span>
+
+<span class="kw">void</span> <span class="fn">AJellyPlane::serverFire_Implementation</span>() {
+    <span class="cm">// Start repeating fire timer at 10 rounds/sec</span>
+    GetWorld()-><span class="fn">GetTimerManager</span>().<span class="fn">SetTimer</span>(FireTimer, <span class="kw">this</span>,
+        &AJellyPlane::Fire, <span class="nm">0.1</span>, <span class="kw">true</span>);
+
+    FVector Location; FRotator Rotation;
+    GetController()-><span class="fn">GetPlayerViewPoint</span>(Location, Rotation);
+    FVector End = Location + Rotation.<span class="fn">Vector</span>() * <span class="nm">10000.f</span>;
+
+    FHitResult Hit;
+    <span class="kw">bool</span> bSuccess = GetWorld()-><span class="fn">LineTraceSingleByChannel</span>(
+        Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
+
+    <span class="kw">if</span> (bSuccess) {
+        FVector ShotDirection = -Rotation.<span class="fn">Vector</span>();
+        <span class="fn">spawnEmitters</span>(Hit.Location, ShotDirection.<span class="fn">Rotation</span>());
+        FPointDamageEvent DamageEvent(<span class="nm">10.f</span>, Hit, ShotDirection, <span class="kw">nullptr</span>);
+        AActor* HitActor = Hit.<span class="fn">GetActor</span>();
+        <span class="kw">if</span> (HitActor != <span class="kw">nullptr</span>)
+            HitActor-><span class="fn">TakeDamage</span>(<span class="nm">10.f</span>, DamageEvent, <span class="fn">GetController</span>(), <span class="kw">this</span>);
+    }
+}`,
+
+  damage: `<span class="cm">// JellyPlane.cpp — Damage & Health System</span>
+
+<span class="kw">float</span> <span class="fn">AJellyPlane::TakeDamage</span>(<span class="kw">float</span> DamageAmount,
+    <span class="kw">struct</span> FDamageEvent <span class="kw">const</span> &DamageEvent,
+    <span class="kw">class</span> AController *EventInstigator,
+    AActor *DamageCausor)
+{
+    <span class="kw">float</span> DamageApplied = <span class="fn">Super::TakeDamage</span>(
+        DamageAmount, DamageEvent, EventInstigator, DamageCausor);
+
+    <span class="cm">// Clamp health between 0 and MaxHealth (500)</span>
+    CurrentHealth = FMath::<span class="fn">Clamp</span>(
+        CurrentHealth - DamageAmount, <span class="nm">0.f</span>, <span class="nm">500.f</span>);
+
+    <span class="kw">if</span>(CurrentHealth <= <span class="nm">0</span>) {
+        <span class="fn">OnDeath</span>(DamageCausor);  <span class="cm">// BlueprintImplementableEvent</span>
+        <span class="fn">Destroy</span>();
+    }
+    <span class="kw">return</span> DamageApplied;
+}`,
+
+  sability: `<span class="cm">// JellyPlane.cpp — Special Ability (Sphere Overlap)</span>
+
+<span class="kw">void</span> <span class="fn">AJellyPlane::serverSAbility_Implementation</span>()
+{
+    <span class="cm">// Debug sphere visualization (radius 1000)</span>
+    <span class="fn">DrawDebugSphere</span>(GetWorld(), <span class="fn">GetActorLocation</span>(),
+        <span class="nm">1000.0f</span>, <span class="nm">32</span>, FColor::Red, <span class="kw">false</span>, <span class="nm">1.0f</span>);
+
+    <span class="cm">// Find all visible actors within 4000 units</span>
+    TArray&lt;TEnumAsByte&lt;EObjectTypeQuery&gt;&gt; traceObjectTypes;
+    traceObjectTypes.<span class="fn">Add</span>(UEngineTypes::<span class="fn">ConvertToObjectType</span>(
+        ECollisionChannel::ECC_Visibility));
+
+    TArray&lt;AActor*&gt; ignoreActors;
+    ignoreActors.<span class="fn">Init</span>(<span class="kw">this</span>, <span class="nm">1</span>);  <span class="cm">// ignore self</span>
+
+    TArray&lt;AActor*&gt; outActors;
+    UKismetSystemLibrary::<span class="fn">SphereOverlapActors</span>(
+        GetWorld(), <span class="fn">GetActorLocation</span>(), <span class="nm">4000.0f</span>,
+        traceObjectTypes, <span class="kw">NULL</span>, ignoreActors, outActors);
+
+    <span class="kw">for</span>(AActor* actor : outActors)
+        UE_LOG(LogTemp, Warning, TEXT(<span class="st">"Hit: %s"</span>), *actor-><span class="fn">GetName</span>());
+}`,
+
+  replication: `<span class="cm">// JellyPlane.h — Replicated Properties</span>
+
+<span class="cm">// In class declaration:</span>
+UPROPERTY(<span class="kw">Replicated</span>)
+<span class="kw">bool</span> bThrottleUp = <span class="kw">false</span>;
+UPROPERTY(<span class="kw">Replicated</span>)
+<span class="kw">bool</span> bThrottleDown = <span class="kw">false</span>;
+UPROPERTY(<span class="kw">Replicated</span>)
+<span class="kw">int</span> ThrottleAmount = <span class="nm">0</span>;
+UPROPERTY(<span class="kw">Replicated</span>, EditAnywhere)
+<span class="kw">float</span> CurrentHealth;
+
+<span class="cm">// JellyPlane.cpp — Register all replicated props:</span>
+<span class="kw">void</span> <span class="fn">AJellyPlane::GetLifetimeReplicatedProps</span>(
+    TArray&lt;FLifetimeProperty&gt;& OutLifetimeProps) <span class="kw">const</span>
+{
+    <span class="fn">Super::GetLifetimeReplicatedProps</span>(OutLifetimeProps);
+    <span class="fn">DOREPLIFETIME</span>(AJellyPlane, CurrentHealth)
+    <span class="fn">DOREPLIFETIME</span>(AJellyPlane, ThrottleAmount)
+    <span class="fn">DOREPLIFETIME</span>(AJellyPlane, bThrottleUp)
+    <span class="fn">DOREPLIFETIME</span>(AJellyPlane, bThrottleDown)
+    <span class="fn">DOREPLIFETIME</span>(AJellyPlane, Flash)
+}`,
+
+  countdown: `<span class="cm">// CountDowwnTimer.html — Original JS (translated & enhanced)</span>
+<span class="cm">// Original: external file "Countdown Timer.js"</span>
+<span class="cm">// Enhanced VP4 version (inline):</span>
+
+<span class="kw">let</span> cdTotal = <span class="nm">0</span>, cdRemaining = <span class="nm">0</span>;
+<span class="kw">let</span> cdInterval = <span class="kw">null</span>, cdRunning = <span class="kw">false</span>;
+
+<span class="kw">function</span> <span class="fn">cdSetAndStart</span>() {
+    <span class="kw">const</span> h = +document.<span class="fn">getElementById</span>(<span class="st">'cd-set-h'</span>).value || <span class="nm">0</span>;
+    <span class="kw">const</span> m = +document.<span class="fn">getElementById</span>(<span class="st">'cd-set-m'</span>).value || <span class="nm">0</span>;
+    <span class="kw">const</span> s = +document.<span class="fn">getElementById</span>(<span class="st">'cd-set-s'</span>).value || <span class="nm">0</span>;
+    cdTotal = h*<span class="nm">3600</span> + m*<span class="nm">60</span> + s;
+    cdRemaining = cdTotal;
+    <span class="fn">cdStart</span>();
+}
+
+<span class="kw">function</span> <span class="fn">cdTick</span>() {
+    <span class="kw">if</span> (cdRemaining <= <span class="nm">0</span>) {
+        <span class="fn">clearInterval</span>(cdInterval);
+        <span class="fn">notify</span>(<span class="st">'⏱ COUNTDOWN COMPLETE!'</span>, <span class="st">'gold'</span>);
+        <span class="kw">return</span>;
+    }
+    cdRemaining--;
+    <span class="fn">cdRender</span>();
+}`
+};
+
+function showSnippet(key) {
+  document.getElementById('snippet-display').innerHTML = SNIPPETS[key] || '<span class="cm">// Not found</span>';
+}
+
+// ═══════════════════════ COUNTDOWN ENGINE ═════════════════════
+let cdTotal=0, cdRemaining=0, cdInterval=null, cdRunning=false;
+let cdSessions=0, cdTotalMins=0, cdStreak=0, cdLongest=0, cdCurrentMins=0;
+
+function cdSetAndStart() {
+  const h=+document.getElementById('cd-set-h').value||0;
+  const m=+document.getElementById('cd-set-m').value||0;
+  const s=+document.getElementById('cd-set-s').value||0;
+  cdTotal = h*3600 + m*60 + s;
+  if(cdTotal<=0){notify('Set a duration first','red');return;}
+  cdRemaining = cdTotal;
+  cdCurrentMins = Math.round(cdTotal/60);
+  cdStart();
+}
+function cdPreset(h,m,s) {
+  document.getElementById('cd-set-h').value=h;
+  document.getElementById('cd-set-m').value=m;
+  document.getElementById('cd-set-s').value=s;
+  cdSetAndStart();
+}
+function cdStart() {
+  if(cdRunning) return;
+  if(cdRemaining<=0&&cdTotal>0) cdRemaining=cdTotal;
+  if(cdRemaining<=0){notify('Set time first','red');return;}
+  cdRunning=true;
+  if(cdInterval) clearInterval(cdInterval);
+  cdInterval = setInterval(cdTick, 1000);
+  notify('Countdown started','ok');
+}
+function cdPause() {
+  if(!cdRunning){cdStart();return;}
+  cdRunning=false;
+  clearInterval(cdInterval);
+  notify('Paused','gold');
+}
+function cdReset() {
+  cdRunning=false;
+  clearInterval(cdInterval);
+  cdRemaining=cdTotal;
+  cdRenderDisplay(cdTotal,cdTotal);
+  document.getElementById('cd-progress').style.width='0%';
+  document.getElementById('cd-message').textContent='Countdown reset.';
+}
+function cdTick() {
+  cdRemaining--;
+  if(cdRemaining<=0) {
+    cdRemaining=0;
+    cdRunning=false;
+    clearInterval(cdInterval);
+    cdSessions++;
+    cdTotalMins+=cdCurrentMins;
+    cdStreak++;
+    if(cdCurrentMins>cdLongest) cdLongest=cdCurrentMins;
+    document.getElementById('cd-sess').textContent=cdSessions;
+    document.getElementById('cd-total-time').textContent=cdTotalMins+' min';
+    document.getElementById('cd-streak').textContent=cdStreak+' 🔥';
+    document.getElementById('cd-longest').textContent=cdLongest+' min';
+    const label=document.getElementById('cd-label-input').value||'Session';
+    const log=document.getElementById('cd-log');
+    const entry=document.createElement('div');
+    entry.innerHTML=`<span style="color:var(--gold)">✓</span> ${label} — ${cdCurrentMins}m @ ${new Date().toLocaleTimeString()}`;
+    log.prepend(entry);
+    document.getElementById('cd-message').textContent='✓ Mission Complete! '+label;
+    document.getElementById('cd-progress').style.width='100%';
+    notify('⏱ COUNTDOWN COMPLETE: '+label,'gold');
+    // Feed the pet
+    petEvent('focus-session');
+    return;
+  }
+  const prog = (cdTotal-cdRemaining)/cdTotal;
+  document.getElementById('cd-progress').style.width=(prog*100)+'%';
+  const label=document.getElementById('cd-label-input').value||'Counting down';
+  document.getElementById('cd-message').textContent=label+' — in progress...';
+  cdRenderDisplay(cdRemaining, cdTotal);
+}
+function cdRenderDisplay(secs) {
+  const h=Math.floor(secs/3600);
+  const m=Math.floor((secs%3600)/60);
+  const s=secs%60;
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+
+// ═══════════════════════ DIGITAL PET ENGINE ════════════════════
+const PET = {
+  energy:70, focus:50, skill:30, mood:80, xp:10,
+  level:1, name:'Byte', events:0, achievements:[],
+  allAchievements: [
+    {id:'first_commit', label:'First Blood 📦', desc:'First commit logged', earned:false},
+    {id:'debugger', label:'Bug Slayer 🐛', desc:'Debug 5 times', earned:false, count:0, target:5},
+    {id:'deployer', label:'Ship It 🚀', desc:'First deploy', earned:false},
+    {id:'level5', label:'Level 5 ⬆', desc:'Reach level 5', earned:false},
+    {id:'centurion', label:'100 XP 💯', desc:'Earn 100 XP', earned:false},
+    {id:'wizard', label:'Code Wizard 🔮', desc:'Reach 2000 XP', earned:false},
+  ]
+};
+const PET_LEVELS = [
+  {min:0,    name:'Hatchling',  emoji:'🥚'},
+  {min:100,  name:'Chick',      emoji:'🐣'},
+  {min:300,  name:'Coder Cat',  emoji:'🐱'},
+  {min:600,  name:'Debug Bot',  emoji:'🤖'},
+  {min:1000, name:'Ace Dev',    emoji:'🦅'},
+  {min:2000, name:'Code Wizard',emoji:'🔮'},
+];
+const PET_EVENTS = {
+  commit:  {energy:+5,  focus:+3,  skill:+5,  mood:+8,  xp:15, msg:'📦 Commit! Byte is happy!'},
+  debug:   {energy:-5,  focus:+10, skill:+8,  mood:+5,  xp:20, msg:'🐛 Debugging... Byte concentrates hard.'},
+  feature: {energy:-8,  focus:+5,  skill:+12, mood:+10, xp:30, msg:'✨ New feature! Byte glows with pride!'},
+  review:  {energy:+0,  focus:+8,  skill:+6,  mood:+5,  xp:12, msg:'👁 Code review. Byte learns from others.'},
+  deploy:  {energy:-10, focus:+0,  skill:+15, mood:+15, xp:40, msg:'🚀 DEPLOYED! Byte is ecstatic!'},
+  break:   {energy:+20, focus:-15, skill:-2,  mood:-10, xp:-5, msg:'😴 Taking a break. Byte naps...'},
+  'focus-session': {energy:-5, focus:+15, skill:+8, mood:+12, xp:25, msg:'⏱ Focus session done! Byte leveled up focus!'},
+};
+
+function petEvent(type) {
+  const ev = PET_EVENTS[type];
+  if(!ev) return;
+  PET.energy   = Math.max(0, Math.min(100, PET.energy  + ev.energy));
+  PET.focus    = Math.max(0, Math.min(100, PET.focus   + ev.focus));
+  PET.skill    = Math.max(0, Math.min(100, PET.skill   + ev.skill));
+  PET.mood     = Math.max(0, Math.min(100, PET.mood    + ev.mood));
+  PET.xp       = Math.max(0, PET.xp + ev.xp);
+  PET.events++;
+
+  // Check achievements
+  if(type==='commit' && !PET.allAchievements[0].earned) { PET.allAchievements[0].earned=true; petAchievement(0); }
+  if(type==='debug') { PET.allAchievements[1].count=(PET.allAchievements[1].count||0)+1; if(PET.allAchievements[1].count>=5&&!PET.allAchievements[1].earned){PET.allAchievements[1].earned=true;petAchievement(1);} }
+  if(type==='deploy' && !PET.allAchievements[2].earned) { PET.allAchievements[2].earned=true; petAchievement(2); }
+  if(PET.xp>=100 && !PET.allAchievements[4].earned) { PET.allAchievements[4].earned=true; petAchievement(4); }
+  if(PET.xp>=2000 && !PET.allAchievements[5].earned) { PET.allAchievements[5].earned=true; petAchievement(5); }
+
+  // Level up
+  let newLevel = 1;
+  for(let i=PET_LEVELS.length-1;i>=0;i--) { if(PET.xp>=PET_LEVELS[i].min){newLevel=i+1;break;} }
+  if(newLevel>PET.level) { PET.level=newLevel; notify('🎉 Byte leveled up! Now: '+PET_LEVELS[newLevel-1].name,'gold'); if(!PET.allAchievements[3].earned&&newLevel>=5){PET.allAchievements[3].earned=true;petAchievement(3);} }
+
+  // Log
+  const log = document.getElementById('pet-log');
+  if(log) { const d=document.createElement('div'); d.innerHTML=`<span style="color:var(--muted);font-size:0.65rem;">${new Date().toLocaleTimeString()}</span> ${ev.msg}`; log.prepend(d); if(log.children.length>20) log.lastChild.remove(); }
+
+  petUpdateStats();
+  petDraw();
+  if(type!=='break') notify(ev.msg.substring(0,60),'ok');
+}
+
+function petAchievement(idx) {
+  const a = PET.allAchievements[idx];
+  notify('🏆 Achievement: '+a.label,'gold');
+  const wrap = document.getElementById('pet-achievements');
+  if(wrap) {
+    const badge = document.createElement('div');
+    badge.className='pet-badge';
+    badge.style.cssText='background:rgba(255,215,0,0.12);border:1px solid var(--gold);color:var(--gold);';
+    badge.textContent = a.label;
+    badge.title = a.desc;
+    wrap.appendChild(badge);
+  }
+}
+
+function petUpdateStats() {
+  const stats = {energy:PET.energy, focus:PET.focus, skill:PET.skill, mood:PET.mood, xp:Math.min(100, PET.xp/20)};
+  const colors = {energy:'var(--neon)',focus:'var(--neon4)',skill:'var(--gold)',mood:'var(--green)',xp:'var(--neon2)'};
+  for(const [k,v] of Object.entries(stats)) {
+    const bar = document.getElementById('ps-'+k);
+    const val = document.getElementById('ps-'+k+'-v');
+    if(bar) bar.style.width = v+'%';
+    if(val) val.textContent = k==='xp' ? PET.xp : Math.round(v);
+  }
+  const lvl = PET_LEVELS[PET.level-1]||PET_LEVELS[0];
+  const moodEl = document.getElementById('pet-mood');
+  const lvlEl = document.getElementById('pet-level-badge');
+  if(moodEl) {
+    const moods = [[80,'THRIVING! ✨'],[60,'HAPPY 😊'],[40,'OK 😐'],[20,'TIRED 😴'],[0,'SAD 😢']];
+    moodEl.textContent = (moods.find(([t])=>PET.mood>=t)||moods[4])[1];
+  }
+  if(lvlEl) lvlEl.textContent = `Level ${PET.level} · ${lvl.emoji} ${lvl.name} · ${PET.xp} XP`;
+}
+
+function petDraw() {
+  const canvas = document.getElementById('pet-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w=280, h=220;
+  ctx.clearRect(0,0,w,h);
+
+  // Background
+  ctx.fillStyle='#020812';
+  ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(0,255,231,0.04)';
+  for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+  const lvl = PET_LEVELS[PET.level-1]||PET_LEVELS[0];
+  const cx=140, cy=110;
+
+  // Aura glow
+  const auraColor = PET.mood>70?'rgba(0,255,136,0.08)':PET.mood>40?'rgba(0,255,231,0.07)':'rgba(255,60,90,0.06)';
+  const grad = ctx.createRadialGradient(cx,cy,10,cx,cy,70);
+  grad.addColorStop(0, auraColor.replace('0.0','0.2'));
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle=grad;
+  ctx.beginPath();ctx.arc(cx,cy,70,0,Math.PI*2);ctx.fill();
+
+  // Body
+  const bodyColor = PET.mood>70?'#00ff88':PET.mood>40?'#00ffe7':'#ff3c5a';
+  ctx.font=`${40+PET.level*4}px serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.shadowBlur=20; ctx.shadowColor=bodyColor;
+  ctx.fillStyle=bodyColor;
+  ctx.fillText(lvl.emoji, cx, cy);
+  ctx.shadowBlur=0;
+
+  // XP ring
+  const xpAngle = (PET.xp % (PET_LEVELS[Math.min(PET.level,PET_LEVELS.length-1)].min||100)) /
+    (PET_LEVELS[Math.min(PET.level,PET_LEVELS.length-1)].min||100) * Math.PI*2;
+  ctx.strokeStyle='rgba(255,215,0,0.3)';
+  ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(cx,cy,56,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle='#ffd700';
+  ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(cx,cy,56,-Math.PI/2,-Math.PI/2+xpAngle);ctx.stroke();
+
+  // Stats mini-bars
+  const barsY = h-38;
+  const bars=[['E',PET.energy,'#00ffe7'],['F',PET.focus,'#7b2fff'],['S',PET.skill,'#ffe600'],['M',PET.mood,'#00ff88']];
+  bars.forEach(([lbl,val,col],i)=>{
+    const bx = 20 + i*60;
+    ctx.fillStyle='rgba(255,255,255,0.06)';
+    ctx.fillRect(bx,barsY,50,7);
+    ctx.fillStyle=col;
+    ctx.fillRect(bx,barsY,50*(val/100),7);
+    ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.font='9px monospace'; ctx.textAlign='center';
+    ctx.fillText(lbl,bx+25,barsY-5);
+  });
+  ctx.textAlign='left';
+
+  // Level badge
+  ctx.fillStyle='rgba(0,0,0,0.6)';
+  ctx.fillRect(5,5,100,22);
+  ctx.fillStyle='#ffd700'; ctx.font='bold 10px Orbitron,monospace';
+  ctx.textAlign='left';
+  ctx.fillText('LVL '+PET.level+' · '+PET.xp+'XP', 10, 20);
+}
+
+// Decay over time
+setInterval(()=>{
+  PET.energy = Math.max(0, PET.energy-1);
+  PET.mood   = Math.max(0, PET.mood-0.5);
+  petUpdateStats();
+  petDraw();
+}, 30000); // every 30 seconds
+
+// Init pet
+setTimeout(()=>{ petUpdateStats(); petDraw(); }, 500);
+
+// Patch showTab to include new tabs
+const _origShowTab = showTab;
+window.showTab = function(id) {
+  const allIds = ['home','inventory','hotel','university','directory','comics','game','countdown','woodlands','pet'];
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const sec = document.getElementById('tab-'+id);
+  if(sec) sec.classList.add('active');
+  const idx = allIds.indexOf(id);
+  const tabs = document.querySelectorAll('.tab');
+  if(tabs[idx]) tabs[idx].classList.add('active');
+  renderAll();
+  if(id==='pet') { petUpdateStats(); petDraw(); }
+};
+
+
+
+// Draw idle game screen
+(function idleDraw() {
+  ctx.fillStyle='#020812'; ctx.fillRect(0,0,800,240);
+  ctx.fillStyle='rgba(0,255,231,0.12)'; ctx.font='22px Orbitron,monospace';
+  ctx.textAlign='center'; ctx.fillText('VP4 RUNNER — PRESS START',400,115);
+  ctx.fillStyle='rgba(0,255,231,0.4)'; ctx.font='13px monospace';
+  ctx.fillText('Collect VP4 boxes · Avoid obstacles · Beat your high score',400,145);
+  ctx.textAlign='left';
+})();
 </script>
-
 </body>
 </html>
