@@ -59,10 +59,17 @@
   .logo-block h1 {
     font-family: 'Orbitron', sans-serif;
     font-size: 2.2rem; font-weight: 900;
+    /* color: #87CEEB;
+    text-shadow: 0 0 24px #87CEEB, 0 0 60px rgba(135,206,235,0.5), 0 0 100px rgba(135,206,235,0.2); */
     color: var(--neon);
-    text-shadow: 0 0 24px var(--neon), 0 0 60px rgba(0,255,231,0.3);
+    text-shadow: 0 0 40px rgba(0, 255, 231, 0.5);
     letter-spacing: 4px;
     line-height:1;
+    animation: h1float 3.5s ease-in-out infinite;
+  }
+  @keyframes h1float {
+    0%,100%{transform:translateY(0px) scale(1);}
+    50%{transform:translateY(-8px) scale(1.015);}
   }
   .logo-block .subtitle {
     font-family:'Rajdhani', sans-serif;
@@ -76,6 +83,155 @@
   }
   .live-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:blink 1.1s infinite; }
   @keyframes blink { 50%{opacity:0.1} }
+
+  /* ── 3D GLOBAL ANIMATIONS ── */
+  body {
+    perspective: 1200px;
+  }
+
+  /* 3D panel hover lift */
+  .panel {
+    transform-style: preserve-3d;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s;
+  }
+  .panel:hover {
+    transform: translateZ(12px) rotateX(-1.5deg) rotateY(1deg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(135,206,235,0.1);
+  }
+
+  /* 3D stat card tilt */
+  .stat-card {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+  }
+  .stat-card:hover {
+    transform: translateZ(18px) rotateX(-4deg) scale(1.04);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 20px rgba(135,206,235,0.15);
+  }
+
+  /* 3D tab hover */
+  .tab {
+    transform-style: preserve-3d;
+    transition: all 0.2s, transform 0.25s;
+  }
+  .tab:hover {
+    transform: translateY(-3px) translateZ(6px);
+  }
+  .tab.active {
+    transform: translateY(-2px) translateZ(4px);
+  }
+
+  /* 3D button press */
+  .btn {
+    transform-style: preserve-3d;
+    transition: all 0.18s, transform 0.15s;
+  }
+  .btn:hover {
+    transform: translateY(-3px) translateZ(8px) rotateX(-5deg);
+    box-shadow: 0 8px 20px rgba(0,255,231,0.25), 0 0 14px rgba(0,255,231,0.3);
+  }
+  .btn:active {
+    transform: translateY(1px) translateZ(2px);
+  }
+
+  /* 3D header */
+  #header {
+    transform-style: preserve-3d;
+    transform: perspective(800px) rotateX(0deg);
+    transition: transform 0.5s;
+  }
+
+  /* Floating cards animation */
+  @keyframes float3d {
+    0%  { transform: translateZ(0px) rotateX(0deg); }
+    33% { transform: translateZ(6px) rotateX(-0.5deg); }
+    66% { transform: translateZ(3px) rotateX(0.3deg); }
+    100%{ transform: translateZ(0px) rotateX(0deg); }
+  }
+
+  /* 3D hero banner */
+  .hero {
+    transform-style: preserve-3d;
+    transform: perspective(600px) rotateX(2deg);
+    transition: transform 0.4s;
+  }
+  .hero:hover {
+    transform: perspective(600px) rotateX(0deg) translateZ(8px);
+  }
+
+  /* 3D nav bar slide-in perspective */
+  #nav {
+    transform: perspective(800px) rotateX(-1.5deg);
+    transform-origin: top center;
+  }
+
+  /* 3D shoe-card tilt */
+  .shoe-card {
+    transform-style: preserve-3d;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .shoe-card:hover {
+    transform: rotateY(-6deg) rotateX(3deg) translateZ(10px);
+    box-shadow: 8px 12px 30px rgba(0,0,0,0.5);
+  }
+
+  /* 3D comic card */
+  .comic-card {
+    transform-style: preserve-3d;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .comic-card:hover {
+    transform: rotateY(6deg) rotateX(-2deg) translateZ(12px);
+    box-shadow: -8px 12px 30px rgba(0,0,0,0.5);
+  }
+
+  /* Scrolling depth shimmer on content area */
+  #content {
+    transform-style: preserve-3d;
+  }
+
+  /* 3D room cell */
+  .room-cell {
+    transform-style: preserve-3d;
+    transition: all 0.18s, transform 0.2s;
+  }
+  .room-cell:hover {
+    transform: scale(1.06) translateZ(10px) rotateX(-5deg);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+
+  /* 3D table rows */
+  tr:hover td {
+    background: rgba(135,206,235,0.06);
+    transform: translateX(4px);
+    transition: all 0.2s;
+  }
+
+  /* Global depth shimmer overlay */
+  body::after {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:998;
+    background: linear-gradient(135deg,
+      transparent 0%,
+      rgba(135,206,235,0.015) 25%,
+      transparent 50%,
+      rgba(135,206,235,0.01) 75%,
+      transparent 100%);
+    background-size: 200% 200%;
+    animation: shimmer3d 8s linear infinite;
+  }
+  @keyframes shimmer3d {
+    0%{background-position:0% 0%}
+    100%{background-position:200% 200%}
+  }
+
+  /* 3D entrance animation for sections */
+  section.active {
+    animation: section3dIn 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;
+  }
+  @keyframes section3dIn {
+    from { opacity:0; transform: perspective(600px) translateZ(-40px) rotateX(3deg); }
+    to   { opacity:1; transform: perspective(600px) translateZ(0) rotateX(0deg); }
+  }
 
   /* ── NAV TABS ── */
   #nav {
@@ -111,7 +267,7 @@
   }
   .panel-title {
     font-family:'Orbitron', sans-serif;
-    font-size:0.7rem; letter-spacing:3px; color:var(--neon);
+    font-size:0.7rem; letter-spacing:3px; color:#87CEEB;
     text-transform:uppercase; margin-bottom:18px;
     display:flex; align-items:center; gap:10px;
   }
@@ -386,7 +542,8 @@
 <!-- HEADER -->
 <div id="header">
   <div class="logo-block">
-    <h1>VP4 ULTIMATE UNIVERSE</h1>
+    <h1>WOODDLAND VP4 AND</h1> 
+      <h1>BATTERY MAN </h1>
     <div class="subtitle">Integrated Command Dashboard · All Systems Online</div>
   </div>
   <div class="live-badge"><div class="live-dot"></div>LIVE SYSTEM</div>
@@ -653,13 +810,13 @@
 <!-- ════════════════════════════════════════════════ GAME ═══ -->
 <section id="tab-game">
   <div class="panel" style="margin-bottom:20px;">
-    <div class="panel-title">VP4 Runner — Collect Shoe Boxes, Avoid Obstacles!</div>
+    <div class="panel-title">VP4 Car Racing — Dodge Enemy Cars, Collect Fuel Tanks!</div>
     <div style="display:flex;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
       <div style="font-size:0.8rem;">Score: <span id="g-score" style="color:var(--neon);font-family:Orbitron,sans-serif;">0</span></div>
       <div style="font-size:0.8rem;">High Score: <span id="g-hi" style="color:var(--gold);font-family:Orbitron,sans-serif;">0</span></div>
       <div style="font-size:0.8rem;">Lives: <span id="g-lives" style="color:var(--red);">♥♥♥</span></div>
       <button class="btn" onclick="startGame()" id="g-btn">▶ START</button>
-      <span style="font-size:0.72rem;color:var(--muted);">SPACE / TAP to jump · Collect VP4 boxes · Avoid obstacles</span>
+      <span style="font-size:0.72rem;color:var(--muted);">← → Arrow Keys to steer · Collect Fuel Tanks · Avoid Enemy Cars</span>
     </div>
     <div id="game-canvas-wrap">
       <canvas id="gameCanvas" width="800" height="240"></canvas>
@@ -668,16 +825,16 @@
   <div class="grid3">
     <div class="panel"><div class="panel-title">How to Play</div>
       <div style="font-size:0.8rem;color:var(--muted);line-height:1.9;">
-        <div>🎮 Press SPACE or click to jump</div>
-        <div>📦 Collect VP4 boxes for +10 pts</div>
-        <div>💥 Collect Battery Man capsules for +25 pts</div>
-        <div>🚫 Avoid red obstacles</div>
+        <div>🎮 Use ← → Arrow Keys to steer your car</div>
+        <div>⛽ Collect Fuel Tanks for +10 pts</div>
+        <div>⚡ Collect Battery Man capsules for +25 pts</div>
+        <div>🚗 Avoid Enemy Cars — they end your run!</div>
         <div>❤️ 3 lives per round</div>
       </div>
     </div>
     <div class="panel"><div class="panel-title">Power-Ups</div>
       <div style="font-size:0.8rem;line-height:2;">
-        <div><span style="color:var(--neon)">■</span> VP4 Box — +10 pts</div>
+        <div><span style="color:var(--neon)">⛽</span> Fuel Tank — +10 pts</div>
         <div><span style="color:var(--neon2)">⚡</span> BM Capsule — +25 pts</div>
         <div><span style="color:var(--gold)">★</span> Gold Star — +50 pts</div>
       </div>
@@ -1631,137 +1788,225 @@ function notify(msg, type='ok') {
   setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity 0.4s';setTimeout(()=>el.remove(),400);},2800);
 }
 
-// ═══════════════════════ GAME ENGINE ═══════════════════════════
+// ═══════════════════════ GAME ENGINE (CAR RACING) ══════════════
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const CANVAS_W = 800, CANVAS_H = 240;
+const ROAD_LEFT = 220, ROAD_RIGHT = 580; // road boundaries
+const LANE_W = (ROAD_RIGHT - ROAD_LEFT) / 3;
+const LANES = [ROAD_LEFT + LANE_W*0.5, ROAD_LEFT + LANE_W*1.5, ROAD_LEFT + LANE_W*2.5];
+
 let gameState = 'idle', score=0, hiScore=0, lives=3, frame=0, speed=3;
-let player={x:80,y:180,w:30,h:40,vy:0,jumping:false};
-let obstacles=[], collectibles=[], groundY=200;
-let gameLoop=null;
+let player = { x: LANES[1]-15, y: CANVAS_H-60, w: 30, h: 48 };
+let obstacles=[], collectibles=[], gameLoop=null;
+let laneLines=[{y:0},{y:60},{y:120},{y:180}]; // animated lane dividers
+let keys = {};
+
+document.addEventListener('keydown', e => {
+  if(e.code==='ArrowLeft'||e.code==='ArrowRight') e.preventDefault();
+  keys[e.code] = true;
+  if(gameState!=='running') { startGame(); return; }
+  if(e.code==='ArrowLeft')  { player.x = Math.max(ROAD_LEFT+4, player.x - (LANE_W)); }
+  if(e.code==='ArrowRight') { player.x = Math.min(ROAD_RIGHT-player.w-4, player.x + (LANE_W)); }
+});
+document.addEventListener('keyup', e => { keys[e.code] = false; });
+canvas.addEventListener('click', () => { if(gameState!=='running') startGame(); });
 
 function startGame() {
   if(gameState==='running') return;
   score=0; lives=3; speed=3; frame=0;
-  player={x:80,y:groundY-player.h,w:30,h:40,vy:0,jumping:false};
+  player = { x: LANES[1]-15, y: CANVAS_H-60, w: 30, h: 48 };
   obstacles=[]; collectibles=[];
   gameState='running';
   document.getElementById('g-btn').textContent='■ STOP';
   if(gameLoop) clearInterval(gameLoop);
-  gameLoop=setInterval(tick,1000/60);
-}
-
-document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();jump();}});
-canvas.addEventListener('click',jump);
-
-function jump() {
-  if(gameState!=='running') {startGame();return;}
-  if(!player.jumping){player.vy=-12;player.jumping=true;}
+  gameLoop = setInterval(tick, 1000/60);
 }
 
 function tick() {
   frame++;
-  // Physics
-  player.vy+=0.6;
-  player.y+=player.vy;
-  if(player.y>=groundY-player.h){player.y=groundY-player.h;player.vy=0;player.jumping=false;}
 
-  // Speed up
-  if(frame%600===0) speed+=0.5;
+  // Speed up over time
+  if(frame%600===0) speed += 0.4;
 
-  // Spawn obstacles
-  if(frame%Math.max(40,100-score/5)===0) {
-    obstacles.push({x:800,y:groundY-35,w:20,h:35});
+  // Animate lane lines (simulate movement)
+  laneLines.forEach(l => { l.y += speed*2; if(l.y>CANVAS_H) l.y -= CANVAS_H; });
+
+  // Spawn enemy cars
+  if(frame % Math.max(35, 90 - Math.floor(score/20)) === 0) {
+    const laneIdx = Math.floor(Math.random()*3);
+    obstacles.push({ x: LANES[laneIdx]-14, y: -50, w: 28, h: 44, lane: laneIdx });
   }
-  // Spawn collectibles
-  if(frame%80===0) {
+
+  // Spawn fuel tanks / collectibles
+  if(frame%70===0) {
     const types=['vp4','bm','star'];
-    const t=types[Math.floor(Math.random()*types.length)];
-    const pts={vp4:10,bm:25,star:50};
-    collectibles.push({x:800,y:groundY-60-Math.random()*60,w:22,h:22,type:t,pts:pts[t]});
+    const t = types[Math.floor(Math.random()*types.length)];
+    const pts = {vp4:10, bm:25, star:50};
+    const laneIdx = Math.floor(Math.random()*3);
+    collectibles.push({ x: LANES[laneIdx]-10, y: -30, w: 22, h: 22, type:t, pts:pts[t] });
   }
 
-  // Move obstacles
-  obstacles.forEach(o=>o.x-=speed);
-  collectibles.forEach(c=>c.x-=speed);
-  obstacles=obstacles.filter(o=>o.x>-40);
-  collectibles=collectibles.filter(c=>c.x>-40);
+  // Move everything downward
+  obstacles.forEach(o => o.y += speed*2);
+  collectibles.forEach(c => c.y += speed*2);
+  obstacles = obstacles.filter(o => o.y < CANVAS_H+60);
+  collectibles = collectibles.filter(c => c.y < CANVAS_H+40);
 
-  // Collision — obstacles
-  obstacles.forEach((o,i)=>{
-    if(player.x+player.w>o.x+4&&player.x<o.x+o.w-4&&player.y+player.h>o.y+4&&player.y<o.y+o.h){
+  // Collision — enemy cars
+  for(let i=obstacles.length-1;i>=0;i--){
+    const o=obstacles[i];
+    if(player.x+player.w-6 > o.x+4 && player.x+6 < o.x+o.w-4 &&
+       player.y+player.h-6 > o.y+4 && player.y+6 < o.y+o.h-4) {
       lives--;
       obstacles.splice(i,1);
-      if(lives<=0){gameOver();return;}
+      notify('💥 Enemy Car hit! -1 Life','red');
+      if(lives<=0){ gameOver(); return; }
     }
-  });
+  }
 
   // Collision — collectibles
-  collectibles.forEach((c,i)=>{
-    if(player.x+player.w>c.x&&player.x<c.x+c.w&&player.y+player.h>c.y&&player.y<c.y+c.h){
-      score+=c.pts;
+  for(let i=collectibles.length-1;i>=0;i--){
+    const c=collectibles[i];
+    if(player.x+player.w > c.x && player.x < c.x+c.w &&
+       player.y+player.h > c.y && player.y < c.y+c.h){
+      score += c.pts;
       collectibles.splice(i,1);
     }
-  });
+  }
 
   if(score>hiScore) hiScore=score;
   updateGameUI();
   draw();
 }
 
+function drawCar(x, y, w, h, bodyColor, isPlayer) {
+  // Car body
+  ctx.fillStyle = bodyColor;
+  ctx.shadowBlur = isPlayer ? 14 : 8;
+  ctx.shadowColor = bodyColor;
+  ctx.fillRect(x, y+8, w, h-14);
+
+  // Car roof
+  ctx.fillStyle = isPlayer ? '#005f8a' : '#7a0000';
+  ctx.fillRect(x+4, y+2, w-8, 16);
+
+  // Windscreen
+  ctx.fillStyle = 'rgba(135,206,235,0.4)';
+  ctx.fillRect(x+5, y+4, w-10, 10);
+
+  // Wheels
+  ctx.fillStyle = '#111';
+  ctx.shadowBlur = 0;
+  // front left
+  ctx.fillRect(x-4, y+10, 7, 12);
+  // front right
+  ctx.fillRect(x+w-3, y+10, 7, 12);
+  // rear left
+  ctx.fillRect(x-4, y+h-24, 7, 12);
+  // rear right
+  ctx.fillRect(x+w-3, y+h-24, 7, 12);
+
+  // Wheel highlight
+  ctx.fillStyle = '#444';
+  ctx.fillRect(x-3, y+12, 5, 8);
+  ctx.fillRect(x+w-2, y+12, 5, 8);
+  ctx.fillRect(x-3, y+h-22, 5, 8);
+  ctx.fillRect(x+w-2, y+h-22, 5, 8);
+
+  // VP4 text on player car
+  if(isPlayer) {
+    ctx.fillStyle='rgba(0,0,0,0.8)'; ctx.shadowBlur=0;
+    ctx.font='bold 8px monospace'; ctx.textAlign='center';
+    ctx.fillText('VP4', x+w/2, y+h/2+4);
+  }
+  ctx.textAlign='left';
+  ctx.shadowBlur=0;
+}
+
 function draw() {
-  ctx.clearRect(0,0,800,240);
+  ctx.clearRect(0,0,CANVAS_W,CANVAS_H);
 
-  // Background
-  ctx.fillStyle='#020812';
-  ctx.fillRect(0,0,800,240);
+  // Sky gradient
+  const sky = ctx.createLinearGradient(0,0,0,CANVAS_H);
+  sky.addColorStop(0,'#020812');
+  sky.addColorStop(1,'#040d18');
+  ctx.fillStyle=sky;
+  ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
 
-  // Grid lines
-  ctx.strokeStyle='rgba(0,255,231,0.05)';
-  ctx.lineWidth=1;
-  for(let x=0;x<800;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,240);ctx.stroke();}
-  for(let y=0;y<240;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(800,y);ctx.stroke();}
+  // Road surface
+  ctx.fillStyle='#1a1a2e';
+  ctx.fillRect(ROAD_LEFT,0,ROAD_RIGHT-ROAD_LEFT,CANVAS_H);
 
-  // Ground
-  ctx.strokeStyle='rgba(0,255,231,0.4)';
+  // Road side shoulders
+  ctx.fillStyle='rgba(0,255,231,0.06)';
+  ctx.fillRect(ROAD_LEFT-20,0,20,CANVAS_H);
+  ctx.fillRect(ROAD_RIGHT,0,20,CANVAS_H);
+
+  // Road edges (neon lines)
+  ctx.strokeStyle='rgba(135,206,235,0.7)';
   ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(0,groundY);ctx.lineTo(800,groundY);ctx.stroke();
+  ctx.shadowBlur=8; ctx.shadowColor='#87CEEB';
+  ctx.beginPath(); ctx.moveTo(ROAD_LEFT,0); ctx.lineTo(ROAD_LEFT,CANVAS_H); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ROAD_RIGHT,0); ctx.lineTo(ROAD_RIGHT,CANVAS_H); ctx.stroke();
+  ctx.shadowBlur=0;
 
-  // Player (VP4 box character)
-  ctx.fillStyle='#00ffe7';
-  ctx.shadowBlur=12; ctx.shadowColor='#00ffe7';
-  ctx.fillRect(player.x,player.y,player.w,player.h);
-  ctx.fillStyle='#000'; ctx.font='bold 10px monospace'; ctx.shadowBlur=0;
-  ctx.fillText('VP4',player.x+3,player.y+player.h/2+4);
-  ctx.strokeStyle='#007a70'; ctx.lineWidth=1;
-  ctx.strokeRect(player.x,player.y,player.w,player.h);
+  // Moving lane divider dashes
+  ctx.strokeStyle='rgba(255,255,255,0.25)';
+  ctx.lineWidth=2;
+  ctx.setLineDash([20,20]);
+  for(let lane=1;lane<3;lane++){
+    const lx = ROAD_LEFT + LANE_W*lane;
+    laneLines.forEach(l=>{
+      ctx.beginPath(); ctx.moveTo(lx,l.y); ctx.lineTo(lx,l.y+18); ctx.stroke();
+    });
+  }
+  ctx.setLineDash([]);
 
-  // Obstacles
-  obstacles.forEach(o=>{
-    ctx.fillStyle='rgba(255,60,90,0.85)';
-    ctx.shadowBlur=8; ctx.shadowColor='#ff3c5a';
-    ctx.fillRect(o.x,o.y,o.w,o.h);
-    ctx.shadowBlur=0;
-  });
+  // Roadside scenery — scrolling dots
+  ctx.fillStyle='rgba(0,255,231,0.1)';
+  for(let i=0;i<5;i++){
+    const sy=(frame*speed*2.4+(i*52))%CANVAS_H;
+    ctx.fillRect(ROAD_LEFT-60, sy, 4, 4);
+    ctx.fillRect(ROAD_RIGHT+56, sy, 4, 4);
+  }
 
   // Collectibles
   collectibles.forEach(c=>{
     if(c.type==='vp4'){ctx.fillStyle='#ffe600';ctx.shadowColor='#ffe600';}
     else if(c.type==='bm'){ctx.fillStyle='#ff006e';ctx.shadowColor='#ff006e';}
     else{ctx.fillStyle='#ffd700';ctx.shadowColor='#ffd700';}
-    ctx.shadowBlur=10;
+    ctx.shadowBlur=12;
     ctx.fillRect(c.x,c.y,c.w,c.w);
     ctx.fillStyle='#000'; ctx.font='9px monospace'; ctx.shadowBlur=0;
-    ctx.fillText({vp4:'VP',bm:'⚡',star:'★'}[c.type], c.x+3, c.y+c.w-5);
+    const icon={vp4:'⛽',bm:'⚡',star:'★'}[c.type];
+    ctx.textAlign='center';
+    ctx.fillText(icon, c.x+c.w/2, c.y+c.w-5);
+    ctx.textAlign='left';
   });
 
-  // HUD
+  // Enemy cars
+  obstacles.forEach(o=>{
+    drawCar(o.x, o.y, o.w, o.h, '#cc1133', false);
+  });
+
+  // Player car
+  drawCar(player.x, player.y, player.w, player.h, '#00BFFF', true);
+
+  // HUD overlay
   ctx.shadowBlur=0;
-  ctx.fillStyle='rgba(0,255,231,0.7)'; ctx.font='11px Orbitron,monospace';
-  ctx.fillText(`SCORE: ${score}`, 10, 20);
-  ctx.fillStyle='rgba(255,215,0,0.7)';
-  ctx.fillText(`BEST: ${hiScore}`, 10, 36);
+  ctx.fillStyle='rgba(0,0,0,0.5)';
+  ctx.fillRect(0,0,200,45);
+  ctx.fillStyle='rgba(135,206,235,0.85)'; ctx.font='11px Orbitron,monospace';
+  ctx.fillText(`SCORE: ${score}`, 10, 18);
+  ctx.fillStyle='rgba(255,215,0,0.85)';
+  ctx.fillText(`BEST: ${hiScore}`, 10, 34);
   ctx.fillStyle='rgba(255,60,90,0.9)';
-  ctx.fillText('♥'.repeat(lives), 700, 20);
+  ctx.fillText('♥'.repeat(lives), CANVAS_W-60, 18);
+
+  // Speed indicator
+  ctx.fillStyle='rgba(0,255,231,0.5)'; ctx.font='9px monospace';
+  ctx.fillText(`SPEED: ${speed.toFixed(1)}x`, CANVAS_W-90, 36);
 }
 
 function gameOver() {
@@ -1775,14 +2020,18 @@ function gameOver() {
     renderLeaderboard();
   }
   notify(`Game Over! Score: ${score}`,'gold');
-  // Draw game over screen
-  ctx.fillStyle='rgba(0,0,0,0.7)';
-  ctx.fillRect(0,0,800,240);
-  ctx.fillStyle='#ff006e'; ctx.font='bold 40px Orbitron,monospace';
+  // Game over screen
+  ctx.fillStyle='rgba(0,0,0,0.75)';
+  ctx.fillRect(0,0,CANVAS_W,CANVAS_H);
+  ctx.fillStyle='#ff006e'; ctx.font='bold 38px Orbitron,monospace';
   ctx.textAlign='center';
-  ctx.fillText('GAME OVER',400,110);
-  ctx.fillStyle='#00ffe7'; ctx.font='16px monospace';
-  ctx.fillText(`Score: ${score} | Best: ${hiScore}`,400,145);
+  ctx.shadowBlur=20; ctx.shadowColor='#ff006e';
+  ctx.fillText('GAME OVER',CANVAS_W/2,100);
+  ctx.shadowBlur=0;
+  ctx.fillStyle='#87CEEB'; ctx.font='16px monospace';
+  ctx.fillText(`Score: ${score} | Best: ${hiScore}`,CANVAS_W/2,140);
+  ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='11px monospace';
+  ctx.fillText('Press START or any key to race again',CANVAS_W/2,170);
   ctx.textAlign='left';
 }
 
@@ -2224,7 +2473,62 @@ setInterval(()=>{
 // Init pet
 setTimeout(()=>{ petUpdateStats(); petDraw(); }, 500);
 
-// Patch showTab to include new tabs
+// ══════════════════ 3D MOUSE PARALLAX EFFECT ══════════════════
+(function init3D(){
+  let mouseX=0, mouseY=0;
+  document.addEventListener('mousemove', e=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY/window.innerHeight - 0.5) * 2;
+  });
+  function apply3DTilt() {
+    const header = document.getElementById('header');
+    if(header){
+      header.style.transform = `perspective(1000px) rotateX(${-mouseY*1.2}deg) rotateY(${mouseX*0.8}deg)`;
+    }
+    requestAnimationFrame(apply3DTilt);
+  }
+  apply3DTilt();
+})();
+
+// ══════════════════ 3D FLOATING PARTICLES ══════════════════════
+(function spawnParticles(){
+  const container = document.createElement('div');
+  container.id='particles3d';
+  container.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;perspective:600px;';
+  document.body.appendChild(container);
+  function createParticle(){
+    const p=document.createElement('div');
+    const size=Math.random()*3+1;
+    const x=Math.random()*100;
+    const dur=Math.random()*12+8;
+    const delay=Math.random()*6;
+    const z=Math.random()*200-100;
+    p.style.cssText=`
+      position:absolute;
+      left:${x}%;top:110%;
+      width:${size}px;height:${size}px;
+      border-radius:50%;
+      background:rgba(135,206,235,${Math.random()*0.4+0.1});
+      box-shadow:0 0 ${size*3}px rgba(135,206,235,0.5);
+      transform:translateZ(${z}px);
+      animation:rise3d ${dur}s ${delay}s linear infinite;
+    `;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(), (dur+delay)*1000+500);
+  }
+  const style=document.createElement('style');
+  style.textContent=`
+    @keyframes rise3d {
+      0%   { top:110%; opacity:0; transform:translateZ(var(--z,0px)) scale(0.5); }
+      10%  { opacity:1; }
+      90%  { opacity:0.6; }
+      100% { top:-5%;  opacity:0; transform:translateZ(calc(var(--z,0px)+60px)) scale(1.5); }
+    }
+  `;
+  document.head.appendChild(style);
+  setInterval(createParticle, 400);
+  for(let i=0;i<15;i++) createParticle();
+})();
 const _origShowTab = showTab;
 window.showTab = function(id) {
   const allIds = ['home','inventory','hotel','university','directory','comics','game','countdown','woodlands','pet'];
@@ -2243,11 +2547,17 @@ window.showTab = function(id) {
 
 // Draw idle game screen
 (function idleDraw() {
-  ctx.fillStyle='#020812'; ctx.fillRect(0,0,800,240);
-  ctx.fillStyle='rgba(0,255,231,0.12)'; ctx.font='22px Orbitron,monospace';
-  ctx.textAlign='center'; ctx.fillText('VP4 RUNNER — PRESS START',400,115);
-  ctx.fillStyle='rgba(0,255,231,0.4)'; ctx.font='13px monospace';
-  ctx.fillText('Collect VP4 boxes · Avoid obstacles · Beat your high score',400,145);
+  ctx.fillStyle='#1a1a2e';
+  ctx.fillRect(ROAD_LEFT,0,ROAD_RIGHT-ROAD_LEFT,CANVAS_H);
+  ctx.fillStyle='#020812'; ctx.fillRect(0,0,ROAD_LEFT,CANVAS_H);
+  ctx.fillRect(ROAD_RIGHT,0,CANVAS_W-ROAD_RIGHT,CANVAS_H);
+  ctx.strokeStyle='rgba(135,206,235,0.6)'; ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(ROAD_LEFT,0);ctx.lineTo(ROAD_LEFT,CANVAS_H);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ROAD_RIGHT,0);ctx.lineTo(ROAD_RIGHT,CANVAS_H);ctx.stroke();
+  ctx.fillStyle='rgba(135,206,235,0.18)'; ctx.font='22px Orbitron,monospace';
+  ctx.textAlign='center'; ctx.fillText('VP4 CAR RACING — PRESS START',CANVAS_W/2,100);
+  ctx.fillStyle='rgba(135,206,235,0.45)'; ctx.font='13px monospace';
+  ctx.fillText('Use ← → Arrow Keys · Collect Fuel Tanks · Dodge Enemy Cars',CANVAS_W/2,135);
   ctx.textAlign='left';
 })();
 </script>
