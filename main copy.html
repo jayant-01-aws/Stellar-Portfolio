@@ -1,755 +1,2249 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylish Portal</title>
-    <link rel="stylesheet" href="styles copy.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-</head>
-
-<body>
-    <div id="particles-js"></div>
-
-    <div class="container">
-        <div class="form-box">
-            <h2>Login</h2>
-            <p>Welcome Back</p>
-
-            <form>
-                <div class="input-group">
-                    <input type="text" id="username" required class="input-field">
-                    <label for="username">Username</label>
-                    <div class="glow-line"></div>
-                </div>
-
-                <div class="input-group">
-                    <input type="password" id="password" required class="input-field">
-                    <label for="password">Password</label>
-                    <div class="glow-line"></div>
-                </div>
-
-                <div class="remember-forgot">
-                    <div class="remember">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="login-btn">
-                    <span>SIGN IN</span>
-                    <div class="btn-glow"></div>
-                </button>
-
-                <div class="signup-link">
-                    Don't have an account? <a href="#">Register</a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            particlesJS('particles-js', {
-                "particles": {
-                    "number": {
-                        "value": 100,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#00d4ff"
-                    },
-                    "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        },
-                        "polygon": {
-                            "nb_sides": 5
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.8,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 1,
-                            "opacity_min": 0.4,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 5,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 2,
-                            "size_min": 1,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#00d4ff",
-                        "opacity": 0.6,
-                        "width": 1.5
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": true,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": true,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "repulse"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 400,
-                            "line_linked": {
-                                "opacity": 1
-                            }
-                        },
-                        "bubble": {
-                            "distance": 400,
-                            "size": 40,
-                            "duration": 2,
-                            "opacity": 8,
-                            "speed": 3
-                        },
-                        "repulse": {
-                            "distance": 100,
-                            "duration": 0.4
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        },
-                        "remove": {
-                            "particles_nb": 2
-                        }
-                    }
-                },
-                "retina_detect": true
-            });
-        });
-    </script>
-    <style>
-        * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOODLAND ARENA — Combat Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<style>
+:root {
+  --cyan: #00d4ff;
+  --cyan-dim: rgba(0,212,255,0.15);
+  --cyan-glow: rgba(0,212,255,0.6);
+  --red: #ff3c3c;
+  --gold: #ffd700;
+  --bg: #000000;
+  --panel: rgba(0,0,0,0.78);
+  --border: rgba(0,212,255,0.3);
+  --font-title: 'Cinzel', serif;
+  --font-hud: 'Orbitron', monospace;
+  --font-body: 'Poppins', sans-serif;
 }
+
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #000000, #000000, #000000);
-    overflow: hidden;
-    perspective: 1000px;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+/* ═══ PARTICLES ═══ */
 #particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.container {
-    width: 100%;
-    max-width: 360px;
-    padding: 20px;
-    position: relative;
-    z-index: 10;
-    perspective: 1000px;
+/* ═══ SCREENS ═══ */
+.screen {
+  display: none;
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+.screen.active { display: flex; }
+
+/* ════════════════════════════════
+   AUTH SCREEN
+════════════════════════════════ */
+#auth-screen {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeInDown 0.8s forwards;
+}
+.auth-logo h1 {
+  font-family: var(--font-title);
+  font-size: clamp(28px, 5vw, 52px);
+  color: var(--cyan);
+  letter-spacing: 6px;
+  text-shadow: 0 0 30px var(--cyan-glow), 0 0 60px rgba(0,212,255,0.3);
+  animation: glow 2s infinite alternate;
+}
+.auth-logo p {
+  color: rgba(0,212,255,0.6);
+  letter-spacing: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 2;
+}
+.auth-tab {
+  padding: 10px 36px;
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.5);
+  color: rgba(0,212,255,0.5);
+  transition: all 0.3s;
+}
+.auth-tab:first-child { border-radius: 12px 0 0 0; }
+.auth-tab:last-child  { border-radius: 0 12px 0 0; border-left: none; }
+.auth-tab.active {
+  background: rgba(0,212,255,0.08);
+  color: var(--cyan);
+  border-color: var(--cyan);
+  border-bottom-color: transparent;
+  text-shadow: 0 0 8px var(--cyan-glow);
 }
 
 .form-box {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4), inset 0 0 16px rgba(0, 212, 255, 0.2);
-  
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    transform-style: preserve-3d;
-    animation: formEntrance 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-    opacity: 0;
-    transform: rotateX(20deg) translateY(100px);
+  background: var(--panel);
+  border-radius: 0 12px 24px 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 40px rgba(0,212,255,0.3), inset 0 0 20px rgba(0,212,255,0.05);
+  border: 1px solid var(--border);
+  animation: formEntrance 1.2s cubic-bezier(0.68,-0.55,0.27,1.55) forwards;
+  opacity: 0;
 }
 
 @keyframes formEntrance {
-    0% {
-        opacity: 0;
-        transform: rotateX(20deg) translateY(100px);
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 1;
-        transform: rotateX(0deg) translateY(0);
-    }
+  0%   { opacity:0; transform: rotateX(15deg) translateY(60px); }
+  60%  { opacity:1; }
+  100% { opacity:1; transform: rotateX(0deg) translateY(0); }
 }
 
-h2 {
-    color: #00d4ff;
-    text-align: center;
-    margin-bottom: 10px;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-    animation: glow 2s infinite alternate;
-    font-size: 24px;
+.auth-panel {
+  display: none;
 }
+.auth-panel.active { display: block; }
 
-@keyframes glow {
-    from {
-        text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
-    }
-    to {
-        text-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-    }
+.auth-panel h2 {
+  font-family: var(--font-title);
+  color: var(--cyan);
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 10px rgba(0,212,255,0.5);
+  animation: glow 2s infinite alternate;
 }
-
-/* Form Styles */
-.login-form {
-    width: 100%;
-}
-
-.input-container {
-    margin-bottom: 25px;
-}
-
-.input-wrapper {
-    position: relative;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.input-wrapper:hover {
-    border-color: #ff6b6b;
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
-}
-
-.input-wrapper.focused {
-    border-color: #4ecdc4;
-    box-shadow: 0 0 25px rgba(78, 205, 196, 0.4);
-}
-
-.input-wrapper input {
-    width: 100%;
-    padding: 15px 20px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 1rem;
-    font-family: 'Rajdhani', sans-serif;
-    position: relative;
-    z-index: 2;
-}
-
-.input-wrapper label {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    color: rgba(255, 107, 107, 0.7);
-    font-size: 1rem;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.input-wrapper.focused label,
-.input-wrapper input:valid + label {
-    top: -10px;
-    left: 15px;
-    font-size: 0.8rem;
-    color: #4ecdc4;
-    background: #1a1a2e;
-    padding: 0 5px;
-}
-
-.scan-line {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-    transition: left 0.5s ease;
-}
-
-.input-wrapper.focused .scan-line {
-    animation: scanLine 2s ease-in-out infinite;
-}
-
-@keyframes scanLine {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: -100%; }
-}
-
-/* Options */
-.options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 25px 0;
-    font-size: 0.9rem;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.checkbox-container input {
-    display: none;
-}
-
-.checkmark {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #ff6b6b;
-    border-radius: 3px;
-    margin-right: 10px;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.checkbox-container input:checked + .checkmark {
-    background: #ff6b6b;
-    box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
-}
-
-.checkmark::after {
-    content: '';
-    position: absolute;
-    display: none;
-    left: 5px;
-    top: 2px;
-    width: 6px;
-    height: 10px;
-    border: solid #1a1a2e;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.checkbox-container input:checked + .checkmark::after {
-    display: block;
-}
-
-.forgot-link {
-    color: #4ecdc4;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.forgot-link:hover {
-    color: #ff6b6b;
-    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
-}
-
-p {
-    color: rgba(0, 212, 255, 0.7);
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 14px;
-    letter-spacing: 1px;
+.auth-panel p {
+  text-align:center;
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
 }
 
 .input-group {
-    position: relative;
-    margin-bottom: 25px;
-    transform: translateZ(10px);
+  position: relative;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.5s forwards;
+  opacity: 0;
 }
+.input-group:nth-child(1){ animation-delay:.3s }
+.input-group:nth-child(2){ animation-delay:.45s }
+.input-group:nth-child(3){ animation-delay:.6s }
+.input-group:nth-child(4){ animation-delay:.75s }
 
 .input-field {
-    width: 100%;
-    padding: 12px 0;
-    font-size: 15px;
-    color: #00d4ff;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-    outline: none;
-    transition: 0.3s;
-    z-index: 1;
-    position: relative;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,212,255,0.3);
+  color: #fff;
+  font-size: 15px;
+  padding: 10px 0 6px;
+  outline: none;
+  font-family: var(--font-body);
+  transition: 0.3s;
+  z-index: 1;
+  position: relative;
 }
-
-.input-field:focus {
-    border-bottom-color: transparent;
-}
+.input-field:focus { border-bottom-color: transparent; }
 
 .glow-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(0, 212, 255, 0.5), 
-        #00d4ff, 
-        rgba(0, 212, 255, 0.5), 
-        transparent);
-    transition: 0.4s;
-    z-index: 0;
+  position: absolute; bottom:0; left:0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.5), #00d4ff, rgba(0,212,255,0.5), transparent);
+  transition: 0.4s;
 }
-
 .input-field:focus ~ .glow-line {
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
-    animation: shimmer 2s infinite;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0,212,255,0.7);
+  animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-    0% {
-        background-position: -100% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
+  0%   { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .input-group label {
-    position: absolute;
-    top: 12px;
-    left: 0;
-    color: rgba(0, 212, 255, 0.7);
-    font-size: 15px;
-    pointer-events: none;
-    transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  position: absolute; top: 12px; left: 0;
+  color: rgba(0,212,255,0.7);
+  font-size: 13px;
+  pointer-events: none;
+  transition: 0.4s cubic-bezier(0.68,-0.55,0.27,1.55);
 }
-
 .input-field:focus ~ label,
 .input-field:valid ~ label {
-    top: -12px;
-    font-size: 12px;
-    color: #00d4ff;
-    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
-    letter-spacing: 1px;
+  top: -13px;
+  font-size: 11px;
+  color: var(--cyan);
+  text-shadow: 0 0 5px rgba(0,212,255,0.5);
+  letter-spacing: 1px;
 }
 
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    font-size: 13px;
+.row-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-size: 12px;
+  color: rgba(0,212,255,0.7);
 }
+.row-flex input { accent-color: var(--cyan); margin-right: 5px; }
+.row-flex a { color: var(--cyan); text-decoration: none; transition: 0.3s; }
+.row-flex a:hover { text-shadow: 0 0 8px var(--cyan-glow); }
 
-.remember {
-    display: flex;
-    align-items: center;
+.btn-primary {
+  width: 100%;
+  padding: 13px 0;
+  background: transparent;
+  border: 1px solid var(--cyan);
+  border-radius: 25px;
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-title);
+  margin-bottom: 18px;
 }
-
-.remember input {
-    margin-right: 5px;
-    accent-color: #00d4ff;
-}
-
-.remember label, .forgot {
-    color: rgba(0, 212, 255, 0.8);
-    font-size: 13px;
-}
-
-.forgot {
-    text-decoration: none;
-    transition: 0.3s;
-    position: relative;
-}
-
-.forgot:hover {
-    color: #00d4ff;
-    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
-}
-
-.forgot::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: #00d4ff;
-    transition: 0.3s;
-}
-
-.forgot:hover::after {
-    width: 100%;
-    box-shadow: 0 0 5px rgba(0, 212, 255, 0.7);
-}
-
-.login-btn {
-    width: 100%;
-    padding: 12px 0;
-    background: #000;
-    border: 1px solid #00d4ff;
-    border-radius: 25px;
-    color: #00d4ff;
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.5s;
-    position: relative;
-    overflow: hidden;
-    transform: translateZ(20px);
-    font-family: 'Cinzel', serif;
-    margin-bottom: 10px;
-}
-
-.login-btn span {
-    position: relative;
-    z-index: 1;
-    transition: 0.3s;
-}
-
+.btn-primary span { position: relative; z-index: 1; }
 .btn-glow {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-        transparent, 
-        rgba(0, 212, 255, 0.2), 
-        rgba(0, 212, 255, 0.3), 
-        rgba(0, 212, 255, 0.2), 
-        transparent);
-    transition: 0.5s;
+  position: absolute; top:0; left:-100%;
+  width:100%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.2), rgba(0,212,255,0.3), rgba(0,212,255,0.2), transparent);
+  transition: 0.5s;
+}
+.btn-primary:hover .btn-glow { left: 100%; }
+.btn-primary:hover {
+  background: rgba(0,212,255,0.1);
+  box-shadow: 0 0 25px rgba(0,212,255,0.4), inset 0 0 12px rgba(0,212,255,0.2);
+  transform: scale(1.03);
+}
+.btn-primary:active { transform: scale(0.97); }
+
+.switch-link {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(0,212,255,0.6);
+}
+.switch-link a {
+  color: var(--cyan);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.switch-link a:hover { text-shadow: 0 0 8px var(--cyan-glow); }
+
+/* validation msg */
+.err-msg { color: var(--red); font-size: 11px; text-align:center; margin-bottom:8px; min-height:16px; }
+.ok-msg  { color: #00ff88; font-size: 11px; text-align:center; margin-bottom:8px; min-height:16px; }
+
+/* ════════════════════════════════
+   MAIN PORTAL SCREEN
+════════════════════════════════ */
+#portal-screen {
+  flex-direction: column;
 }
 
-.login-btn:hover .btn-glow {
-    left: 100%;
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: rgba(0,0,0,0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--cyan);
+  letter-spacing: 4px;
+  text-shadow: 0 0 10px var(--cyan-glow);
+}
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  color: rgba(0,212,255,0.8);
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), #0066ff);
+  display: flex; align-items:center; justify-content:center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #000;
+  font-family: var(--font-hud);
+  box-shadow: 0 0 12px var(--cyan-glow);
+}
+.nav-logout {
+  padding: 7px 18px;
+  border: 1px solid rgba(255,60,60,0.5);
+  color: var(--red);
+  background: transparent;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  transition: all 0.3s;
+}
+.nav-logout:hover {
+  background: rgba(255,60,60,0.1);
+  box-shadow: 0 0 15px rgba(255,60,60,0.3);
 }
 
-.login-btn:hover {
-    background: rgba(0, 212, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5),
-                inset 0 0 10px rgba(0, 212, 255, 0.3);
-    transform: translateZ(20px) scale(1.05);
+.portal-hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  position: relative;
+}
+.portal-hero h2 {
+  font-family: var(--font-title);
+  font-size: clamp(24px, 4vw, 48px);
+  color: var(--cyan);
+  letter-spacing: 6px;
+  text-shadow: 0 0 30px var(--cyan-glow);
+  animation: glow 2.5s infinite alternate;
+  margin-bottom: 10px;
+}
+.portal-hero p {
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
-.login-btn:hover span {
-    text-shadow: 0 0 5px rgba(0, 212, 255, 0.7);
+/* games grid */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  padding: 20px 40px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.login-btn:active {
-    transform: translateZ(20px) scale(0.98);
+.game-card {
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  padding: 32px 28px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s forwards;
+  opacity: 0;
+}
+.game-card:nth-child(1){ animation-delay:.1s }
+.game-card:nth-child(2){ animation-delay:.25s }
+.game-card:nth-child(3){ animation-delay:.4s }
+
+.game-card::before {
+  content:'';
+  position:absolute; top:0; left:-100%;
+  width:100%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.06), transparent);
+  transition: 0.6s;
+}
+.game-card:hover::before { left: 100%; }
+.game-card:hover {
+  border-color: var(--cyan);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0,212,255,0.25), inset 0 0 30px rgba(0,212,255,0.05);
 }
 
-.signup-link {
-    text-align: center;
-    margin-top: 20px;
-    color: rgba(0, 212, 255, 0.7);
-    font-size: 13px;
+.card-icon {
+  font-size: 52px;
+  margin-bottom: 18px;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(0,212,255,0.6));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+.game-card:nth-child(2) .card-icon { animation-delay:.5s }
+.game-card:nth-child(3) .card-icon { animation-delay:1s }
+
+@keyframes floatIcon {
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-8px); }
 }
 
-.signup-link a {
-    color: #00d4ff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
-    position: relative;
+.card-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-family: var(--font-hud);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.badge-jelly  { background: rgba(0,212,255,0.15); color: var(--cyan); border: 1px solid rgba(0,212,255,0.4); }
+.badge-vplane { background: rgba(255,215,0,0.12); color: var(--gold); border: 1px solid rgba(255,215,0,0.4); }
+.badge-hud    { background: rgba(255,60,60,0.12);  color: var(--red);  border: 1px solid rgba(255,60,60,0.4); }
+
+.game-card h3 {
+  font-family: var(--font-title);
+  font-size: 22px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px rgba(0,212,255,0.4);
+}
+.game-card p {
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+.card-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.stat {
+  background: rgba(0,212,255,0.07);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 10px;
+  font-family: var(--font-hud);
+  color: var(--cyan);
+  text-align:center;
+}
+.stat span { display:block; font-size:14px; font-weight:700; margin-bottom:2px; }
+
+.play-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--cyan);
+  border-radius: 25px;
+  color: var(--cyan);
+  font-family: var(--font-title);
+  font-size: 12px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.play-btn::after {
+  content:'';
+  position:absolute; inset:0;
+  background: rgba(0,212,255,0.1);
+  opacity: 0;
+  transition: 0.3s;
+}
+.play-btn:hover::after { opacity:1; }
+.play-btn:hover { box-shadow: 0 0 20px rgba(0,212,255,0.4); }
+
+.vplane-card h3 { color: var(--gold); text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+.vplane-card .play-btn { border-color: var(--gold); color: var(--gold); }
+.vplane-card .play-btn:hover { box-shadow: 0 0 20px rgba(255,215,0,0.4); }
+.vplane-card:hover { border-color: var(--gold); box-shadow: 0 20px 60px rgba(255,215,0,0.15), inset 0 0 30px rgba(255,215,0,0.03); }
+
+.hud-card h3 { color: var(--red); text-shadow: 0 0 8px rgba(255,60,60,0.4); }
+.hud-card .play-btn { border-color: var(--red); color: var(--red); }
+.hud-card .play-btn:hover { box-shadow: 0 0 20px rgba(255,60,60,0.4); }
+.hud-card:hover { border-color: var(--red); box-shadow: 0 20px 60px rgba(255,60,60,0.15), inset 0 0 30px rgba(255,60,60,0.03); }
+
+/* ════════════════════════════════
+   GAME SCREEN (shared wrapper)
+════════════════════════════════ */
+.game-screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+.game-screen.active { display: flex; }
+
+.game-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background: rgba(0,0,0,0.9);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.game-title-bar {
+  font-family: var(--font-hud);
+  font-size: 14px;
+  color: var(--cyan);
+  letter-spacing: 3px;
+}
+.back-btn {
+  padding: 7px 20px;
+  border: 1px solid var(--border);
+  color: rgba(0,212,255,0.7);
+  background: transparent;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  transition: all 0.3s;
+}
+.back-btn:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 10px rgba(0,212,255,0.3); }
+
+.hud-strip {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-family: var(--font-hud);
+  font-size: 11px;
+  color: rgba(0,212,255,0.7);
+}
+.hud-val { color: var(--cyan); font-weight:700; font-size:14px; }
+
+/* ════════════════════════════════
+   JELLY PLANE GAME
+════════════════════════════════ */
+#jelly-game-screen { display:none; }
+#jelly-game-screen.active { display:flex; flex-direction:column; }
+
+.jelly-arena {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #000d1a 0%, #000000 100%);
+  min-height: 500px;
+  cursor: crosshair;
 }
 
-.signup-link a:hover {
-    text-shadow: 0 0 5px rgba(0, 212, 255, 0.7);
+#jelly-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute; top:0; left:0;
 }
 
-.signup-link a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: #00d4ff;
-    transition: 0.3s;
+.jelly-hud {
+  position: absolute;
+  top: 12px; left: 12px;
+  display: flex; flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.hud-box {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-hud);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+.hud-box span { font-size:16px; font-weight:700; display:block; }
+
+.crosshair {
+  position: absolute;
+  width: 24px; height: 24px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+.crosshair::before, .crosshair::after {
+  content:'';
+  position:absolute;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+.crosshair::before { width:2px; height:100%; left:50%; transform:translateX(-50%); }
+.crosshair::after  { height:2px; width:100%; top:50%; transform:translateY(-50%); }
+.crosshair-dot {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.crosshair-dot::after {
+  content:'';
+  width:4px; height:4px;
+  border-radius:50%;
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
 }
 
-.signup-link a:hover::after {
-    width: 100%;
-    box-shadow: 0 0 5px rgba(0, 212, 255, 0.7);
+.controls-hint {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 11px;
+  color: rgba(0,212,255,0.6);
+  pointer-events:none;
+  line-height: 1.8;
+  font-family: var(--font-hud);
+}
+.controls-hint b { color: var(--cyan); }
+
+.game-over-overlay {
+  display:none;
+  position:absolute; inset:0;
+  background: rgba(0,0,0,0.85);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index: 50;
+}
+.game-over-overlay.show { display:flex; }
+.game-over-overlay h2 {
+  font-family: var(--font-title);
+  font-size: 48px;
+  color: var(--red);
+  text-shadow: 0 0 30px rgba(255,60,60,0.7);
+  letter-spacing: 4px;
+  animation: glow 1s infinite alternate;
+  margin-bottom: 14px;
+}
+.game-over-overlay p {
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 30px;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.restart-btn {
+  padding: 14px 40px;
+  border: 1px solid var(--cyan);
+  border-radius: 30px;
+  background: transparent;
+  color: var(--cyan);
+  font-family: var(--font-title);
+  font-size: 14px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.restart-btn:hover { background: rgba(0,212,255,0.1); box-shadow: 0 0 25px rgba(0,212,255,0.4); }
+
+/* ════════════════════════════════
+   VPLANE GAME
+════════════════════════════════ */
+#vplane-game-screen { display:none; }
+#vplane-game-screen.active { display:flex; flex-direction:column; }
+
+#vplane-canvas {
+  display:block;
+  width:100%;
+  background: #000;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .login-container {
-        flex-direction: column;
-        justify-content: center;
-        gap: 40px;
-        padding: 40px;
-    }
-    
-    .info-panel {
-        max-width: 420px;
-    }
+.vplane-hud {
+  position: absolute;
+  top:12px; right:12px;
+  display:flex; flex-direction:column; gap:8px;
+  pointer-events:none;
+}
+.vhud-box {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,215,0,0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-hud);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-align:right;
+}
+.vhud-box span { font-size:16px; font-weight:700; display:block; }
+
+/* ════════════════════════════════
+   CROSSHAIR HUD TRAINER
+════════════════════════════════ */
+#hud-game-screen { display:none; }
+#hud-game-screen.active { display:flex; flex-direction:column; }
+
+#hud-canvas {
+  display:block;
+  width:100%;
+  cursor:none;
 }
 
-@media (max-width: 768px) {
-    .login-container {
-        padding: 20px;
-        gap: 30px;
-    }
-    
-    .login-box {
-        padding: 32px 24px;
-        max-width: 100%;
-    }
-    
-    .info-panel {
-        padding: 32px 24px;
-        max-width: 100%;
-    }
-    
-    .logo h1 {
-        font-size: 24px;
-    }
-    
-    .info-panel h3 {
-        font-size: 20px;
-    }
+.hud-trainer-overlay {
+  position:absolute;
+  top:12px; left:50%; transform:translateX(-50%);
+  display:flex; gap:20px;
+  pointer-events:none;
+}
+.hud-stat-pill {
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,60,60,0.4);
+  border-radius:20px;
+  padding: 6px 18px;
+  font-family: var(--font-hud);
+  font-size:11px;
+  color: var(--red);
+  letter-spacing:1px;
+}
+.hud-stat-pill b { font-size:15px; }
+
+/* ════════════════════════════════
+   WOODLAND INFO (code guide)
+════════════════════════════════ */
+#woodland-screen { display:none; }
+#woodland-screen.active { display:flex; flex-direction:column; min-height:100vh; }
+
+.woodland-content {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width:100%;
+}
+.woodland-content h2 {
+  font-family: var(--font-title);
+  font-size: 32px;
+  color: var(--cyan);
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 20px var(--cyan-glow);
+}
+.woodland-content > p {
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 36px;
+  letter-spacing: 2px;
+  font-size: 12px;
 }
 
-@media (max-width: 480px) {
-    .login-container {
-        padding: 16px;
-    }
-    
-    .login-box {
-        padding: 24px 20px;
-    }
-    
-    .info-panel {
-        padding: 24px 20px;
-    }
-    
-    input[type="text"],
-    input[type="password"] {
-        padding: 14px 14px 14px 44px;
-    }
-    
-    .input-icon {
-        left: 14px;
-    }
-    
-    label {
-        left: 44px;
-    }
-    
-    .input-wrapper.focused label,
-    input:focus + label,
-    input:valid + label {
-        left: 36px;
-    }
+.code-section {
+  margin-bottom: 32px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: fadeInUp 0.5s forwards;
+  opacity:0;
+}
+.code-section:nth-child(1){ animation-delay:.1s }
+.code-section:nth-child(2){ animation-delay:.2s }
+.code-section:nth-child(3){ animation-delay:.3s }
+.code-section:nth-child(4){ animation-delay:.4s }
+
+.code-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 14px 20px;
+  background: rgba(0,212,255,0.05);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select:none;
+}
+.code-header:hover { background: rgba(0,212,255,0.1); }
+.code-header h3 {
+  font-family: var(--font-hud);
+  font-size: 13px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+}
+.code-toggle {
+  font-size: 18px;
+  color: var(--cyan);
+  transition: transform 0.3s;
+}
+.code-section.open .code-toggle { transform: rotate(180deg); }
+
+.code-body {
+  display:none;
+  padding: 20px;
+}
+.code-section.open .code-body { display:block; }
+
+.code-body p {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-bottom: 16px;
 }
 
-@media (max-width: 768px) {
-    .login-box {
-        padding: 30px 20px;
-        margin: 10px;
-    }
-    
-    .header h1 {
-        font-size: 2rem;
-    }
-    
-    .status-panel {
-        position: relative;
-        top: auto;
-        right: auto;
-        margin-top: 20px;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 300px;
-    }
+.code-snippet {
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #7fdbff;
+  overflow-x: auto;
+  white-space: pre;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  position:relative;
+}
+.code-snippet .kw { color: #ff79c6; }
+.code-snippet .fn { color: #50fa7b; }
+.code-snippet .cm { color: #6272a4; }
+.code-snippet .st { color: #f1fa8c; }
+.code-snippet .ty { color: #8be9fd; }
+.code-snippet .nu { color: #bd93f9; }
+
+.class-diagram {
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+.cls-box {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius:10px;
+  padding:14px 20px;
+  font-family: var(--font-hud);
+  font-size:11px;
+  min-width:180px;
+}
+.cls-box h4 { color:var(--cyan); margin-bottom:8px; font-size:12px; letter-spacing:1px; }
+.cls-box ul { list-style:none; color:rgba(255,255,255,0.55); }
+.cls-box ul li::before { content:'▸ '; color:var(--cyan); }
+.cls-arrow {
+  display:flex; align-items:center;
+  color: rgba(0,212,255,0.5);
+  font-size:22px;
 }
 
-/* 3D hover effect for the entire form */
-.form-box:hover {
-    transform: rotateX(5deg) rotateY(5deg);
-    transition: transform 0.5s ease;
+/* ═══ SHARED KEYFRAMES ═══ */
+@keyframes glow {
+  from { text-shadow: 0 0 5px rgba(0,212,255,0.5); }
+  to   { text-shadow: 0 0 20px rgba(0,212,255,0.9), 0 0 40px rgba(0,212,255,0.5); }
 }
-
-/* Additional animations for form elements */
-.input-group, .remember-forgot, .login-btn, .signup-link {
-    animation: fadeInUp 0.5s forwards;
-    opacity: 0;
-}
-
-.input-group:nth-child(1) {
-    animation-delay: 0.6s;
-}
-
-.input-group:nth-child(2) {
-    animation-delay: 0.8s;
-}
-
-.remember-forgot {
-    animation-delay: 1s;
-}
-
-.login-btn {
-    animation-delay: 1.2s;
-}
-
-.signup-link {
-    animation-delay: 1.4s;
-}
-
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
 }
-    </style>
-</body>
+@keyframes fadeInDown {
+  from { opacity:0; transform: translateY(-24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%,100% { opacity:1; } 50% { opacity:0.4; }
+}
 
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.4); border-radius:3px; }
+
+/* ═══ MOBILE ═══ */
+@media (max-width:600px) {
+  .games-grid { padding:16px; gap:16px; }
+  .nav-bar { padding:12px 16px; }
+  .game-topbar { padding:10px 16px; }
+  .auth-tab { padding:8px 22px; font-size:11px; }
+  .form-box { padding:28px 22px; }
+  .woodland-content { padding:20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ PARTICLES BG ══ -->
+<div id="particles-js"></div>
+
+<!-- ══════════════════════════════════
+     AUTH SCREEN
+══════════════════════════════════ -->
+<div id="auth-screen" class="screen active">
+  <div style="position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;">
+    <div class="auth-logo">
+      <h1>⚔ WOODLAND ARENA</h1>
+      <p>Elite Combat Systems — Access Portal</p>
+    </div>
+
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">SIGN IN</div>
+      <div class="auth-tab" id="tab-register" onclick="switchTab('register')">REGISTER</div>
+    </div>
+
+    <div class="form-box">
+      <!-- LOGIN -->
+      <div class="auth-panel active" id="panel-login">
+        <h2>LOGIN</h2>
+        <p>Welcome Back, Commander</p>
+        <div id="login-err" class="err-msg"></div>
+
+        <div class="input-group">
+          <input type="text" id="login-user" class="input-field" required autocomplete="off">
+          <label for="login-user">Username</label>
+          <div class="glow-line"></div>
+        </div>
+        <div class="input-group">
+          <input type="password" id="login-pass" class="input-field" required>
+          <label for="login-pass">Password</label>
+          <div class="glow-line"></div>
+        </div>
+
+        <div class="row-flex">
+          <label><input type="checkbox" id="remember"> &nbsp;Remember me</label>
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <button class="btn-primary" onclick="doLogin()">
+          <span>ENTER ARENA</span>
+          <div class="btn-glow"></div>
+        </button>
+
+        <div class="switch-link">No account? <a onclick="switchTab('register')">Register Here</a></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="auth-panel" id="panel-register">
+        <h2>REGISTER</h2>
+        <p>Enlist, Pilot</p>
+        <div id="reg-err" class="err-msg"></div>
+        <div id="reg-ok" class="ok-msg"></div>
+
+        <div class="input-group">
+          <input type="text" id="reg-user" class="input-field" required autocomplete="off">
+          <label for="reg-user">Username</label>
+          <div class="glow-line"></div>
+        </div>
+        <div class="input-group">
+          <input type="email" id="reg-email" class="input-field" required>
+          <label for="reg-email">Email Address</label>
+          <div class="glow-line"></div>
+        </div>
+        <div class="input-group">
+          <input type="password" id="reg-pass" class="input-field" required>
+          <label for="reg-pass">Password</label>
+          <div class="glow-line"></div>
+        </div>
+        <div class="input-group">
+          <input type="password" id="reg-pass2" class="input-field" required>
+          <label for="reg-pass2">Confirm Password</label>
+          <div class="glow-line"></div>
+        </div>
+
+        <button class="btn-primary" onclick="doRegister()">
+          <span>CREATE ACCOUNT</span>
+          <div class="btn-glow"></div>
+        </button>
+
+        <div class="switch-link">Already enlisted? <a onclick="switchTab('login')">Sign In</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PORTAL / HOME SCREEN
+══════════════════════════════════ -->
+<div id="portal-screen" class="screen">
+  <nav class="nav-bar">
+    <div class="nav-logo">⚔ WOODLAND ARENA</div>
+    <div class="nav-user">
+      <div class="avatar" id="avatar-initial">P</div>
+      <span id="nav-username">Pilot</span>
+      <button class="nav-logout" onclick="doLogout()">LOGOUT</button>
+    </div>
+  </nav>
+
+  <div class="portal-hero">
+    <h2>SELECT YOUR MISSION</h2>
+    <p>Choose a combat system to engage</p>
+  </div>
+
+  <div class="games-grid">
+    <!-- JELLY PLANE -->
+    <div class="game-card" onclick="launchGame('jelly')">
+      <span class="card-icon">🛸</span>
+      <div class="card-badge badge-jelly">AERIAL COMBAT</div>
+      <h3>JELLY PLANE</h3>
+      <p>Pilot your JellyPlane through enemy skies. Dodge attacks, manage throttle, deploy special abilities, and dominate aerial combat with physics-driven flight.</p>
+      <div class="card-stats">
+        <div class="stat"><span>∞</span>THROTTLE</div>
+        <div class="stat"><span>500</span>MAX HP</div>
+        <div class="stat"><span>10K</span>RANGE</div>
+      </div>
+      <button class="play-btn">▶ LAUNCH MISSION</button>
+    </div>
+
+    <!-- VPLANE -->
+    <div class="game-card vplane-card" onclick="launchGame('vplane')">
+      <span class="card-icon">✈</span>
+      <div class="card-badge badge-vplane">BASE PLATFORM</div>
+      <h3>V-PLANE</h3>
+      <p>The foundational VPlane pawn — dual muzzle hardpoints, static mesh body, and root component hierarchy. Test base flight mechanics and scene components.</p>
+      <div class="card-stats">
+        <div class="stat"><span>2</span>MUZZLES</div>
+        <div class="stat"><span>3D</span>PHYSICS</div>
+        <div class="stat"><span>UE5</span>ENGINE</div>
+      </div>
+      <button class="play-btn" style="border-color:var(--gold);color:var(--gold)">▶ TEST FLIGHT</button>
+    </div>
+
+    <!-- CROSSHAIR HUD -->
+    <div class="game-card hud-card" onclick="launchGame('hud')">
+      <span class="card-icon">🎯</span>
+      <div class="card-badge badge-hud">AIM TRAINER</div>
+      <h3>CROSSHAIR HUD</h3>
+      <p>ACrosshairHUD aim-trainer. Practice precision targeting with a dynamic crosshair that tracks movement offsets. Hit targets before time runs out.</p>
+      <div class="card-stats">
+        <div class="stat"><span>60s</span>TIMER</div>
+        <div class="stat"><span>∞</span>TARGETS</div>
+        <div class="stat"><span>%</span>ACCURACY</div>
+      </div>
+      <button class="play-btn" style="border-color:var(--red);color:var(--red)">▶ TRAIN AIM</button>
+    </div>
+  </div>
+
+  <!-- Woodland Info Button -->
+  <div style="text-align:center;padding-bottom:50px;">
+    <button class="btn-primary" style="max-width:300px;margin:0 auto;" onclick="showWoodland()">
+      <span>📂 WOODLAND v4 — CODE DOCS</span>
+      <div class="btn-glow"></div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     JELLY PLANE GAME
+══════════════════════════════════ -->
+<div id="jelly-game-screen" class="game-screen">
+  <div class="game-topbar">
+    <div class="game-title-bar">🛸 JELLY PLANE — AERIAL COMBAT</div>
+    <div class="hud-strip">
+      <span>HP: <span class="hud-val" id="j-hp">500</span></span>
+      <span>THROTTLE: <span class="hud-val" id="j-throttle">0</span></span>
+      <span>SCORE: <span class="hud-val" id="j-score">0</span></span>
+      <span>WAVE: <span class="hud-val" id="j-wave">1</span></span>
+    </div>
+    <button class="back-btn" onclick="backToPortal()">◄ PORTAL</button>
+  </div>
+  <div class="jelly-arena" id="jelly-arena">
+    <canvas id="jelly-canvas"></canvas>
+    <!-- crosshair -->
+    <div class="crosshair" id="crosshair">
+      <div class="crosshair-dot"></div>
+    </div>
+    <!-- HUD -->
+    <div class="jelly-hud">
+      <div class="hud-box">HEALTH<br><span id="j-hp2">500</span></div>
+      <div class="hud-box">THROTTLE<br><span id="j-thr2">0%</span></div>
+      <div class="hud-box">KILLS<br><span id="j-kills">0</span></div>
+    </div>
+    <!-- controls -->
+    <div class="controls-hint">
+      <b>WASD</b> — Move Plane<br>
+      <b>SHIFT</b> — Throttle Up<br>
+      <b>CTRL</b> — Throttle Down<br>
+      <b>SPACE</b> — Dash<br>
+      <b>E</b> — Special Ability<br>
+      <b>CLICK</b> — Fire
+    </div>
+    <!-- game over -->
+    <div class="game-over-overlay" id="j-gameover">
+      <h2>PLANE DOWN</h2>
+      <p id="j-final-score">SCORE: 0 · KILLS: 0</p>
+      <button class="restart-btn" onclick="restartJelly()">RESTART MISSION</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VPLANE GAME
+══════════════════════════════════ -->
+<div id="vplane-game-screen" class="game-screen">
+  <div class="game-topbar">
+    <div class="game-title-bar" style="color:var(--gold)">✈ V-PLANE — FLIGHT TEST</div>
+    <div class="hud-strip">
+      <span>ALTITUDE: <span class="hud-val" style="color:var(--gold)" id="v-alt">0</span></span>
+      <span>SPEED: <span class="hud-val" style="color:var(--gold)" id="v-speed">0</span></span>
+      <span>ROLL: <span class="hud-val" style="color:var(--gold)" id="v-roll">0°</span></span>
+    </div>
+    <button class="back-btn" onclick="backToPortal()">◄ PORTAL</button>
+  </div>
+  <div style="position:relative;flex:1;overflow:hidden;">
+    <canvas id="vplane-canvas"></canvas>
+    <div class="vplane-hud">
+      <div class="vhud-box">ALTITUDE<br><span id="v-alt2">0 m</span></div>
+      <div class="vhud-box">SPEED<br><span id="v-sp2">0 kts</span></div>
+      <div class="vhud-box">MUZZLE<br><span>R+L ARMED</span></div>
+    </div>
+    <div class="controls-hint" style="border-color:rgba(255,215,0,0.3);color:rgba(255,215,0,0.6);">
+      <b style="color:var(--gold)">↑↓</b> — Pitch<br>
+      <b style="color:var(--gold)">←→</b> — Yaw<br>
+      <b style="color:var(--gold)">A/D</b> — Roll<br>
+      <b style="color:var(--gold)">W/S</b> — Throttle
+    </div>
+    <div class="game-over-overlay" id="v-gameover">
+      <h2 style="color:var(--gold)">CRASHED</h2>
+      <p id="v-final">DISTANCE: 0 km</p>
+      <button class="restart-btn" style="border-color:var(--gold);color:var(--gold)" onclick="restartVplane()">RESTART FLIGHT</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     CROSSHAIR HUD AIM TRAINER
+══════════════════════════════════ -->
+<div id="hud-game-screen" class="game-screen">
+  <div class="game-topbar">
+    <div class="game-title-bar" style="color:var(--red)">🎯 CROSSHAIR HUD — AIM TRAINER</div>
+    <div class="hud-strip">
+      <span>TIME: <span class="hud-val" style="color:var(--red)" id="h-time">60</span>s</span>
+      <span>HITS: <span class="hud-val" style="color:var(--red)" id="h-hits">0</span></span>
+      <span>ACC: <span class="hud-val" style="color:var(--red)" id="h-acc">0%</span></span>
+    </div>
+    <button class="back-btn" onclick="backToPortal()">◄ PORTAL</button>
+  </div>
+  <div style="position:relative;flex:1;overflow:hidden;cursor:none;">
+    <canvas id="hud-canvas"></canvas>
+    <div class="hud-trainer-overlay">
+      <div class="hud-stat-pill">TIME <b id="h-time2">60</b>s</div>
+      <div class="hud-stat-pill">HITS <b id="h-hits2">0</b></div>
+      <div class="hud-stat-pill">ACC <b id="h-acc2">0%</b></div>
+    </div>
+    <div class="game-over-overlay" id="h-gameover">
+      <h2 style="color:var(--red)">SESSION END</h2>
+      <p id="h-final">HITS: 0 · ACCURACY: 0%</p>
+      <button class="restart-btn" style="border-color:var(--red);color:var(--red)" onclick="restartHUD()">TRAIN AGAIN</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     WOODLAND CODE DOCS
+══════════════════════════════════ -->
+<div id="woodland-screen" class="game-screen">
+  <div class="game-topbar">
+    <div class="game-title-bar">📂 WOODLAND v4 — CODE DOCUMENTATION</div>
+    <button class="back-btn" onclick="backToPortal()">◄ PORTAL</button>
+  </div>
+  <div style="overflow-y:auto;flex:1;padding:20px 0;">
+    <div class="woodland-content">
+      <h2>WOODLAND v4</h2>
+      <p>UNREAL ENGINE 5 · C++ SOURCE GUIDE</p>
+
+      <!-- CLASS HIERARCHY -->
+      <div class="code-section open">
+        <div class="code-header" onclick="toggleSection(this)">
+          <h3>CLASS HIERARCHY</h3>
+          <span class="code-toggle">▼</span>
+        </div>
+        <div class="code-body">
+          <p>The WoodLandv4 project follows a clean inheritance chain built on top of Unreal Engine's APawn base class.</p>
+          <div class="class-diagram">
+            <div class="cls-box">
+              <h4>APawn (UE5 Base)</h4>
+              <ul><li>PrimaryActorTick</li><li>SetupPlayerInputComponent</li><li>GetController</li></ul>
+            </div>
+            <div class="cls-arrow">→</div>
+            <div class="cls-box">
+              <h4>AVPlane</h4>
+              <ul><li>PlaneBody (UStaticMesh)</li><li>R_Muzzel (USceneComp)</li><li>L_Muzzel (USceneComp)</li></ul>
+            </div>
+            <div class="cls-arrow">→</div>
+            <div class="cls-box">
+              <h4>AJellyPlane</h4>
+              <ul><li>SpringArm</li><li>Camera</li><li>Replicated properties</li><li>Server RPCs</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VPLANE -->
+      <div class="code-section">
+        <div class="code-header" onclick="toggleSection(this)">
+          <h3>VPlane.h / VPlane.cpp — Base Aircraft Pawn</h3>
+          <span class="code-toggle">▼</span>
+        </div>
+        <div class="code-body">
+          <p>AVPlane is the base pawn class that defines the physical structure of every aircraft in the game. It attaches a UStaticMeshComponent as the fuselage and two USceneComponents as left and right gun muzzle mount points.</p>
+          <div class="code-snippet"><span class="cm">// VPlane.h — Declares base aircraft structure</span>
+<span class="kw">class</span> <span class="ty">WOODLANDV4_API</span> <span class="ty">AVPlane</span> : <span class="kw">public</span> <span class="ty">APawn</span> {
+    <span class="ty">GENERATED_BODY</span>()
+<span class="kw">protected</span>:
+    <span class="ty">UPROPERTY</span>(VisibleAnywhere, Category = <span class="st">"Mesh"</span>)
+    <span class="ty">UStaticMeshComponent</span>* PlaneBody;   <span class="cm">// main fuselage</span>
+
+    <span class="ty">UPROPERTY</span>(VisibleAnywhere, Category = <span class="st">"Mesh"</span>)
+    <span class="ty">USceneComponent</span>* R_Muzzel;         <span class="cm">// right gun mount</span>
+    <span class="ty">USceneComponent</span>* L_Muzzel;         <span class="cm">// left gun mount</span>
+};</div>
+          <p><b>Key design note:</b> PlaneBody is attached to RootComponent. Both muzzle points attach to PlaneBody, inheriting its world transform. This makes rotation and world-position look-ups trivial for bullet spawn logic.</p>
+        </div>
+      </div>
+
+      <!-- JELLY PLANE -->
+      <div class="code-section">
+        <div class="code-header" onclick="toggleSection(this)">
+          <h3>JellyPlane.h / JellyPlane.cpp — Combat Aircraft</h3>
+          <span class="code-toggle">▼</span>
+        </div>
+        <div class="code-body">
+          <p>AJellyPlane extends AVPlane with full combat capabilities: camera rigging, throttle system, replicated health, server RPCs for all inputs, and a special area-of-effect ability.</p>
+          <div class="code-snippet"><span class="cm">// Server-authoritative fire logic</span>
+<span class="kw">void</span> <span class="fn">AJellyPlane::serverFire_Implementation</span>() {
+    <span class="ty">FVector</span> Location; <span class="ty">FRotator</span> Rotation;
+    GetController()->GetPlayerViewPoint(Location, Rotation);
+    <span class="ty">FVector</span> End = Location + Rotation.Vector() * <span class="nu">10000.f</span>;
+
+    <span class="ty">FHitResult</span> Hit;
+    <span class="kw">bool</span> bSuccess = GetWorld()->LineTraceSingleByChannel(
+        Hit, Location, End, ECC_GameTraceChannel1);
+
+    <span class="kw">if</span> (bSuccess) {
+        <span class="ty">FPointDamageEvent</span> DamageEvent(<span class="nu">10.f</span>, Hit, -Rotation.Vector(), <span class="kw">nullptr</span>);
+        <span class="kw">if</span> (<span class="ty">AActor</span>* HitActor = Hit.GetActor())
+            HitActor->TakeDamage(<span class="nu">10.f</span>, DamageEvent, GetController(), <span class="kw">this</span>);
+    }
+}</div>
+          <div class="code-snippet"><span class="cm">// TakeDamage override with health clamping</span>
+<span class="kw">float</span> <span class="fn">AJellyPlane::TakeDamage</span>(<span class="kw">float</span> DamageAmount, ...) {
+    <span class="kw">float</span> Applied = Super::TakeDamage(DamageAmount, ...);
+    CurrentHealth = FMath::Clamp(CurrentHealth - DamageAmount, <span class="nu">0.f</span>, <span class="nu">500.f</span>);
+    <span class="kw">if</span> (CurrentHealth &lt;= <span class="nu">0</span>) { OnDeath(DamageCausor); Destroy(); }
+    <span class="kw">return</span> Applied;
+}</div>
+          <p><b>Replication:</b> CurrentHealth, ThrottleAmount, Range, bThrottleUp, bThrottleDown, and Flash are all replicated using DOREPLIFETIME macros. All input goes through Server RPCs (serverFire, serverTurn, serverLookUp etc.) ensuring cheating prevention in multiplayer.</p>
+          <div class="code-snippet"><span class="cm">// Throttle physics — called every 0.05s by timer</span>
+<span class="kw">void</span> <span class="fn">AJellyPlane::CalculateSpeed</span>() {
+    <span class="kw">float</span> Speeed = FMath::Clamp(ThrottleAmount * Speed, <span class="nu">0.f</span>, Speed * <span class="nu">10</span>);
+    <span class="ty">FVector</span> ForwardVector = PlaneBody->GetForwardVector() * Speeed;
+    <span class="ty">FVector</span> PVelocity = PlaneBody->GetPhysicsLinearVelocity();
+    PlaneBody->SetPhysicsLinearVelocity(
+        FMath::Lerp(PVelocity, ForwardVector, <span class="nu">0.01f</span>));
+}</div>
+        </div>
+      </div>
+
+      <!-- CROSSHAIR HUD -->
+      <div class="code-section">
+        <div class="code-header" onclick="toggleSection(this)">
+          <h3>CrosshairHUD.h / CrosshairHUD.cpp — On-Screen HUD</h3>
+          <span class="code-toggle">▼</span>
+        </div>
+        <div class="code-body">
+          <p>ACrosshairHUD extends AHUD and renders a UTexture2D crosshair centered on screen. The DragCrossHair method shifts the crosshair by an offset — used to visualise look input momentum.</p>
+          <div class="code-snippet"><span class="cm">// Centered crosshair draw</span>
+<span class="kw">void</span> <span class="fn">ACrosshairHUD::DrawHUD</span>() {
+    Super::DrawHUD();
+    <span class="kw">const</span> <span class="ty">FVector2D</span> Center(Canvas->ClipX * <span class="nu">0.5f</span>, Canvas->ClipY * <span class="nu">0.5f</span>);
+    <span class="kw">const</span> <span class="ty">FVector2D</span> DrawPos(Center.X - <span class="nu">5.f</span>, Center.Y - <span class="nu">5.f</span>);
+
+    <span class="ty">FCanvasTileItem</span> TileItem(DrawPos, CrosshairTex->Resource, FLinearColor::White);
+    TileItem.BlendMode = SE_BLEND_Translucent;
+    Canvas->DrawItem(TileItem);
+}
+
+<span class="cm">// Dynamic crosshair with offset (for aim-sway)</span>
+<span class="kw">void</span> <span class="fn">ACrosshairHUD::DragCrossHair</span>(<span class="kw">float</span> value, <span class="kw">float</span> value1) {
+    <span class="kw">const</span> <span class="ty">FVector2D</span> DrawPos(
+        Center.X - <span class="nu">5.f</span> + value,
+        Center.Y - <span class="nu">5.f</span> + value1);
+    <span class="cm">// ... same draw logic with offset applied</span>
+}</div>
+          <p>The texture is loaded at construction via ConstructorHelpers::FObjectFinder pointing to <code style="color:#7fdbff">/Game/Crosshair/FirstPersonCrosshair</code>. The GameMode registers ACrosshairHUD as the HUDClass so UE5 automatically spawns it for every local player.</p>
+        </div>
+      </div>
+
+      <!-- BUGS -->
+      <div class="code-section">
+        <div class="code-header" onclick="toggleSection(this)">
+          <h3>⚠ KNOWN BUGS IN SOURCE CODE</h3>
+          <span class="code-toggle">▼</span>
+        </div>
+        <div class="code-body">
+          <p>The following issues were identified in the uploaded source files:</p>
+          <div class="code-snippet" style="color:#ff6b6b"><span class="cm">// JellyPlane.cpp — serverLookUp_Implementation:</span>
+(DeltaRot, <span class="kw">true</span>);   <span class="cm">// ← BUG: Missing AddActorLocalRotation()</span>
+<span class="cm">// Fix: AddActorLocalRotation(DeltaRot, true);</span>
+
+<span class="cm">// JellyPlane.cpp — trailing Python code (line ~280+)</span>
+<span class="kw">while</span> true:           <span class="cm">// ← BUG: Python code inside .cpp file!</span>
+    n = int(input())   <span class="cm">// Remove entirely — won't compile</span>
+
+<span class="cm">// WoodLandv4GameModeBase.cpp — bad include path:</span>
+#include <span class="st">"/JellyPlane/JellyPlane.h"</span>  <span class="cm">// ← absolute path, use relative</span>
+<span class="cm">// Fix: #include "JellyPlane/JellyPlane.h"</span>
+
+<span class="cm">// JellyPlane.h — FTimerHandle marked Replicated (invalid):</span>
+<span class="ty">UPROPERTY</span>(Replicated) <span class="ty">FTimerHandle</span> ThrottleTimer; <span class="cm">// ← FTimerHandle is not replicatable</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════ -->
+<script>
+// ═══════════════════════════════════
+// AUTH LOGIC
+// ═══════════════════════════════════
+const USERS_KEY = 'woodland_users';
+const SESSION_KEY = 'woodland_session';
+
+function getUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+function switchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('panel-login').classList.toggle('active', tab==='login');
+  document.getElementById('panel-register').classList.toggle('active', tab==='register');
+  document.getElementById('login-err').textContent = '';
+  document.getElementById('reg-err').textContent = '';
+  document.getElementById('reg-ok').textContent = '';
+}
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  if (!u||!p) { err.textContent='Fill all fields.'; return; }
+  const users = getUsers();
+  if (!users[u] || users[u].pass !== btoa(p)) { err.textContent='Invalid credentials.'; return; }
+  sessionStart(u);
+}
+
+function doRegister() {
+  const u = document.getElementById('reg-user').value.trim();
+  const e = document.getElementById('reg-email').value.trim();
+  const p = document.getElementById('reg-pass').value;
+  const p2 = document.getElementById('reg-pass2').value;
+  const err = document.getElementById('reg-err');
+  const ok  = document.getElementById('reg-ok');
+  err.textContent=''; ok.textContent='';
+  if (!u||!e||!p||!p2) { err.textContent='Fill all fields.'; return; }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(e)) { err.textContent='Invalid email.'; return; }
+  if (p.length < 6) { err.textContent='Password min 6 chars.'; return; }
+  if (p !== p2) { err.textContent='Passwords do not match.'; return; }
+  const users = getUsers();
+  if (users[u]) { err.textContent='Username taken.'; return; }
+  users[u] = { pass: btoa(p), email: e };
+  saveUsers(users);
+  ok.textContent = 'Account created! Signing you in…';
+  setTimeout(() => sessionStart(u), 800);
+}
+
+function sessionStart(u) {
+  localStorage.setItem(SESSION_KEY, u);
+  document.getElementById('nav-username').textContent = u;
+  document.getElementById('avatar-initial').textContent = u[0].toUpperCase();
+  showScreen('portal-screen');
+}
+
+function doLogout() {
+  localStorage.removeItem(SESSION_KEY);
+  showScreen('auth-screen');
+}
+
+// check existing session
+(function() {
+  const s = localStorage.getItem(SESSION_KEY);
+  if (s) { sessionStart(s); }
+})();
+
+// ═══════════════════════════════════
+// SCREEN MANAGER
+// ═══════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen, .game-screen').forEach(s => {
+    s.classList.remove('active');
+    if (s.tagName === 'DIV' && s.classList.contains('screen')) s.style.display = 'none';
+    if (s.tagName === 'DIV' && s.classList.contains('game-screen')) s.style.display = 'none';
+  });
+  const el = document.getElementById(id);
+  if (el) {
+    el.style.display = 'flex';
+    el.classList.add('active');
+  }
+}
+
+function launchGame(type) {
+  if (type === 'jelly') { showScreen('jelly-game-screen'); initJellyGame(); }
+  else if (type === 'vplane') { showScreen('vplane-game-screen'); initVplaneGame(); }
+  else if (type === 'hud') { showScreen('hud-game-screen'); initHUDGame(); }
+}
+
+function showWoodland() {
+  showScreen('woodland-screen');
+}
+
+function backToPortal() {
+  stopAllGames();
+  showScreen('portal-screen');
+}
+
+// ═══════════════════════════════════
+// PARTICLES
+// ═══════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 80, density: { enable: true, value_area: 900 } },
+      color: { value: '#00d4ff' },
+      shape: { type: 'circle' },
+      opacity: { value: 0.7, random: true, anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false } },
+      size: { value: 4, random: true, anim: { enable: true, speed: 2, size_min: 1, sync: false } },
+      line_linked: { enable: true, distance: 140, color: '#00d4ff', opacity: 0.5, width: 1.2 },
+      move: { enable: true, speed: 1.5, direction: 'none', random: true, straight: false, out_mode: 'out',
+              attract: { enable: true, rotateX: 600, rotateY: 1200 } }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+      modes: { repulse: { distance: 90, duration: 0.4 }, push: { particles_nb: 3 } }
+    },
+    retina_detect: true
+  });
+});
+
+// ═══════════════════════════════════
+// WOODLAND CODE ACCORDION
+// ═══════════════════════════════════
+function toggleSection(header) {
+  const section = header.parentElement;
+  section.classList.toggle('open');
+}
+
+// ═══════════════════════════════════
+// ════ JELLY PLANE GAME ════
+// ═══════════════════════════════════
+let jellyGame = null;
+
+function initJellyGame() {
+  if (jellyGame) jellyGame.destroy();
+  jellyGame = new JellyPlaneGame();
+}
+function restartJelly() {
+  document.getElementById('j-gameover').classList.remove('show');
+  initJellyGame();
+}
+
+class JellyPlaneGame {
+  constructor() {
+    this.canvas = document.getElementById('jelly-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.arena = document.getElementById('jelly-arena');
+    this.resize();
+    
+    // state
+    this.plane = { x: this.W/2, y: this.H/2, vx:0, vy:0, angle:0, throttle:0, maxSpeed:5, hp:500 };
+    this.enemies = [];
+    this.bullets = [];
+    this.eBullets = [];
+    this.score = 0;
+    this.kills = 0;
+    this.wave = 1;
+    this.keys = {};
+    this.mx = this.W/2; this.my = this.H/2;
+    this.fire = false;
+    this.fireTimer = 0;
+    this.dash = false;
+    this.alive = true;
+    this.particles = [];
+    this.eSpawnTimer = 0;
+    
+    this.spawnEnemyWave();
+    this.bindEvents();
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+
+  resize() {
+    this.W = this.arena.clientWidth || 800;
+    this.H = this.arena.clientHeight || 500;
+    this.canvas.width = this.W;
+    this.canvas.height = this.H;
+  }
+
+  bindEvents() {
+    this._kd = e => { this.keys[e.code] = true; e.preventDefault(); };
+    this._ku = e => { this.keys[e.code] = false; };
+    this._mm = e => {
+      const rect = this.canvas.getBoundingClientRect();
+      this.mx = e.clientX - rect.left;
+      this.my = e.clientY - rect.top;
+      const ch = document.getElementById('crosshair');
+      ch.style.left = this.mx + 'px';
+      ch.style.top  = this.my + 'px';
+    };
+    this._md = () => { this.fire = true; };
+    this._mu = () => { this.fire = false; };
+    window.addEventListener('keydown', this._kd);
+    window.addEventListener('keyup', this._ku);
+    this.canvas.addEventListener('mousemove', this._mm);
+    this.canvas.addEventListener('mousedown', this._md);
+    this.canvas.addEventListener('mouseup', this._mu);
+  }
+
+  destroy() {
+    window.removeEventListener('keydown', this._kd);
+    window.removeEventListener('keyup', this._ku);
+    this.canvas.removeEventListener('mousemove', this._mm);
+    this.canvas.removeEventListener('mousedown', this._md);
+    this.canvas.removeEventListener('mouseup', this._mu);
+    cancelAnimationFrame(this.raf);
+  }
+
+  spawnEnemyWave() {
+    const count = 3 + this.wave * 2;
+    for (let i = 0; i < count; i++) {
+      const side = Math.floor(Math.random()*4);
+      let ex, ey;
+      if (side===0) { ex=Math.random()*this.W; ey=-40; }
+      else if (side===1) { ex=this.W+40; ey=Math.random()*this.H; }
+      else if (side===2) { ex=Math.random()*this.W; ey=this.H+40; }
+      else { ex=-40; ey=Math.random()*this.H; }
+      this.enemies.push({ x:ex, y:ey, hp:30+this.wave*10, angle:0, fireTimer: Math.random()*120, speed: 1+this.wave*0.2 });
+    }
+  }
+
+  update() {
+    if (!this.alive) return;
+    const p = this.plane;
+
+    // throttle
+    if (this.keys['ShiftLeft'] || this.keys['ShiftRight']) p.throttle = Math.min(p.throttle+0.5, 100);
+    if (this.keys['ControlLeft']) p.throttle = Math.max(p.throttle-1, 0);
+    if (!this.keys['ShiftLeft'] && !this.keys['ShiftRight'] && !this.keys['ControlLeft']) {
+      p.throttle = Math.max(p.throttle-0.1, 0);
+    }
+
+    // dash
+    const spd = this.dash ? p.maxSpeed*2.5 : p.maxSpeed * (p.throttle/100);
+    const dx = this.mx - p.x, dy = this.my - p.y;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if (dist > 5) {
+      p.angle = Math.atan2(dy, dx);
+      p.vx += Math.cos(p.angle)*0.15;
+      p.vy += Math.sin(p.angle)*0.15;
+    }
+    const vel = Math.sqrt(p.vx*p.vx+p.vy*p.vy);
+    if (vel > spd) { p.vx = p.vx/vel*spd; p.vy = p.vy/vel*spd; }
+    p.x += p.vx; p.y += p.vy;
+    p.x = Math.max(20, Math.min(this.W-20, p.x));
+    p.y = Math.max(20, Math.min(this.H-20, p.y));
+
+    // dash
+    if (this.keys['Space']) { this.dash = true; }
+    else this.dash = false;
+
+    // fire
+    if (this.fire) {
+      this.fireTimer--;
+      if (this.fireTimer <= 0) {
+        this.fireTimer = 8;
+        const bAngle = Math.atan2(this.my - p.y, this.mx - p.x);
+        this.bullets.push({ x:p.x, y:p.y, vx:Math.cos(bAngle)*14, vy:Math.sin(bAngle)*14, life:60 });
+      }
+    }
+
+    // special ability E
+    if (this.keys['KeyE']) {
+      this.keys['KeyE'] = false;
+      this.doSpecial();
+    }
+
+    // bullets
+    this.bullets = this.bullets.filter(b => {
+      b.x += b.vx; b.y += b.vy; b.life--;
+      return b.life > 0 && b.x>0 && b.x<this.W && b.y>0 && b.y<this.H;
+    });
+
+    // enemies
+    this.eSpawnTimer++;
+    this.enemies.forEach(e => {
+      const ex = p.x - e.x, ey = p.y - e.y;
+      e.angle = Math.atan2(ey, ex);
+      e.x += Math.cos(e.angle)*e.speed;
+      e.y += Math.sin(e.angle)*e.speed;
+
+      // enemy fire
+      e.fireTimer--;
+      if (e.fireTimer <= 0) {
+        e.fireTimer = 90 + Math.random()*60;
+        this.eBullets.push({ x:e.x, y:e.y, vx:Math.cos(e.angle)*5, vy:Math.sin(e.angle)*5, life:120 });
+      }
+
+      // bullet hits enemy
+      this.bullets.forEach((b,bi) => {
+        const d = Math.hypot(b.x-e.x, b.y-e.y);
+        if (d < 22) {
+          e.hp -= 10;
+          this.bullets.splice(bi, 1);
+          this.spawnParticles(e.x, e.y, '#ff4444', 5);
+          this.score += 10;
+        }
+      });
+    });
+
+    // enemy bullets vs player
+    this.eBullets = this.eBullets.filter(b => {
+      b.x += b.vx; b.y += b.vy; b.life--;
+      const d = Math.hypot(b.x-p.x, b.y-p.y);
+      if (d < 18) {
+        p.hp -= 10;
+        this.spawnParticles(p.x, p.y, '#00d4ff', 6);
+        return false;
+      }
+      return b.life > 0;
+    });
+
+    // remove dead enemies
+    const prev = this.enemies.length;
+    this.enemies = this.enemies.filter(e => {
+      if (e.hp <= 0) { this.kills++; this.score += 50; this.spawnParticles(e.x,e.y,'#ff8800',12); return false; }
+      return true;
+    });
+    if (this.enemies.length === 0) { this.wave++; this.spawnEnemyWave(); }
+
+    // player death
+    if (p.hp <= 0) { this.gameOver(); }
+
+    // particles
+    this.particles = this.particles.filter(pt => { pt.life--; pt.x+=pt.vx; pt.y+=pt.vy; pt.vy+=0.2; return pt.life>0; });
+
+    // HUD
+    this.updateHUD();
+  }
+
+  doSpecial() {
+    // AoE shockwave
+    this.spawnParticles(this.plane.x, this.plane.y, '#00d4ff', 30);
+    this.enemies.forEach(e => {
+      const d = Math.hypot(e.x-this.plane.x, e.y-this.plane.y);
+      if (d < 200) { e.hp -= 50; }
+    });
+    this.score += 25;
+  }
+
+  spawnParticles(x, y, color, n) {
+    for (let i=0; i<n; i++) {
+      const a = Math.random()*Math.PI*2;
+      const spd = 1+Math.random()*4;
+      this.particles.push({ x, y, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd, life:30+Math.random()*20, color });
+    }
+  }
+
+  gameOver() {
+    this.alive = false;
+    document.getElementById('j-final-score').textContent = `SCORE: ${this.score} · KILLS: ${this.kills}`;
+    document.getElementById('j-gameover').classList.add('show');
+  }
+
+  updateHUD() {
+    const h = Math.max(0, Math.round(this.plane.hp));
+    document.getElementById('j-hp').textContent = h;
+    document.getElementById('j-hp2').textContent = h;
+    document.getElementById('j-throttle').textContent = Math.round(this.plane.throttle)+'%';
+    document.getElementById('j-thr2').textContent = Math.round(this.plane.throttle)+'%';
+    document.getElementById('j-score').textContent = this.score;
+    document.getElementById('j-wave').textContent = this.wave;
+    document.getElementById('j-kills').textContent = this.kills;
+  }
+
+  draw() {
+    const ctx = this.ctx;
+    ctx.clearRect(0,0,this.W,this.H);
+
+    // background grid
+    ctx.strokeStyle = 'rgba(0,212,255,0.04)';
+    ctx.lineWidth = 1;
+    for (let x=0;x<this.W;x+=40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,this.H); ctx.stroke(); }
+    for (let y=0;y<this.H;y+=40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(this.W,y); ctx.stroke(); }
+
+    // particles
+    this.particles.forEach(pt => {
+      ctx.save();
+      ctx.globalAlpha = pt.life/50;
+      ctx.fillStyle = pt.color;
+      ctx.beginPath(); ctx.arc(pt.x, pt.y, 3, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+
+    // enemy bullets
+    this.eBullets.forEach(b => {
+      ctx.fillStyle = '#ff4444';
+      ctx.shadowColor = '#ff4444'; ctx.shadowBlur = 8;
+      ctx.beginPath(); ctx.arc(b.x, b.y, 4, 0, Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+
+    // enemies
+    this.enemies.forEach(e => {
+      ctx.save();
+      ctx.translate(e.x, e.y);
+      ctx.rotate(e.angle + Math.PI/2);
+      ctx.fillStyle = '#ff3c3c';
+      ctx.shadowColor = '#ff3c3c'; ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.moveTo(0,-20); ctx.lineTo(-12,14); ctx.lineTo(0,8); ctx.lineTo(12,14);
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+      // hp bar
+      const bw = 40, bh = 4;
+      ctx.fillStyle = '#440000';
+      ctx.fillRect(e.x-bw/2, e.y+24, bw, bh);
+      ctx.fillStyle = '#ff4444';
+      ctx.fillRect(e.x-bw/2, e.y+24, bw*(e.hp/(30+this.wave*10)), bh);
+    });
+
+    // player bullets
+    this.bullets.forEach(b => {
+      ctx.fillStyle = '#00d4ff';
+      ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 10;
+      ctx.beginPath(); ctx.arc(b.x, b.y, 4, 0, Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+
+    // player plane
+    const p = this.plane;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle + Math.PI/2);
+    // engine glow
+    ctx.fillStyle = `rgba(0,212,255,${0.3+p.throttle/200})`;
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 20+p.throttle/5;
+    ctx.beginPath(); ctx.ellipse(0, 12, 8, 14, 0, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // body
+    ctx.fillStyle = '#00d4ff';
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 16;
+    ctx.beginPath();
+    ctx.moveTo(0,-22); ctx.lineTo(-14,16); ctx.lineTo(0,10); ctx.lineTo(14,16);
+    ctx.closePath(); ctx.fill();
+    // cockpit
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.shadowBlur = 0;
+    ctx.beginPath(); ctx.ellipse(0,-8, 5, 8, 0, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    // hp bar player
+    const bw = 100, bh = 6;
+    const hpRatio = Math.max(0, p.hp/500);
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(p.x-bw/2, p.y+28, bw, bh);
+    ctx.fillStyle = hpRatio > 0.5 ? '#00ff88' : hpRatio > 0.25 ? '#ffaa00' : '#ff4444';
+    ctx.fillRect(p.x-bw/2, p.y+28, bw*hpRatio, bh);
+
+    // dash effect
+    if (this.dash) {
+      ctx.strokeStyle = 'rgba(0,212,255,0.4)';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 10;
+      for (let i=0;i<6;i++) {
+        const a = Math.random()*Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(p.x+Math.cos(a)*10, p.y+Math.sin(a)*10);
+        ctx.lineTo(p.x+Math.cos(a)*30, p.y+Math.sin(a)*30);
+        ctx.stroke();
+      }
+      ctx.shadowBlur=0;
+    }
+
+    // wave info
+    ctx.fillStyle = 'rgba(0,212,255,0.3)';
+    ctx.font = '12px Orbitron, monospace';
+    ctx.fillText(`WAVE ${this.wave}`, 12, this.H-14);
+  }
+
+  loop() {
+    this.update();
+    this.draw();
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+}
+
+// ═══════════════════════════════════
+// ════ VPLANE GAME ════
+// ═══════════════════════════════════
+let vplaneGame = null;
+
+function initVplaneGame() {
+  if (vplaneGame) vplaneGame.destroy();
+  vplaneGame = new VPlaneGame();
+}
+function restartVplane() {
+  document.getElementById('v-gameover').classList.remove('show');
+  initVplaneGame();
+}
+
+class VPlaneGame {
+  constructor() {
+    this.canvas = document.getElementById('vplane-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.W = window.innerWidth;
+    this.H = Math.max(500, window.innerHeight - 60);
+    this.canvas.width = this.W;
+    this.canvas.height = this.H;
+
+    this.plane = { x: this.W/2, y: this.H*0.6, vx:0, vy:0, angle:0, throttle:0, roll:0, altitude:0, distance:0, alive:true };
+    this.obstacles = [];
+    this.clouds = [];
+    this.rings = [];
+    this.score = 0;
+    this.keys = {};
+    this.time = 0;
+
+    for (let i=0;i<12;i++) this.clouds.push({ x:Math.random()*this.W, y:Math.random()*this.H*0.7, r:30+Math.random()*60, speed:0.3+Math.random()*0.5 });
+    for (let i=0;i<5;i++) this.spawnRing();
+    this.spawnObstacles();
+
+    this._kd = e => { this.keys[e.code]=true; e.preventDefault(); };
+    this._ku = e => { this.keys[e.code]=false; };
+    window.addEventListener('keydown',this._kd);
+    window.addEventListener('keyup',this._ku);
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+
+  destroy() {
+    window.removeEventListener('keydown',this._kd);
+    window.removeEventListener('keyup',this._ku);
+    cancelAnimationFrame(this.raf);
+  }
+
+  spawnRing() {
+    this.rings.push({ x:this.W+100+Math.random()*300, y:80+Math.random()*(this.H-160), r:35, hit:false });
+  }
+
+  spawnObstacles() {
+    for (let i=0;i<8;i++) {
+      this.obstacles.push({ x:this.W+200+i*200+Math.random()*100, y:Math.random()*this.H, w:20+Math.random()*20, h:60+Math.random()*120 });
+    }
+  }
+
+  update() {
+    const p = this.plane;
+    if (!p.alive) return;
+    this.time++;
+
+    // controls
+    if (this.keys['ArrowUp']||this.keys['KeyW'])   p.vy -= 0.4;
+    if (this.keys['ArrowDown']||this.keys['KeyS'])  p.vy += 0.3;
+    if (this.keys['ArrowLeft']||this.keys['KeyA'])  { p.vx -= 0.3; p.roll = Math.max(p.roll-3,-30); }
+    if (this.keys['ArrowRight']||this.keys['KeyD']) { p.vx += 0.3; p.roll = Math.min(p.roll+3,30); }
+    else p.roll *= 0.9;
+
+    if (this.keys['ShiftLeft']) p.throttle = Math.min(p.throttle+0.5, 10);
+    else p.throttle = Math.max(p.throttle-0.1, 1);
+
+    p.vx = Math.max(-12, Math.min(12, p.vx));
+    p.vy = Math.max(-10, Math.min(10, p.vy));
+    p.vy += 0.08; // gravity
+    p.vx *= 0.97;
+    p.vy *= 0.97;
+    p.x += p.throttle + p.vx;
+    p.y += p.vy;
+    p.angle = Math.atan2(p.vy, p.throttle+p.vx)*0.6;
+    p.altitude = Math.round((this.H - p.y) / this.H * 3000);
+    p.distance += 0.02;
+
+    // scroll world
+    this.clouds.forEach(c => { c.x -= c.speed; if(c.x<-80) c.x=this.W+80; });
+    this.obstacles.forEach(o => { o.x -= 2+this.score/500; });
+    this.rings.forEach(r => { r.x -= 2+this.score/500; });
+
+    // remove off-screen obstacles, spawn new
+    this.obstacles = this.obstacles.filter(o => o.x > -100);
+    if (this.obstacles.length < 6) this.spawnObstacles();
+    this.rings = this.rings.filter(r => r.x > -50);
+    while (this.rings.length < 5) this.spawnRing();
+
+    // ring collection
+    this.rings.forEach(r => {
+      if (!r.hit) {
+        const d = Math.hypot(p.x - r.x, p.y - r.y);
+        if (d < r.r + 14) { r.hit=true; this.score+=100; }
+      }
+    });
+
+    // crash checks
+    if (p.y < 0 || p.y > this.H) { p.alive=false; this.gameOver(); return; }
+    this.obstacles.forEach(o => {
+      if (p.x>o.x && p.x<o.x+o.w && p.y>o.y && p.y<o.y+o.h) { p.alive=false; this.gameOver(); }
+    });
+
+    // score
+    this.score += 0.05;
+    this.updateHUD();
+  }
+
+  gameOver() {
+    document.getElementById('v-final').textContent = `DISTANCE: ${Math.round(this.plane.distance)} km · SCORE: ${Math.round(this.score)}`;
+    document.getElementById('v-gameover').classList.add('show');
+  }
+
+  updateHUD() {
+    const alt = this.plane.altitude;
+    const spd = Math.round(this.plane.throttle*20);
+    document.getElementById('v-alt').textContent = alt;
+    document.getElementById('v-alt2').textContent = alt + ' m';
+    document.getElementById('v-speed').textContent = spd;
+    document.getElementById('v-sp2').textContent = spd + ' kts';
+    document.getElementById('v-roll').textContent = Math.round(this.plane.roll)+'°';
+  }
+
+  draw() {
+    const ctx = this.ctx, p = this.plane;
+    // sky gradient
+    const grad = ctx.createLinearGradient(0,0,0,this.H);
+    grad.addColorStop(0,'#000814'); grad.addColorStop(0.6,'#001a33'); grad.addColorStop(1,'#002244');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,this.W,this.H);
+
+    // ground
+    ctx.fillStyle = '#001a0d';
+    ctx.fillRect(0, this.H-30, this.W, 30);
+    ctx.fillStyle = '#003300';
+    ctx.fillRect(0, this.H-32, this.W, 4);
+
+    // clouds
+    this.clouds.forEach(c => {
+      ctx.fillStyle = 'rgba(0,212,255,0.06)';
+      ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(c.x+c.r*0.5, c.y-c.r*0.3, c.r*0.7, 0, Math.PI*2); ctx.fill();
+    });
+
+    // rings
+    this.rings.forEach(r => {
+      if (r.hit) return;
+      ctx.strokeStyle = 'rgba(255,215,0,0.9)';
+      ctx.lineWidth = 4;
+      ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 20;
+      ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI*2); ctx.stroke();
+      ctx.shadowBlur=0;
+    });
+
+    // obstacles
+    this.obstacles.forEach(o => {
+      const g = ctx.createLinearGradient(o.x, o.y, o.x+o.w, o.y+o.h);
+      g.addColorStop(0,'#440000'); g.addColorStop(1,'#880000');
+      ctx.fillStyle = g;
+      ctx.shadowColor = '#ff0000'; ctx.shadowBlur = 8;
+      ctx.fillRect(o.x, o.y, o.w, o.h);
+      ctx.shadowBlur=0;
+    });
+
+    // plane
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    // engine trail
+    for (let i=0;i<6;i++) {
+      ctx.fillStyle = `rgba(255,150,0,${0.4-i*0.06})`;
+      ctx.beginPath(); ctx.ellipse(-20-i*12, 0, 4, 3-i*0.3, 0, 0, Math.PI*2); ctx.fill();
+    }
+    // wings
+    ctx.fillStyle = '#ffd700';
+    ctx.shadowColor = '#ffd700'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.moveTo(-10,-4); ctx.lineTo(-30,16); ctx.lineTo(-10,4); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(-10,-4); ctx.lineTo(-30,-16); ctx.lineTo(-10,4); ctx.closePath(); ctx.fill();
+    // body
+    ctx.beginPath(); ctx.ellipse(0,0,22,7,0,0,Math.PI*2); ctx.fill();
+    // nose
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.moveTo(22,0); ctx.lineTo(14,6); ctx.lineTo(14,-6); ctx.closePath(); ctx.fill();
+    // cockpit
+    ctx.fillStyle = 'rgba(0,200,255,0.8)';
+    ctx.shadowBlur=0;
+    ctx.beginPath(); ctx.ellipse(8,0,8,4,0,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    // score
+    ctx.fillStyle = 'rgba(255,215,0,0.7)';
+    ctx.font = '13px Orbitron, monospace';
+    ctx.fillText(`SCORE: ${Math.round(this.score)}`, 12, this.H-40);
+    ctx.fillText(`COLLECT GOLDEN RINGS!`, 12, this.H-22);
+  }
+
+  loop() {
+    this.update();
+    this.draw();
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+}
+
+// ═══════════════════════════════════
+// ════ CROSSHAIR HUD AIM TRAINER ════
+// ═══════════════════════════════════
+let hudGame = null;
+
+function initHUDGame() {
+  if (hudGame) hudGame.destroy();
+  hudGame = new HUDTrainer();
+}
+function restartHUD() {
+  document.getElementById('h-gameover').classList.remove('show');
+  initHUDGame();
+}
+
+class HUDTrainer {
+  constructor() {
+    this.canvas = document.getElementById('hud-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    const parent = this.canvas.parentElement;
+    this.W = parent.clientWidth || 800;
+    this.H = Math.max(500, window.innerHeight - 70);
+    this.canvas.width = this.W;
+    this.canvas.height = this.H;
+
+    this.targets = [];
+    this.mx = this.W/2; this.my = this.H/2;
+    this.crossX = this.W/2; this.crossY = this.H/2;
+    this.shots = 0; this.hits = 0;
+    this.timeLeft = 60;
+    this.active = true;
+    this.particles = [];
+    this.streakFlash = 0;
+
+    // spawn targets
+    for (let i=0;i<5;i++) this.spawnTarget();
+
+    this._mm = e => {
+      const rect = this.canvas.getBoundingClientRect();
+      this.mx = e.clientX - rect.left;
+      this.my = e.clientY - rect.top;
+    };
+    this._md = () => { if(this.active) this.shoot(); };
+    this.canvas.addEventListener('mousemove', this._mm);
+    this.canvas.addEventListener('click', this._md);
+
+    this.timerInterval = setInterval(() => {
+      if (!this.active) return;
+      this.timeLeft--;
+      if (this.timeLeft <= 0) this.endSession();
+    }, 1000);
+
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+
+  destroy() {
+    this.canvas.removeEventListener('mousemove', this._mm);
+    this.canvas.removeEventListener('click', this._md);
+    clearInterval(this.timerInterval);
+    cancelAnimationFrame(this.raf);
+  }
+
+  spawnTarget() {
+    const r = 18 + Math.random()*30;
+    this.targets.push({
+      x: r+Math.random()*(this.W-r*2),
+      y: r+Math.random()*(this.H-r*2),
+      r, life: 120+Math.random()*180,
+      vx: (Math.random()-0.5)*2,
+      vy: (Math.random()-0.5)*2,
+      flash:0
+    });
+  }
+
+  shoot() {
+    this.shots++;
+    let hit = false;
+    this.targets = this.targets.filter(t => {
+      const d = Math.hypot(this.crossX - t.x, this.crossY - t.y);
+      if (d < t.r + 2) {
+        this.hits++;
+        this.streakFlash = 15;
+        for (let i=0;i<16;i++) {
+          const a = Math.random()*Math.PI*2;
+          const spd = 2+Math.random()*6;
+          this.particles.push({ x:t.x, y:t.y, vx:Math.cos(a)*spd, vy:Math.sin(a)*spd, life:30, color:'#ff3c3c' });
+        }
+        hit = true;
+        return false;
+      }
+      return true;
+    });
+    if (hit) this.spawnTarget();
+    // muzzle flash on crosshair
+    this.particles.push({ x:this.crossX, y:this.crossY, vx:0, vy:0, life:8, color:'#fff', big:true });
+    this.updateHUD();
+  }
+
+  endSession() {
+    this.active = false;
+    const acc = this.shots>0 ? Math.round(this.hits/this.shots*100) : 0;
+    document.getElementById('h-final').textContent = `HITS: ${this.hits} · ACCURACY: ${acc}% · SHOTS: ${this.shots}`;
+    document.getElementById('h-gameover').classList.add('show');
+  }
+
+  updateHUD() {
+    const acc = this.shots>0 ? Math.round(this.hits/this.shots*100) : 0;
+    document.getElementById('h-time').textContent = this.timeLeft;
+    document.getElementById('h-time2').textContent = this.timeLeft;
+    document.getElementById('h-hits').textContent = this.hits;
+    document.getElementById('h-hits2').textContent = this.hits;
+    document.getElementById('h-acc').textContent = acc+'%';
+    document.getElementById('h-acc2').textContent = acc+'%';
+  }
+
+  update() {
+    // crosshair lags behind mouse (simulates DragCrossHair lag)
+    this.crossX += (this.mx - this.crossX) * 0.2;
+    this.crossY += (this.my - this.crossY) * 0.2;
+
+    // targets
+    this.targets.forEach(t => {
+      t.x += t.vx; t.y += t.vy;
+      if (t.x-t.r<0||t.x+t.r>this.W) t.vx*=-1;
+      if (t.y-t.r<0||t.y+t.r>this.H) t.vy*=-1;
+      t.life--;
+      if (t.life <= 0) { t.life = 150; t.x = t.r+Math.random()*(this.W-t.r*2); t.y = t.r+Math.random()*(this.H-t.r*2); }
+    });
+
+    // particles
+    this.particles = this.particles.filter(p => { p.x+=p.vx; p.y+=p.vy; p.life--; return p.life>0; });
+    if (this.streakFlash > 0) this.streakFlash--;
+    this.updateHUD();
+  }
+
+  draw() {
+    const ctx = this.ctx;
+    // bg
+    ctx.fillStyle = '#050510';
+    ctx.fillRect(0,0,this.W,this.H);
+
+    // grid
+    ctx.strokeStyle = 'rgba(255,60,60,0.05)';
+    ctx.lineWidth=1;
+    for (let x=0;x<this.W;x+=50) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,this.H); ctx.stroke(); }
+    for (let y=0;y<this.H;y+=50) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(this.W,y); ctx.stroke(); }
+
+    // streak flash
+    if (this.streakFlash > 0) {
+      ctx.fillStyle = `rgba(255,60,60,${this.streakFlash/15*0.08})`;
+      ctx.fillRect(0,0,this.W,this.H);
+    }
+
+    // particles
+    this.particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.life/(p.big?8:30);
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color; ctx.shadowBlur = p.big?20:8;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.big?12:3, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+
+    // targets
+    this.targets.forEach(t => {
+      const pulse = 0.7 + 0.3*Math.sin(Date.now()*0.01);
+      // outer ring
+      ctx.strokeStyle = `rgba(255,60,60,${pulse})`;
+      ctx.lineWidth = 2;
+      ctx.shadowColor='#ff3c3c'; ctx.shadowBlur=15;
+      ctx.beginPath(); ctx.arc(t.x,t.y,t.r,0,Math.PI*2); ctx.stroke();
+      // inner ring
+      ctx.strokeStyle = `rgba(255,100,100,${pulse*0.6})`;
+      ctx.beginPath(); ctx.arc(t.x,t.y,t.r*0.6,0,Math.PI*2); ctx.stroke();
+      // center dot
+      ctx.fillStyle='#ff3c3c';
+      ctx.beginPath(); ctx.arc(t.x,t.y,4,0,Math.PI*2); ctx.fill();
+      ctx.shadowBlur=0;
+      // life bar
+      const lp = t.life/300;
+      ctx.fillStyle='rgba(255,60,60,0.2)';
+      ctx.fillRect(t.x-t.r, t.y+t.r+4, t.r*2, 3);
+      ctx.fillStyle='#ff3c3c';
+      ctx.fillRect(t.x-t.r, t.y+t.r+4, t.r*2*lp, 3);
+    });
+
+    // CROSSHAIR (ACrosshairHUD simulation)
+    const cx = this.crossX, cy = this.crossY;
+    const size = 16, gap = 5;
+    ctx.strokeStyle = '#00d4ff';
+    ctx.lineWidth = 2;
+    ctx.shadowColor = '#00d4ff'; ctx.shadowBlur = 10;
+    // horizontal lines
+    ctx.beginPath(); ctx.moveTo(cx-size-gap,cy); ctx.lineTo(cx-gap,cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx+gap,cy); ctx.lineTo(cx+size+gap,cy); ctx.stroke();
+    // vertical lines
+    ctx.beginPath(); ctx.moveTo(cx,cy-size-gap); ctx.lineTo(cx,cy-gap); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,cy+gap); ctx.lineTo(cx,cy+size+gap); ctx.stroke();
+    // center dot (red - like the real CrosshairHUD)
+    ctx.fillStyle = '#ff3c3c';
+    ctx.shadowColor = '#ff3c3c'; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // timer ring
+    const prog = this.timeLeft/60;
+    ctx.strokeStyle = this.timeLeft>15 ? 'rgba(255,60,60,0.6)' : 'rgba(255,60,60,1)';
+    ctx.lineWidth = this.timeLeft<=15 ? 3 : 2;
+    if (this.timeLeft<=15) { ctx.shadowColor='#ff3c3c'; ctx.shadowBlur=20; }
+    ctx.beginPath();
+    ctx.arc(this.W-40, this.H-40, 28, -Math.PI/2, -Math.PI/2 + Math.PI*2*prog);
+    ctx.stroke();
+    ctx.shadowBlur=0;
+    ctx.fillStyle = this.timeLeft<=15?'#ff3c3c':'rgba(255,60,60,0.8)';
+    ctx.font = 'bold 12px Orbitron, monospace';
+    ctx.textAlign='center';
+    ctx.fillText(this.timeLeft, this.W-40, this.H-36);
+    ctx.textAlign='left';
+  }
+
+  loop() {
+    this.update();
+    this.draw();
+    this.raf = requestAnimationFrame(this.loop.bind(this));
+  }
+}
+
+// ═══════════════════════════════════
+// STOP ALL GAMES
+// ═══════════════════════════════════
+function stopAllGames() {
+  if (jellyGame) { jellyGame.destroy(); jellyGame=null; }
+  if (vplaneGame) { vplaneGame.destroy(); vplaneGame=null; }
+  if (hudGame) { hudGame.destroy(); hudGame=null; }
+}
+
+// ═══════════════════════════════════
+// ENTER KEY SUPPORT
+// ═══════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key==='Enter') {
+    const loginActive = document.getElementById('panel-login').classList.contains('active');
+    if (loginActive) doLogin(); else doRegister();
+  }
+});
+</script>
+</body>
 </html>
