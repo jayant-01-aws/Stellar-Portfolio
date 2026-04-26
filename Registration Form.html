@@ -1,493 +1,937 @@
 <!DOCTYPE html>
-<!-- saved from url=(0057)file:///C:/Users/jayan/Downloads/Pr6RegistrationForm.html -->
 <html lang="en">
-
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/Registration Form_files/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <style>
-        a,
-        input[type="radio"],
-        input [type="radio"] {
-            font: rgb(0, 183, 255);
-            color: #00ccff;
-        }
+    body {
+      width:100%; height:100vh;
+      display:flex; justify-content:center; align-items:center;
+      letter-spacing:1px;
+      background:#0c1022;
+      overflow:hidden;
+    }
 
-        value {
-            font-size: medium;
-            font-weight: bolder;
-        }
+    /* ── Full-screen 3D canvas behind everything ── */
+    #bgCanvas {
+      position:fixed;
+      inset:0;
+      width:100%; height:100%;
+      z-index:0;
+      pointer-events:none;
+    }
 
-        input {
-            font-size: 16px;
-            font-weight: bolder;
-        }
+    /* ── Everything form-related sits above canvas ── */
+    .scene-wrapper {
+      position:relative;
+      z-index:10;
+    }
 
-        option,
-        select {
-            font-weight: bolder;
-            font-style: oblique;
-            border: #000;
-            font-size: small;
-        }
+    a, input[type="radio"] { font:rgb(0,183,255); color:#00ccff; }
 
-        option,
-        select:hover {
-            border-color: #00ccff;
-            border: #00ccff;
-        }
+    input {
+      font-size:16px; font-weight:bolder;
+      background-color:transparent; color:#d400d4;
+    }
 
-        /* #Registration_button {
-    position: relative;
-    width: 300px;
-    height: 30px;
-    transition: 1s;
-    margin-top:152px;
-    text-decoration: none;
-    z-index: 10;
-    cursor: pointer;
-    font-size: 22px;
-    letter-spacing: 2px;
-    border: 1px solid #00ccff;
-    border-radius: 50px;
-    background-color: transparent;
-    color: #00ccff;
-    text-align: center;
-    padding: 8px 0;
+    option, select {
+      font-weight:bolder; font-style:oblique;
+      border:#000; font-size:small;
+    }
+    option, select:hover { border-color:#00ccff; }
+
+    .fa { font-size:10px !important; }
+
+    .input_text {
+      width:95%; height:30px;
+      background-color:transparent; color:#d400d4;
+      border:none; outline:none;
+      border-bottom:1px solid #00ccff;
+      font-size:20px; padding-left:10px;
+    }
+
+    ::placeholder { font-size:15px; color:#00ccff66; letter-spacing:1px; }
+
+    .glowIcon { text-shadow:0 0 10px #00ccff; }
+    a:hover   { text-shadow:0 0 10px #ff0000; cursor:pointer; }
+
+    .tab { background-color:#0c1022; border-color:#040717; color:#00ccff; }
+
+    option, select {
+      background-color:#0c1022; border-color:#040717; color:#00ccff;
+    }
+
+    .footer {
+      display:flex; justify-content:space-between;
+      cursor:pointer; font-size:18px;
+    }
+
+    /* ══ ROTATING BORDER CONTAINER — ORIGINAL ══ */
+    .Registration_form_container {
+      position:relative;
+      width:400px; height:530px;
+      background:#040717;
+      border-radius:50px 0px;
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+
+    .Registration_form_container::before {
+      position:absolute; width:170%; height:170%; content:'';
+      background-image:conic-gradient(transparent,transparent,transparent,#ee00ff);
+      animation:rotate_border 6s linear infinite;
+    }
+    .Registration_form_container::after {
+      position:absolute; width:170%; height:170%; content:'';
+      background-image:conic-gradient(transparent,transparent,transparent,#00ccff);
+      animation:rotate_border 6s linear infinite;
+      animation-delay:-3s;
+    }
+    @keyframes rotate_border {
+      0%   { transform:rotate(0deg); }
+      100% { transform:rotate(360deg); }
+    }
+
+    /* ══ INNER FORM ══ */
+    .Registration_form {
+      position:absolute; background:#0c1022;
+      border-radius:50px 0px; inset:5px;
+      z-index:10; color:#00ccff; overflow:hidden;
+    }
+
+    h2 { font-size:40px; font-weight:600; text-align:center; color:#00ccff; }
+
+    /* ══ SUBMIT BUTTON — ORIGINAL ══ */
+    .reg-btn {
+      position:relative; width:75%; height:42px;
+      cursor:pointer; font-size:22px; letter-spacing:2px;
+      border:2px solid #00ccff; border-radius:50px;
+      background-color:#0c1022;
+      display:flex; justify-content:center; align-items:center;
+      color:#00ccff; transition:1s; overflow:hidden; z-index:10;
+    }
+    .reg-btn::before {
+      content:""; position:absolute;
+      top:-5px; left:-5px; bottom:-2px;
+      width:calc(100% + 10px); height:calc(100% + 10px);
+      border-radius:50px; box-shadow:0 0 20px 10px #000;
+      z-index:-10; opacity:0; transition:1s;
+      background:linear-gradient(315deg,#00ccff,#0e1538,#0e1538,#d400d4);
+    }
+    .reg-btn:hover::before { opacity:1; }
+    .reg-btn:hover { background-color:#7b00ff; color:rgb(0,255,242); }
+
+    /* ══ PANEL SYSTEM ══ */
+    .panel {
+      position:absolute; inset:0;
+      padding:36px 40px 24px;
+      display:flex; flex-direction:column; gap:10px;
+      color:#00ccff; opacity:0; pointer-events:none;
+      transform:translateX(60px);
+      transition:opacity 0.45s ease, transform 0.45s ease;
+    }
+    .panel.active  { opacity:1; pointer-events:all; transform:translateX(0); }
+    .panel.exit    { opacity:0; transform:translateX(-60px); pointer-events:none; }
+
+    .btn-row { display:flex; justify-content:center; margin-top:4px; }
+
+    .panel select {
+      width:100%; background-color:#0c1022; color:#00ccff;
+      border:none; border-bottom:1px solid #00ccff;
+      padding:4px 0 4px 8px; outline:none;
+      font-size:14px; font-weight:bolder; font-style:oblique;
+    }
+    .panel select option { background:#040717; color:#00ccff; }
+    .panel input[type="radio"] { background-color:transparent; accent-color:#00ccff; }
+    .panel input[type="date"]  { color-scheme:dark; }
+
+    .otp-row { display:flex; gap:6px; justify-content:center; }
+    .otp-row input {
+      width:36px; height:36px; text-align:center;
+      font-size:18px; font-weight:bolder;
+      border:1px solid #00ccff; border-radius:6px;
+      background-color:transparent; color:#d400d4;
+      outline:none; padding:0;
+    }
+    .otp-row input:focus { box-shadow:0 0 10px #00ccff; }
+
+    .str-bar { display:flex; gap:4px; }
+    .str-bar span { flex:1; height:3px; border-radius:2px; background:#00ccff22; transition:background 0.3s; }
+    .str-bar .w { background:#ff4444; }
+    .str-bar .m { background:#ffaa00; }
+    .str-bar .s { background:#00ff88; }
+
+    .terms {
+      display:flex; align-items:center; gap:8px;
+      font-size:12px; letter-spacing:1px; color:#00ccff88;
+    }
+    .terms input[type="checkbox"] { background:transparent; accent-color:#00ccff; width:13px; height:13px; }
+
+    .dots { display:flex; gap:7px; justify-content:center; margin-top:2px; }
+    .dot {
+      width:7px; height:7px; border-radius:50%;
+      background:#00ccff33; cursor:pointer;
+      transition:background 0.3s, box-shadow 0.3s;
+    }
+    .dot.on { background:#00ccff; box-shadow:0 0 8px #00ccff; }
+
+    @keyframes rippleAnim {
+      from { transform:scale(1); opacity:1; }
+      to   { transform:scale(20); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ 3D BACKGROUND CANVAS ════════════════ -->
+<canvas id="bgCanvas"></canvas>
+
+<div class="scene-wrapper">
+  <div class="Registration_form_container">
+    <div class="Registration_form" id="formRoot">
+
+      <!-- ══════ PANEL 1 : CONTACT ══════ -->
+      <div class="panel active" id="p-login">
+        <h2>Contact Me</h2>
+        <div class="input_group">
+          <i class="fa fa-user"><input type="text" placeholder="Name" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-unlock-alt"><input type="password" placeholder="Phone Number" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="tab">
+          Birthdate &amp; Education<br>
+          <input type="date" class="input_text" style="width:95%;padding-left:8px;" value="2003-04-18">
+        </div>
+        <select id="education" name="education">
+          <option value="No formal education">No formal education</option>
+          <option value="Primary education">Primary education</option>
+          <option value="Secondary education">Secondary education or high school</option>
+          <option value="GED">GED</option>
+          <option value="Vocational qualification">Vocational qualification</option>
+          <option value="Bachelor's degree">Bachelor's degree</option>
+          <option value="Master's degree">Master's degree</option>
+          <option value="Doctorate or higher">Doctorate or higher</option>
+        </select>
+        <div>
+          <p>Gender</p>
+          <input type="radio" name="gender" value="male"> Male &nbsp;
+          <input type="radio" name="gender" value="female"> Female
+        </div>
+        <div class="btn-row">
+          <div class="reg-btn" onclick="ripple(this)"><a>Submit</a></div>
+        </div>
+        <div class="footer">
+          <a onclick="go('p-forgot')">Forgotten Details</a>
+          <a onclick="go('p-signup')">Signup</a>
+        </div>
+        <div class="dots">
+          <div class="dot on" id="d0" onclick="go('p-login')"></div>
+          <div class="dot"    id="d1" onclick="go('p-forgot')"></div>
+          <div class="dot"    id="d2" onclick="go('p-signup')"></div>
+        </div>
+      </div>
+
+      <!-- ══════ PANEL 2 : FORGOTTEN DETAILS ══════ -->
+      <div class="panel" id="p-forgot">
+        <h2>Recover</h2>
+        <div class="input_group">
+          <i class="fa fa-envelope"><input type="email" placeholder="Registered Email" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-phone"><input type="tel" placeholder="Registered Phone" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="tab">Enter OTP sent to your Email</div>
+        <div class="otp-row">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+          <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
+        </div>
+        <div class="input_group">
+          <i class="fa fa-lock"><input type="password" placeholder="New Password" class="input_text" id="fp-pass" oninput="pwStrength(this,'fp')"></i>
+        </div>
+        <div class="str-bar">
+          <span id="fp1"></span><span id="fp2"></span><span id="fp3"></span><span id="fp4"></span>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-lock"><input type="password" placeholder="Confirm New Password" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="btn-row">
+          <div class="reg-btn" onclick="ripple(this)"><a>Reset Password</a></div>
+        </div>
+        <div class="footer">
+          <a onclick="go('p-login')">← Back to Login</a>
+          <a onclick="go('p-signup')">Signup</a>
+        </div>
+        <div class="dots">
+          <div class="dot"    id="e0" onclick="go('p-login')"></div>
+          <div class="dot on" id="e1" onclick="go('p-forgot')"></div>
+          <div class="dot"    id="e2" onclick="go('p-signup')"></div>
+        </div>
+      </div>
+
+      <!-- ══════ PANEL 3 : SIGN UP ══════ -->
+      <div class="panel" id="p-signup">
+        <h2>Sign Up</h2>
+        <div class="input_group">
+          <i class="fa fa-user"><input type="text" placeholder="Full Name" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-envelope"><input type="email" placeholder="Email Address" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-phone"><input type="tel" placeholder="Phone Number" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-lock"><input type="password" placeholder="Create Password" class="input_text" id="su-pass" oninput="pwStrength(this,'su')"></i>
+        </div>
+        <div class="str-bar">
+          <span id="su1"></span><span id="su2"></span><span id="su3"></span><span id="su4"></span>
+        </div>
+        <div class="input_group">
+          <i class="fa fa-lock"><input type="password" placeholder="Confirm Password" class="input_text" autocomplete="off"></i>
+        </div>
+        <div class="tab">
+          Date of Birth<br>
+          <input type="date" class="input_text" style="width:95%;padding-left:8px;">
+        </div>
+        <select name="edu-signup">
+          <option value="">— Education Level —</option>
+          <option>Primary education</option>
+          <option>Secondary / High School</option>
+          <option>Bachelor's degree</option>
+          <option>Master's degree</option>
+          <option>Doctorate or higher</option>
+        </select>
+        <div>
+          <p>Gender</p>
+          <input type="radio" name="sg" value="male"> Male &nbsp;
+          <input type="radio" name="sg" value="female"> Female &nbsp;
+          <input type="radio" name="sg" value="other"> Other
+        </div>
+        <div class="terms">
+          <input type="checkbox" id="agree">
+          <label for="agree">I agree to the Terms &amp; Conditions</label>
+        </div>
+        <div class="btn-row">
+          <div class="reg-btn" onclick="ripple(this)"><a>Create Account</a></div>
+        </div>
+        <div class="footer">
+          <a onclick="go('p-login')">← Back to Login</a>
+          <a onclick="go('p-forgot')">Forgot Details</a>
+        </div>
+        <div class="dots">
+          <div class="dot"    id="s0" onclick="go('p-login')"></div>
+          <div class="dot"    id="s1" onclick="go('p-forgot')"></div>
+          <div class="dot on" id="s2" onclick="go('p-signup')"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   MEGA 3D BACKGROUND ENGINE
+   Layers:
+   1. Infinite perspective grid (floor + ceiling) flying through
+   2. 3D rotating wireframe cube / icosahedron orbits
+   3. Meteor / shooting star streaks with trails
+   4. DNA double-helix strands scrolling vertically
+   5. Pulsing energy rings expanding from center
+   6. Warp-speed star tunnel (depth-sorted)
+   7. Floating glowing orbs with sine-wave paths
+   8. Electric arc lightning between nodes
+   9. Scanline sweep overlay
+   10. Mouse parallax on all layers
+════════════════════════════════════════════════════════ */
+
+const cv  = document.getElementById('bgCanvas');
+const ctx = cv.getContext('2d');
+
+let W, H, mx = 0, my = 0;
+function resize() {
+  W = cv.width  = window.innerWidth;
+  H = cv.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+const T = { now: 0 };
+
+// ── Colour helpers ──
+const CYAN   = '#00ccff';
+const PURPLE = '#d400d4';
+const VIOLET = '#7b00ff';
+const WHITE  = '#ffffff';
+
+function rgba(hex, a) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
 }
 
-#Registration_button:hover {
-    background-color: #00ccff;
-    color: #0c1022;
-} */
-        #Registration_button {
-            position: relative;
-            width: 300px;
-            height: 30px;
-            transition: 1s;
-            margin-top: 152px;
-            text-decoration: none;
-            z-index: 10;
-            cursor: pointer;
-            font-size: 22px;
-            letter-spacing: 2px;
-            border: 1px solid #000;
-            border-radius: 50px;
-            background-color: transparent;
-            color: #000;
-            text-align: center;
-            padding: 8px 0;
-        }
+/* ══════════════════════════════════════
+   LAYER 1 — PERSPECTIVE GRID (floor)
+══════════════════════════════════════ */
+function drawGrid(t) {
+  const cx = W/2 + (mx - W/2) * 0.03;
+  const hy = H * 0.52 + (my - H/2) * 0.04;
+  const horizon = hy;
+  const fov = 300;
+  const speed = (t * 60) % fov;
+  const cols = 14;
+  const rows = 18;
 
-        #Registration_button::before {
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            bottom: -2px;
-            width: calc(100% + 10px);
-            height: calc(100% + 10px);
-            border-radius: 50px;
-            box-shadow: 0 0 20px 10px #000;
-            z-index: -10;
-            opacity: 0;
-            transition: 1s;
-            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
-        }
+  ctx.save();
 
-        #Registration_button:hover::before {
-            opacity: 1;
-        }
+  // floor
+  for (let r = 0; r <= rows; r++) {
+    const depth = (r / rows) * fov + speed;
+    if (depth <= 0) continue;
+    const scale = fov / depth;
+    const y = horizon + scale * 160;
+    if (y > H + 10) continue;
+    const x0 = cx - scale * 500;
+    const x1 = cx + scale * 500;
+    const a  = Math.min(0.55, (r / rows) * 0.7 + 0.05);
+    ctx.strokeStyle = r % 3 === 0 ? rgba(CYAN, a * 1.4) : rgba(VIOLET, a * 0.6);
+    ctx.lineWidth = r % 3 === 0 ? 1.2 : 0.5;
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  }
+  for (let c = 0; c <= cols; c++) {
+    const ratio = (c / cols) * 2 - 1;
+    const xNear = cx + ratio * 500;
+    const xFar  = cx + ratio * 12;
+    const yNear = H + 10;
+    const yFar  = horizon;
+    const a = 0.25 + Math.abs(ratio) * 0.1;
+    ctx.strokeStyle = rgba(CYAN, a);
+    ctx.lineWidth = 0.6;
+    ctx.beginPath(); ctx.moveTo(xNear, yNear); ctx.lineTo(xFar, yFar); ctx.stroke();
+  }
 
-        #Registration_button:hover {
-            background-color: #7b00ff;
-            color: rgb(0, 255, 242);
-        }
+  // ceiling (mirrored)
+  ctx.save(); ctx.scale(1, -1); ctx.translate(0, -horizon * 2);
+  for (let r = 0; r <= rows; r++) {
+    const depth = (r / rows) * fov + speed;
+    if (depth <= 0) continue;
+    const scale = fov / depth;
+    const y = horizon + scale * 160;
+    if (y > H + 10) continue;
+    const x0 = cx - scale * 500;
+    const x1 = cx + scale * 500;
+    const a  = Math.min(0.2, (r / rows) * 0.25);
+    ctx.strokeStyle = rgba(PURPLE, a);
+    ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  }
+  ctx.restore();
 
-        #Registration-button {
-            background-color: #7b00ff;
-            color: rgb(0, 255, 242);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 18px;
-            box-shadow: 0 0 10px #7b00ff;
-        }
+  ctx.restore();
+}
 
-        #Registration-button:active {
-            box-shadow: 0 0 20px #7b00ff;
-        }
+/* ══════════════════════════════════════
+   LAYER 2 — 3D WIREFRAME POLYHEDRA
+══════════════════════════════════════ */
+function project3D(x, y, z, cx, cy, fov) {
+  const scale = fov / (fov + z);
+  return { x: cx + x * scale, y: cy + y * scale, s: scale };
+}
 
-        #Registration-button:hover {
-            box-shadow: 0 0 20px 0.5em 0.4em #7b00ff;
-        }
+function makeIcosaVerts() {
+  const phi = (1 + Math.sqrt(5)) / 2;
+  const verts = [
+    [0,1,phi],[0,-1,phi],[0,1,-phi],[0,-1,-phi],
+    [1,phi,0],[-1,phi,0],[1,-phi,0],[-1,-phi,0],
+    [phi,0,1],[phi,0,-1],[-phi,0,1],[-phi,0,-1]
+  ];
+  const len = Math.sqrt(1 + phi*phi);
+  return verts.map(v => v.map(c => c/len));
+}
 
-        input {
-            background-color: #00ccff;
-            color: #d400d4;
-        }
+const icosaVerts = makeIcosaVerts();
+const icosaEdges = [
+  [0,1],[0,4],[0,5],[0,8],[0,10],
+  [1,6],[1,7],[1,8],[1,10],
+  [2,3],[2,4],[2,5],[2,9],[2,11],
+  [3,6],[3,7],[3,9],[3,11],
+  [4,5],[4,8],[4,9],
+  [5,10],[5,11],
+  [6,7],[6,8],[6,9],
+  [7,10],[7,11],
+  [8,9],[10,11]
+];
 
-        * {
-            margin: 0;
-            padding: 0%;
-            box-sizing: border-box;
-        }
+const polyhedra = Array.from({length: 3}, (_, i) => ({
+  x: (i - 1) * 340 + 60,
+  y: -60 + i * 30,
+  z: 80 + i * 40,
+  rx: Math.random() * Math.PI * 2,
+  ry: Math.random() * Math.PI * 2,
+  rz: Math.random() * Math.PI * 2,
+  speed: 0.004 + i * 0.002,
+  size: 55 + i * 20,
+  color: [CYAN, PURPLE, VIOLET][i],
+}));
 
-        body {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            letter-spacing: 1px;
-            background: #0c1022;
-        }
+function rotateVert(v, rx, ry, rz) {
+  let [x, y, z] = v;
+  let y2 = y * Math.cos(rx) - z * Math.sin(rx);
+  let z2 = y * Math.sin(rx) + z * Math.cos(rx);
+  y = y2; z = z2;
+  let x2 = x * Math.cos(ry) + z * Math.sin(ry);
+  let z3 = -x * Math.sin(ry) + z * Math.cos(ry);
+  x = x2; z = z3;
+  let x3 = x * Math.cos(rz) - y * Math.sin(rz);
+  let y3 = x * Math.sin(rz) + y * Math.cos(rz);
+  return [x3, y3, z];
+}
 
-        .Registration_form_container {
-            position: relative;
-            width: 400px;
-            height: 470px;
-            max-width: 400px;
-            max-height: 470px;
-            background: #040717;
-            border-radius: 50px 0px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+function drawPolyhedra(t) {
+  const cx = W/2, cy = H/2;
+  polyhedra.forEach((p, pi) => {
+    p.rx += p.speed * 0.7;
+    p.ry += p.speed;
+    p.rz += p.speed * 0.4;
 
-        .Registration_form_container::before {
-            position: absolute;
-            width: 170%;
-            height: 170%;
-            content: '';
-            background-image: conic-gradient(transparent, transparent, transparent, #ee00ff);
-            animation: rotate_border 6s linear infinite;
-        }
+    const px = cx + p.x + (mx - W/2) * (0.04 + pi * 0.01);
+    const py = cy + p.y + (my - H/2) * (0.03 + pi * 0.01);
 
-        .Registration_form_container::after {
-            position: absolute;
-            width: 170%;
-            height: 170%;
-            content: '';
-            background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
-            animation: rotate_border 6s linear infinite;
-            animation-delay: -3s;
-        }
+    const rotated = icosaVerts.map(v => rotateVert(v, p.rx, p.ry, p.rz));
+    const projected = rotated.map(v => project3D(v[0]*p.size, v[1]*p.size, v[2]*p.size + p.z, px, py, 400));
 
-        @keyframes rotate_border {
-            0% {
-                transform: rotate(0deg);
-            }
+    icosaEdges.forEach(([a, b]) => {
+      const pa = projected[a], pb = projected[b];
+      const depth = (rotated[a][2] + rotated[b][2]) / 2;
+      const alpha = 0.12 + (depth + 1) * 0.18;
+      ctx.strokeStyle = rgba(p.color, Math.max(0.05, Math.min(0.55, alpha)));
+      ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+    });
 
-            100% {
+    // glowing vertices
+    rotated.forEach((rv, i) => {
+      const pv = projected[i];
+      const depth = rv[2];
+      if (depth > 0) {
+        ctx.beginPath();
+        ctx.arc(pv.x, pv.y, 1.5 * pv.s, 0, Math.PI*2);
+        ctx.fillStyle = rgba(p.color, 0.6);
+        ctx.fill();
+      }
+    });
+  });
+}
 
-                transform: rotate(360deg);
-            }
+/* ══════════════════════════════════════
+   LAYER 3 — METEOR STREAKS
+══════════════════════════════════════ */
+const meteors = Array.from({length: 12}, () => spawnMeteor());
 
-        }
+function spawnMeteor() {
+  return {
+    x: Math.random() * W * 1.4 - W * 0.2,
+    y: Math.random() * H * 0.5 - H * 0.1,
+    vx: -(3 + Math.random() * 6),
+    vy:  (1 + Math.random() * 3),
+    len: 60 + Math.random() * 140,
+    alpha: 0.4 + Math.random() * 0.5,
+    color: Math.random() > 0.5 ? CYAN : PURPLE,
+    width: 0.8 + Math.random() * 1.4,
+  };
+}
 
-        .Registration_form {
-            position: absolute;
-            content: '';
-            background: #0c1022;
-            border-radius: 50px 0px;
-            inset: 5px;
-            padding: 50px 40px;
-            z-index: 10;
-            color: #00ccff
-        }
+function drawMeteors() {
+  meteors.forEach((m, i) => {
+    m.x += m.vx;
+    m.y += m.vy;
+    if (m.x < -200 || m.y > H + 50) meteors[i] = spawnMeteor();
 
-        h2 {
-            font-size: 40px;
-            font-weight: 600;
-            text-align: center;
-        }
+    const angle = Math.atan2(m.vy, m.vx);
+    const ex = m.x - Math.cos(angle) * m.len;
+    const ey = m.y - Math.sin(angle) * m.len;
 
-        input_group {
-            margin-top: 40px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space;
-        }
+    const grad = ctx.createLinearGradient(m.x, m.y, ex, ey);
+    grad.addColorStop(0, rgba(m.color, m.alpha));
+    grad.addColorStop(0.3, rgba(m.color, m.alpha * 0.5));
+    grad.addColorStop(1, rgba(m.color, 0));
 
-        .fa {
-            font-size: 10px !important;
-        }
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = m.width;
+    ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(ex, ey); ctx.stroke();
 
-        .input_text {
-            width: 95%;
-            height: 30px;
-            background: transparent;
-            border: none;
-            outline: none;
-            border-bottom: 1px solid #00ccff;
-            font-size: 20px;
-            padding-left: 10px;
-        }
+    // bright head
+    ctx.beginPath();
+    ctx.arc(m.x, m.y, m.width * 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(WHITE, m.alpha * 0.9);
+    ctx.fill();
+  });
+}
 
-        ::placeholder {
-            font-size: 15px;
-            color: #0099ff52;
-            letter-spacing: 1px;
-        }
+/* ══════════════════════════════════════
+   LAYER 4 — DNA HELIX STRANDS
+══════════════════════════════════════ */
+function drawDNA(t) {
+  const strands = [
+    { x: 80,  color1: CYAN,   color2: PURPLE },
+    { x: W - 80, color1: PURPLE, color2: VIOLET },
+  ];
 
-        #Registration_button {
-            position: relative;
-            width: 300px;
-            height: 30px;
-            transition: 1s;
-            margin-top: 160px
-        }
+  strands.forEach(s => {
+    const amp = 28;
+    const freq = 0.022;
+    const speed = t * 0.6;
+    const step = 8;
 
-        #Registration_button {
-            position: absolute;
-            width: 75%;
-            height: 10%;
-            text-decoration: dotted;
-            z-index: 10;
-            cursor: pointer;
-            font-size: 22px;
-            letter-spacing: 2px;
-            border: 2px solid #00ccff;
-            border-radius: 50px;
-            background-color: #0c1022;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #00ccff;
-        }
+    for (let y = -step; y < H + step; y += step) {
+      const phase1 = y * freq + speed;
+      const phase2 = y * freq + speed + Math.PI;
+      const x1 = s.x + Math.sin(phase1) * amp;
+      const x2 = s.x + Math.sin(phase2) * amp;
+      const nx1 = s.x + Math.sin(phase1 + freq * step) * amp;
+      const nx2 = s.x + Math.sin(phase2 + freq * step) * amp;
 
-        .footer {
-            margin-top: 60px;
-            display: flex;
-            justify-content: space-between;
+      const alpha = 0.35 + Math.sin(phase1 * 2) * 0.12;
 
-        }
+      // strand 1
+      ctx.strokeStyle = rgba(s.color1, alpha);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(nx1, y + step); ctx.stroke();
 
-        .footer {
-            text-decoration: solid;
-            cursor: pointer;
-            font-size: 18px;
+      // strand 2
+      ctx.strokeStyle = rgba(s.color2, alpha);
+      ctx.beginPath(); ctx.moveTo(x2, y); ctx.lineTo(nx2, y + step); ctx.stroke();
 
-        }
+      // rungs (connecting base pairs)
+      if (Math.floor(y / step) % 4 === 0) {
+        const midY = y + step / 2;
+        const mx1 = s.x + Math.sin(phase1 + freq * step * 0.5) * amp;
+        const mx2 = s.x + Math.sin(phase2 + freq * step * 0.5) * amp;
+        ctx.strokeStyle = rgba(WHITE, 0.12);
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(mx1, midY); ctx.lineTo(mx2, midY); ctx.stroke();
 
-        .glowIcon {
-            text-shadow: 0 0 10px #00ccff;
-        }
+        // node dots
+        ctx.beginPath(); ctx.arc(mx1, midY, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(s.color1, 0.55); ctx.fill();
+        ctx.beginPath(); ctx.arc(mx2, midY, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(s.color2, 0.55); ctx.fill();
+      }
+    }
+  });
+}
 
-        a:hover {
-            text-shadow: 0 0 10px #ff0000
-        }
+/* ══════════════════════════════════════
+   LAYER 5 — PULSING ENERGY RINGS
+══════════════════════════════════════ */
+const rings = Array.from({length: 6}, (_, i) => ({
+  r: i * 80,
+  maxR: 360 + i * 30,
+  speed: 0.9 + i * 0.3,
+  color: i % 2 === 0 ? CYAN : PURPLE,
+  alpha: 0.0,
+}));
 
-        .tab,
-        ::placeholder {
-            background-color: #0c1022;
-            border-color: #040717;
-            display: -moz-grid;
-        }
+function drawRings(t) {
+  const cx = W/2 + (mx - W/2) * 0.02;
+  const cy = H/2 + (my - H/2) * 0.02;
 
-        .fieldset,
-        legend,
-        option,
-        select,
-        border,
-        tab,
-        placeholder,
-        oninput,
-        this.className {
-            background-color: #0c1022;
-            border-color: #040717;
-            color: #00ccff;
-        }
+  rings.forEach(ring => {
+    ring.r += ring.speed;
+    if (ring.r > ring.maxR) { ring.r = 0; }
+    const progress = ring.r / ring.maxR;
+    const alpha = (1 - progress) * 0.22;
 
-        /*This Effect has been paused Because some Circustances has not beeen completed yet */
-        .button_group::before {
-            position: absolute;
-            content: '';
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            border-radius: 50px;
-            z-index: 2;
-            transition: 1s;
-            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
-            filter: blur(20px);
-        }
+    ctx.strokeStyle = rgba(ring.color, alpha);
+    ctx.lineWidth = 1.5 * (1 - progress * 0.7);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, ring.r, ring.r * 0.38, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  });
+}
 
-        .button_group::after {
-            position: absolute;
-            content: '';
-            top: -2px;
-            right: -2px;
-            border-radius: 50px;
-            z-index: 2;
-            transition: 1s;
-            background: linear-gradient(315deg, #00ccff, #0e1538, #0e1538, #d400d4);
-            filter: blur(20px);
-        }
+/* ══════════════════════════════════════
+   LAYER 6 — WARP STAR TUNNEL
+══════════════════════════════════════ */
+const stars = Array.from({length: 220}, () => spawnStar());
 
+function spawnStar() {
+  const angle = Math.random() * Math.PI * 2;
+  const dist  = Math.random() * 0.5 + 0.01;
+  return {
+    angle,
+    dist,
+    z: Math.random(),
+    color: Math.random() > 0.7 ? CYAN : Math.random() > 0.5 ? PURPLE : WHITE,
+  };
+}
 
-        .button_group {
-            border: 3px;
-        }
-    </style>
-</head>
+function drawStars(t) {
+  const cx = W/2 + (mx - W/2) * 0.015;
+  const cy = H/2 + (my - H/2) * 0.015;
+  const maxR = Math.hypot(W, H) * 0.55;
 
-<body>
-    <div class="Registration_form_container">
-        <div class="Registration_form">
+  stars.forEach((s, i) => {
+    s.z -= 0.004;
+    if (s.z <= 0) { stars[i] = spawnStar(); stars[i].z = 1; return; }
 
-            <h2>Contact Me</h2>
-            <center>
-                <!-- <h4>Competetive Exam</h4> -->
+    const r  = (1 - s.z) * maxR * s.dist * 3.5;
+    const pr = (1 - (s.z + 0.02)) * maxR * s.dist * 3.5;
+    const x  = cx + Math.cos(s.angle) * r;
+    const y  = cy + Math.sin(s.angle) * r;
+    const px = cx + Math.cos(s.angle) * pr;
+    const py = cy + Math.sin(s.angle) * pr;
 
-                <!-- <h6>Fill the Details</h6> -->
-            </center>
-            <div class="input_group">
-                <!-- i.fafa-user -->
-                <i class="fa fa-user">
-                    <input type="text" placeholder="Name" class="input_text" autocomplete="off">
-                </i>
-            </div>
-            <div class="input_group">
-                <!-- i.fafa-unlock-alt -->
-                <i class="fa fa-unlock-alt">
-                    <input type="password" placeholder="Phone Number" class="input_text" autocomplete="off">
-                </i>
-            </div>
-            <div class="button_group" id="Registration_button">
-                <a>Submit</a>
-            </div>
+    const alpha = (1 - s.z) * 0.7;
+    const size  = (1 - s.z) * 2.2;
 
-            <div class="tab">
-                <br>Birthdate &amp; Education<br>
-                <p><input type="Birthday" type="date" value="18-04-2003">
-                </p>
-            </div>
-            <div>
-                <select class="form-control dropdown" id="education" name="education">
-                    <!-- <option value="" selected="selected" disabled="disabled">-- select one --</option> -->
-                    <option value="No formal education"><em>No formal education</em></option>
-                    <option value="Primary education"><em>Primary education</em></option>
-                    <option value="Secondary education"><em>Secondary education or high school</em></option>
-                    <option value="GED">GED</option>
-                    <option value="Vocational qualification"><em>Vocational qualification</em></option>
-                    <option value="Bachelor&#39;s degree"><em>Bachelor's degree</em></option>
-                    <option value="Master&#39;s degree"><em>Master's degree</em></option>
-                    <option value="Doctorate or higher"><em>Doctorate or higher</em></option>
-                </select>
-            </div>
-            <form action="file://www.html.am/html-codes/forms/html-form-tag-action.cfm" target="result" method="get">
-                <br>
-                <p>Gender</p><br>
-                <input type="radio" name="gender" value="male"> Male
-                <input type="radio" name="gender" value="female" disabled> Female
-                <div class="footer" position="bottom">
-                    <a>Forgotten Details</a>
-                    <a>Signup</a>
-                </div>
+    // streak trail
+    ctx.strokeStyle = rgba(s.color, alpha * 0.5);
+    ctx.lineWidth = size * 0.5;
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke();
 
-            </form>
-        </div>
-    </div>
+    // dot head
+    ctx.beginPath(); ctx.arc(x, y, size * 0.6, 0, Math.PI*2);
+    ctx.fillStyle = rgba(s.color, alpha);
+    ctx.fill();
+  });
+}
 
-    <!-- <div class="container">
-        <div class="form">
-            <h2>Registration Form</h2>
-            <form>
-                <div class="inputBox">
-                    <input type="text" name="" placeholder="Username">
-                </div>
-                <div class="inputBox">
-                    <input type="submit" value="RegistrationForm">
-                </div>
-            </form>
-        </div>
-    </div> -->
+/* ══════════════════════════════════════
+   LAYER 7 — FLOATING GLOWING ORBS
+══════════════════════════════════════ */
+const orbs = Array.from({length: 7}, (_, i) => ({
+  x: Math.random() * W,
+  y: Math.random() * H,
+  r: 40 + Math.random() * 80,
+  ox: Math.random() * Math.PI * 2,
+  oy: Math.random() * Math.PI * 2,
+  sx: 0.3 + Math.random() * 0.5,
+  sy: 0.2 + Math.random() * 0.4,
+  color: [CYAN, PURPLE, VIOLET, '#00ff88', CYAN, PURPLE, VIOLET][i],
+  amp: 30 + Math.random() * 60,
+}));
 
-    <script src="./Registration Form_files/jquery.min.js.download"></script>
-    <!-- <script src="style.js"></script> -->
-    <script>
-        $(".input_text").focus(function () {
-            $(this).prev('.fa').addClass('glowIcon');
-        });
-        $(".input_text").focus(function () {
-            $(this).prev('.fa').removeClass('glowIcon');
-        });
-        $("#Registration_button").hover(function () {
-            $(this).addClass('#Registration_button');
-        })
-        $('#Registration_button'.mouseleave(function () {
-            setTimeout(() => {
-                $(this).removeClass('#Registration_button')
-            }, 100);
-        }))
-            <? php
+function drawOrbs(t) {
+  orbs.forEach(o => {
+    const x = o.x + Math.sin(t * o.sx + o.ox) * o.amp + (mx - W/2) * 0.04;
+    const y = o.y + Math.cos(t * o.sy + o.oy) * o.amp * 0.6 + (my - H/2) * 0.04;
 
-// Connect to database
-$host = "host_name";
-        $username = "username";
-        $password = "password";
-        $dbname = "database_name";
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, o.r);
+    grad.addColorStop(0, rgba(o.color, 0.18));
+    grad.addColorStop(0.5, rgba(o.color, 0.07));
+    grad.addColorStop(1, rgba(o.color, 0));
 
-        $conn = mysqli_connect($host, $username, $password, $dbname);
+    ctx.beginPath(); ctx.arc(x, y, o.r, 0, Math.PI * 2);
+    ctx.fillStyle = grad; ctx.fill();
+  });
+}
 
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: ".mysqli_connect_error());
-        }
+/* ══════════════════════════════════════
+   LAYER 8 — ELECTRIC ARC NODES
+══════════════════════════════════════ */
+const arcNodes = Array.from({length: 10}, (_, i) => ({
+  x: (i / 9) * W,
+  y: H * 0.15 + Math.sin(i * 1.3) * H * 0.1,
+  vx: (Math.random() - 0.5) * 0.8,
+  vy: (Math.random() - 0.5) * 0.5,
+  r: 3 + Math.random() * 3,
+  color: i % 2 === 0 ? CYAN : PURPLE,
+}));
 
-        // Get form data
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+function drawArcs(t) {
+  // move nodes
+  arcNodes.forEach(n => {
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < 0 || n.x > W) n.vx *= -1;
+    if (n.y < 0 || n.y > H * 0.4) n.vy *= -1;
+  });
 
-        // Insert data into database
-        $sql = "INSERT INTO users (first_name, last_name, email, password)
-        VALUES('$first_name', '$last_name', '$email', '$password')";
+  // draw arcs between nearby nodes
+  for (let i = 0; i < arcNodes.length; i++) {
+    for (let j = i + 1; j < arcNodes.length; j++) {
+      const a = arcNodes[i], b = arcNodes[j];
+      const dist = Math.hypot(b.x - a.x, b.y - a.y);
+      if (dist > 260) continue;
+      const alpha = (1 - dist / 260) * 0.4;
+      const mid = {
+        x: (a.x + b.x) / 2 + (Math.random() - 0.5) * 30,
+        y: (a.y + b.y) / 2 + (Math.random() - 0.5) * 30,
+      };
+      ctx.strokeStyle = rgba(CYAN, alpha * 0.6);
+      ctx.lineWidth = 0.7;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.quadraticCurveTo(mid.x, mid.y, b.x, b.y);
+      ctx.stroke();
+    }
+    // node dot
+    const n = arcNodes[i];
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(n.color, 0.7); ctx.fill();
+    // glow halo
+    const halo = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 4);
+    halo.addColorStop(0, rgba(n.color, 0.25));
+    halo.addColorStop(1, rgba(n.color, 0));
+    ctx.beginPath(); ctx.arc(n.x, n.y, n.r * 4, 0, Math.PI * 2);
+    ctx.fillStyle = halo; ctx.fill();
+  }
+}
 
-        if (mysqli_query($conn, $sql)) {
-    echo "New record created successfully";
-        } else {
-    echo "Error: ".$sql. "<br>".mysqli_error($conn);
-        }
+/* ══════════════════════════════════════
+   LAYER 9 — SCANLINE
+══════════════════════════════════════ */
+let scanY = 0;
+function drawScanline(t) {
+  scanY = (scanY + 1.5) % H;
+  const grad = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
+  grad.addColorStop(0, rgba(CYAN, 0));
+  grad.addColorStop(0.5, rgba(CYAN, 0.04));
+  grad.addColorStop(1, rgba(CYAN, 0));
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, scanY - 40, W, 80);
+}
 
-        // Close connection
-        mysqli_close($conn);
+/* ══════════════════════════════════════
+   LAYER 10 — 3D FLOATING HEXAGONS
+══════════════════════════════════════ */
+const hexagons = Array.from({length: 8}, (_, i) => ({
+  x: Math.random() * W,
+  y: Math.random() * H,
+  size: 18 + Math.random() * 35,
+  rot: Math.random() * Math.PI,
+  rotSpeed: (Math.random() - 0.5) * 0.012,
+  vy: -0.15 - Math.random() * 0.25,
+  alpha: 0.07 + Math.random() * 0.15,
+  color: Math.random() > 0.5 ? CYAN : PURPLE,
+  scaleY: 0.4 + Math.random() * 0.4,
+}));
 
-?>
+function drawHexagons() {
+  hexagons.forEach((h, i) => {
+    h.rot += h.rotSpeed;
+    h.y += h.vy;
+    h.x += Math.sin(h.rot * 0.5) * 0.3;
+    if (h.y < -100) { h.y = H + 100; h.x = Math.random() * W; }
 
-    </script>
-</body>
+    ctx.save();
+    ctx.translate(h.x, h.y);
+    ctx.rotate(h.rot);
+    ctx.scale(1, h.scaleY);
 
-</html>
-<script>
-        document.getElementById("Registration_form").addEventListener("submit", function (event) {
-            event.preventDefault();
+    ctx.strokeStyle = rgba(h.color, h.alpha);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let j = 0; j < 6; j++) {
+      const angle = (j / 6) * Math.PI * 2;
+      const px = Math.cos(angle) * h.size;
+      const py = Math.sin(angle) * h.size;
+      j === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+  });
+}
 
-            const formData = new FormData(this);
+/* ══════════════════════════════════════
+   MAIN RENDER LOOP
+══════════════════════════════════════ */
+let last = 0;
+function render(now) {
+  const t = now * 0.001;
+  const dt = t - last;
+  last = t;
 
-            fetch("form-handler.php", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.text())
-                .then(result => {
-                    console.log("Form submitted successfully:", result);
-                })
-                .catch(error => {
-                    console.error("Error submitting form:", error);
-                });
-        });
+  // deep clear + faint trail (motion blur feel)
+  ctx.fillStyle = 'rgba(12,16,34,0.18)';
+  ctx.fillRect(0, 0, W, H);
 
+  drawOrbs(t);
+  drawGrid(t);
+  drawStars(t);
+  drawDNA(t);
+  drawRings(t);
+  drawArcs(t);
+  drawPolyhedra(t);
+  drawMeteors();
+  drawHexagons();
+  drawScanline(t);
+
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+/* ════════════ FORM LOGIC (unchanged) ════════════ */
+const panels  = ['p-login','p-forgot','p-signup'];
+const dotRows = [['d0','d1','d2'],['e0','e1','e2'],['s0','s1','s2']];
+let cur = 'p-login';
+
+function go(id) {
+  if (id === cur) return;
+  const old  = document.getElementById(cur);
+  const next = document.getElementById(id);
+  old.classList.add('exit'); old.classList.remove('active');
+  setTimeout(() => old.classList.remove('exit'), 500);
+  setTimeout(() => next.classList.add('active'), 80);
+  cur = id;
+  const idx = panels.indexOf(id);
+  dotRows.forEach(row => row.forEach((dId, i) => {
+    const el = document.getElementById(dId);
+    if (el) el.classList.toggle('on', i === idx);
+  }));
+}
+
+document.querySelectorAll('.input_text').forEach(inp => {
+  inp.addEventListener('focus', () => { const ico = inp.closest('i'); if (ico) ico.classList.add('glowIcon'); });
+  inp.addEventListener('blur',  () => { const ico = inp.closest('i'); if (ico) ico.classList.remove('glowIcon'); });
+});
+
+document.querySelectorAll('.otp-digit').forEach((el, i, all) => {
+  el.addEventListener('input',   () => { if (el.value && i < all.length-1) all[i+1].focus(); });
+  el.addEventListener('keydown', e  => { if (e.key==='Backspace' && !el.value && i>0) all[i-1].focus(); });
+});
+
+function pwStrength(inp, prefix) {
+  const v = inp.value;
+  let sc = 0;
+  if (v.length >= 8) sc++;
+  if (/[A-Z]/.test(v)) sc++;
+  if (/[0-9]/.test(v)) sc++;
+  if (/[^A-Za-z0-9]/.test(v)) sc++;
+  const cls = sc <= 1 ? 'w' : sc <= 2 ? 'm' : 's';
+  for (let n = 1; n <= 4; n++) {
+    const b = document.getElementById(prefix + n);
+    b.className = n <= sc ? cls : '';
+  }
+}
+
+function ripple(btn) {
+  const span = document.createElement('span');
+  span.style.cssText = `
+    position:absolute; border-radius:50%;
+    background:rgba(0,204,255,0.3);
+    width:10px; height:10px;
+    left:50%; top:50%; translate:-50% -50%;
+    animation:rippleAnim 0.8s ease-out forwards;
+    pointer-events:none; z-index:0;
+  `;
+  btn.appendChild(span);
+  setTimeout(() => span.remove(), 850);
+}
 </script>
+</body>
+</html>
