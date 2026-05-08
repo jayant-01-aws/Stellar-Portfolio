@@ -225,6 +225,21 @@
             <a href="https://github.com/Jayant987" target="_blank" class="social-link">
                 View GitHub Game Repos <i class="fas fa-arrow-right"></i>
             </a>
+            <div style="margin-top: 15px;">
+                <button onclick="openShopifyFrame()" style="display:inline-block; background: linear-gradient(135deg, #96bf48, #5e8e3e); color: white; border: none; cursor: pointer; padding: 10px 22px; border-radius: 8px; font-weight: bold; font-size: 0.95rem; letter-spacing: 0.5px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                    <i class="fas fa-car" style="margin-right: 8px;"></i>Horizon Drive Game
+                </button>
+            </div>
+
+            <div id="shopifyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+                <div style="width:95%; max-width:1100px; height:88vh; display:flex; flex-direction:column; border-radius:12px; overflow:hidden; border:2px solid #96bf48;">
+                    <div style="background:#1a1a2e; padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#96bf48; font-weight:bold; font-size:1rem;"><i class="fas fa-car" style="margin-right:8px;"></i>Horizon Drive Game</span>
+                        <button onclick="closeShopifyFrame()" style="background:transparent; border:1px solid #ff3131; color:#ff3131; padding:5px 14px; border-radius:6px; cursor:pointer; font-weight:bold;">&#x2715; Close</button>
+                    </div>
+                    <iframe id="shopifyFrame" src="" style="flex:1; border:none; width:100%;"></iframe>
+                </div>
+            </div>
         </footer>
     </div>
 </div>
@@ -342,6 +357,20 @@
         startPrompt.style.display = "none";
         spawnObstacle();
         update();
+    }
+
+    function openShopifyFrame() {
+        const modal = document.getElementById('shopifyModal');
+        const frame = document.getElementById('shopifyFrame');
+        frame.src = 'https://www.shopify.com/editions/summer2025/drive?mcp_token=eyJwaWQiOjM5MjgxODQsInNpZCI6MTE2MTU2MzYyMSwiYXgiOiJiOWFjMTA0NTM3M2FlYWY3MjlkYTNiN2FlZjU0NWUwMyIsInRzIjoxNzc4MjAzNzU2LCJleHAiOjE3ODA2MjI5NTZ9.i77Y9B_tqlVGhPxc_5Ysy3hGyn9KxTPf8MK3p5c8HIU&fbclid=PAVERTVgRqG8FleHRuA2FlbQIxMABzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAacz26_yY0En9-61M3-VuRS96X-Y9OWCGmkMPjT2NMksiciC-SBUICFQxjXSHQ_aem_PR-4xt55phvsqZTdNuB8Cw';
+        modal.style.display = 'flex';
+    }
+
+    function closeShopifyFrame() {
+        const modal = document.getElementById('shopifyModal');
+        const frame = document.getElementById('shopifyFrame');
+        modal.style.display = 'none';
+        frame.src = '';
     }
 
     container.addEventListener('mousedown', startGame);
