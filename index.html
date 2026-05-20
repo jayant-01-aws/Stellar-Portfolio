@@ -2188,6 +2188,25 @@ document.querySelectorAll('.proj-card').forEach((card, i) => {
   top: document.body.scrollHeight,
   behavior: 'smooth'
 });
+  var audioPlaying = false;
+
+function toggleAudio() {
+  audioPlaying = !audioPlaying;
+  
+  // Waves animation control karne ke liye
+  const waves = document.querySelectorAll('.loading .x');
+  waves.forEach(x => {
+    x.style.animationPlayState = audioPlaying ? 'running' : 'paused';
+  });
+
+  // HTML wale audio element ko select karke play/pause karna
+  const music = document.getElementById('myAudio');
+  if (audioPlaying) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
 </script>
 
 </body>
